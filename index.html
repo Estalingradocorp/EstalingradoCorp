@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Corporación Estalingrado — Sistemas Centrales</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+::selection{background:#2563eb;color:#fff}
+body{background:#000;color:#e5e7eb;font-family:'Inter',ui-sans-serif,system-ui,sans-serif;overflow-x:hidden}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:#000}
+::-webkit-scrollbar-thumb{background:#1e3a8a;border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:#2563eb}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes pulseGlow{0%,100%{box-shadow:0 0 20px rgba(37,99,235,.15)}50%{box-shadow:0 0 35px rgba(37,99,235,.35)}}
+@keyframes blink{50%{border-color:transparent}}
+.a-fu{opacity:0;animation:fadeInUp .8s cubic-bezier(.16,1,.3,1) forwards}
+.a-f{opacity:0;animation:fadeIn 1s ease-out forwards}
+.d1{animation-delay:.1s}.d2{animation-delay:.2s}.d3{animation-delay:.3s}.d4{animation-delay:.4s}.d5{animation-delay:.5s}.d6{animation-delay:.6s}.d7{animation-delay:.7s}.d8{animation-delay:.8s}
+.reveal{opacity:0;transform:translateY(30px);transition:all .8s cubic-bezier(.16,1,.3,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.glass{background:rgba(0,0,0,.6);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+.glass-card{background:rgba(255,255,255,.02);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.04)}
+.glow-line{height:1px;background:linear-gradient(90deg,transparent,rgba(37,99,235,.5),transparent)}
+.tg{background:linear-gradient(135deg,#60a5fa,#2563eb,#1d4ed8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.bgh{background:radial-gradient(ellipse 80% 50% at 50% -20%,rgba(37,99,235,.15),transparent),radial-gradient(ellipse 60% 40% at 80% 100%,rgba(30,58,138,.08),transparent)}
+.scard{position:relative;overflow:hidden;transition:all .5s cubic-bezier(.16,1,.3,1)}
+.scard::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(37,99,235,.03),transparent);transition:left .7s ease}
+.scard:hover::before{left:100%}
+.scard:hover{transform:translateY(-4px);border-color:rgba(37,99,235,.2);box-shadow:0 20px 60px -15px rgba(37,99,235,.1)}
+.scard .ci{transition:all .5s cubic-bezier(.16,1,.3,1)}
+.scard:hover .ci{transform:scale(1.1) rotate(-5deg);color:#3b82f6}
+.scard .ca{transform:translate(4px,-4px);opacity:0;transition:all .4s cubic-bezier(.16,1,.3,1)}
+.scard:hover .ca{transform:translate(0,0);opacity:1}
+.prow{transition:all .4s cubic-bezier(.16,1,.3,1);position:relative}
+.prow::after{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:#2563eb;transform:scaleY(0);transition:transform .3s ease}
+.prow:hover::after{transform:scaleY(1)}
+.prow:hover{background:rgba(37,99,235,.03)}
+.prow:hover .rl{opacity:1;transform:translateX(0)}
+.rl{opacity:0;transform:translateX(-8px);transition:all .3s ease}
+.nl{position:relative}
+.nl::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:#2563eb;transition:width .3s ease}
+.nl:hover::after{width:100%}
+.bsh{position:relative;overflow:hidden}
+.bsh::after{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:linear-gradient(45deg,transparent 40%,rgba(255,255,255,.08) 50%,transparent 60%);transform:translateX(-100%) rotate(45deg);transition:transform .6s ease}
+.bsh:hover::after{transform:translateX(100%) rotate(45deg)}
+.sd{position:relative}
+.sd::after{content:'';position:absolute;inset:-3px;border-radius:50%;background:rgba(37,99,235,.4);animation:pulseGlow 2s ease-in-out infinite}
+.gridl{background-image:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);background-size:60px 60px}
+#pc{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1}
+.qm{font-family:'Playfair Display',Georgia,serif;font-size:6rem;line-height:1;color:rgba(37,99,235,.15);position:absolute;top:-10px;left:-10px}
+html{scroll-behavior:smooth}
+</style>
+</head>
+<body class="min-h-screen antialiased">
+
+<!-- NAVBAR -->
+<nav class="fixed w-full top-0 z-50 glass border-b border-white/5 transition-all duration-500" id="navbar">
+<div class="px-6 md:px-12 h-20 flex items-center justify-between max-w-[1400px] mx-auto">
+<a href="#" class="flex items-center gap-4 group">
+<div class="relative">
+<img src="https://64.media.tumblr.com/37c52c25279f877bd0bc2d538626c938/2f8407cc51b2210e-be/s540x810/c379bb3cd18325d6b075e62fd26ffe91f5093ee3.jpg" alt="Logo" class="h-10 w-10 object-cover rounded-full shadow-[0_0_20px_rgba(37,99,235,.3)] group-hover:shadow-[0_0_30px_rgba(37,99,235,.5)] transition-all duration-500"/>
+<div class="absolute inset-0 rounded-full border border-blue-500/30 group-hover:border-blue-500/60 transition-all duration-500 scale-110"></div>
+</div>
+<div class="flex flex-col">
+<span class="text-white font-semibold text-sm tracking-[.25em] uppercase">Estalingrado</span>
+<span class="text-[10px] text-blue-500/60 tracking-[.3em] uppercase font-mono">Corp.</span>
+</div>
+</a>
+<div class="hidden md:flex items-center space-x-10 text-[11px] font-medium tracking-[.2em] uppercase text-zinc-400">
+<a href="#servicios" class="nl hover:text-white transition-colors duration-300">Servicios</a>
+<a href="#proyectos" class="nl hover:text-white transition-colors duration-300">Proyectos</a>
+<button id="btn-open-intranet" class="flex items-center gap-2.5 text-blue-400 hover:text-blue-300 transition-all duration-300 group">
+<span class="w-6 h-6 rounded-full border border-blue-500/30 flex items-center justify-center group-hover:border-blue-500/60 group-hover:bg-blue-500/10 transition-all duration-300"><i class="fa-solid fa-lock text-[10px]"></i></span>
+Portal Intranet
+</button>
+</div>
+<button class="md:hidden text-zinc-400 hover:text-white transition-colors" id="mobile-menu-btn"><i class="fa-solid fa-bars text-xl"></i></button>
+</div>
+</nav>
+
+<!-- Mobile Menu -->
+<div id="mobile-menu" class="fixed inset-0 z-40 bg-black/95 backdrop-blur-xl hidden flex-col items-center justify-center gap-8">
+<button id="mobile-menu-close" class="absolute top-6 right-6 text-zinc-400 hover:text-white"><i class="fa-solid fa-xmark text-2xl"></i></button>
+<a href="#servicios" class="text-2xl font-light text-white tracking-widest hover:text-blue-400 transition-colors mobile-link">Servicios</a>
+<a href="#proyectos" class="text-2xl font-light text-white tracking-widest hover:text-blue-400 transition-colors mobile-link">Proyectos</a>
+<button id="btn-open-intranet-mobile" class="text-2xl font-light text-blue-400 tracking-widest hover:text-blue-300 transition-colors flex items-center gap-3"><i class="fa-solid fa-lock text-lg"></i> Portal Intranet</button>
+</div>
+
+<!-- HERO -->
+<section class="relative min-h-screen flex items-center pt-20 overflow-hidden bgh">
+<canvas id="pc"></canvas>
+<div class="absolute top-1/4 left-10 w-px h-40 bg-gradient-to-b from-transparent via-blue-500/20 to-transparent a-f d7"></div>
+<div class="absolute bottom-1/4 right-10 w-px h-40 bg-gradient-to-b from-transparent via-blue-500/20 to-transparent a-f d8"></div>
+<div class="px-6 md:px-12 max-w-[1400px] mx-auto w-full relative z-10">
+<div class="max-w-4xl">
+<div class="a-fu mb-8 inline-flex items-center gap-3 px-4 py-2 rounded-full border border-blue-500/20 bg-blue-500/5">
+<span class="w-1.5 h-1.5 rounded-full bg-blue-500 sd"></span>
+<span class="text-blue-400 font-mono text-[11px] tracking-[.2em] uppercase">Sistemas Centrales Online</span>
+</div>
+<h1 class="text-5xl md:text-7xl lg:text-[5.5rem] font-light tracking-tight text-white leading-[1.05] mb-8">
+<span class="block a-fu d1">Ingeniería de datos</span>
+<span class="block a-fu d2">para el <span class="tg font-medium italic font-serif">futuro.</span></span>
+</h1>
+<p class="text-lg md:text-xl text-zinc-400 max-w-2xl font-light leading-relaxed mb-12 a-fu d3">
+Corporación Estalingrado desarrolla tecnologías de búsqueda, infraestructura crítica y protocolos de seguridad para las organizaciones más exigentes del mundo.
+</p>
+<div class="flex flex-wrap gap-4 a-fu d4">
+<a href="#servicios" class="bsh group inline-flex items-center gap-3 bg-white text-black px-8 py-4 text-xs font-semibold tracking-[.2em] uppercase hover:bg-zinc-100 transition-all duration-300">
+Explorar Servicios <i class="fa-solid fa-arrow-right text-[10px] group-hover:translate-x-1 transition-transform"></i>
+</a>
+<a href="#proyectos" class="group inline-flex items-center gap-3 border border-zinc-700 text-zinc-300 px-8 py-4 text-xs font-medium tracking-[.2em] uppercase hover:border-blue-500/50 hover:text-white transition-all duration-300">
+Ver Proyectos <i class="fa-solid fa-chevron-right text-[10px] group-hover:translate-x-1 transition-transform"></i>
+</a>
+</div>
+<div class="mt-20 pt-8 border-t border-white/5 grid grid-cols-2 md:grid-cols-4 gap-8 a-fu d5">
+<div><div class="text-2xl md:text-3xl font-light text-white mb-1">7+</div><div class="text-[10px] text-zinc-500 uppercase tracking-[.2em]">Plataformas Activas</div></div>
+<div><div class="text-2xl md:text-3xl font-light text-white mb-1">6</div><div class="text-[10px] text-zinc-500 uppercase tracking-[.2em]">Proyectos en Curso</div></div>
+<div><div class="text-2xl md:text-3xl font-light text-white mb-1">24/7</div><div class="text-[10px] text-zinc-500 uppercase tracking-[.2em]">Operación Continua</div></div>
+<div><div class="text-2xl md:text-3xl font-light text-white mb-1">100%</div><div class="text-[10px] text-zinc-500 uppercase tracking-[.2em]">Compromiso</div></div>
+</div>
+</div>
+</div>
+<div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 a-f d7">
+<span class="text-[10px] text-zinc-600 uppercase tracking-[.3em]">Scroll</span>
+<div class="w-px h-8 bg-gradient-to-b from-zinc-600 to-transparent"></div>
+</div>
+</section>
+
+<!-- QUOTE 1 -->
+<section class="py-24 px-6 md:px-12 border-y border-white/5 relative overflow-hidden">
+<div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(37,99,235,.08),transparent_70%)]"></div>
+<div class="max-w-4xl mx-auto text-center relative z-10 reveal">
+<div class="relative inline-block">
+<span class="qm">"</span>
+<p class="text-2xl md:text-4xl font-light text-white leading-relaxed italic font-serif px-8">
+La tecnología no es el fin, es el <span class="tg">camino</span>. Construimos infraestructura para quienes no se conforman con lo posible.
+</p>
+</div>
+<div class="mt-8 flex items-center justify-center gap-3">
+<div class="w-8 h-px bg-blue-500/40"></div>
+<span class="text-xs text-zinc-500 uppercase tracking-[.3em] font-mono">— Estalingrado Corp.</span>
+<div class="w-8 h-px bg-blue-500/40"></div>
+</div>
+</div>
+</section>
+
+<!-- SERVICIOS -->
+<section id="servicios" class="py-28 px-6 md:px-12 relative">
+<div class="absolute inset-0 gridl opacity-50"></div>
+<div class="max-w-[1400px] mx-auto relative z-10">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8 reveal">
+<div class="max-w-xl">
+<div class="flex items-center gap-3 mb-6"><div class="w-8 h-px bg-blue-500"></div><span class="text-blue-400 font-mono text-[11px] tracking-[.2em] uppercase">Divisiones Operativas</span></div>
+<h2 class="text-4xl md:text-5xl font-light tracking-tight text-white mb-4">Ecosistema de <span class="tg font-medium">aplicaciones</span></h2>
+<p class="text-zinc-400 font-light leading-relaxed">Soluciones tecnológicas integradas diseñadas para escalar, proteger y potenciar cada operación de tu organización.</p>
+</div>
+<div class="hidden md:block text-right">
+<p class="text-zinc-600 text-xs font-mono">SYS.MODULES.LOADED</p>
+<p class="text-zinc-700 text-[10px] font-mono mt-1">v2.4.1-stable</p>
+</div>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<a href="https://estalingradocorp.qzz.io/" target="_blank" class="scard glass-card rounded-2xl p-10 group block relative reveal">
+<div class="ca absolute top-8 right-8 text-blue-400"><i class="fa-solid fa-up-right-from-square text-lg"></i></div>
+<div class="ci text-blue-500/60 mb-8"><div class="w-14 h-14 rounded-xl bg-blue-500/5 border border-blue-500/10 flex items-center justify-center"><i class="fa-solid fa-magnifying-glass text-2xl"></i></div></div>
+<h3 class="text-xl font-medium text-white mb-3 tracking-tight">Buscador Estalingrado</h3>
+<p class="text-zinc-400 font-light leading-relaxed text-sm">Motor de búsqueda principal de la corporación. Indexación y acceso de alta velocidad.</p>
+<div class="mt-6 flex items-center gap-2 text-[11px] text-blue-400/60 font-mono uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity duration-300"><span>Acceder</span><i class="fa-solid fa-arrow-right text-[8px]"></i></div>
+</a>
+
+<a href="https://nicotips27.github.io/ECwebSend/" target="_blank" class="scard glass-card rounded-2xl p-10 group block relative reveal">
+<div class="ca absolute top-8 right-8 text-blue-400"><i class="fa-solid fa-up-right-from-square text-lg"></i></div>
+<div class="ci text-blue-500/60 mb-8"><div class="w-14 h-14 rounded-xl bg-blue-500/5 border border-blue-500/10 flex items-center justify-center"><i class="fa-regular fa-paper-plane text-2xl"></i></div></div>
+<h3 class="text-xl font-medium text-white mb-3 tracking-tight">EC WebSend</h3>
+<p class="text-zinc-400 font-light leading-relaxed text-sm">Plataforma segura para la transferencia y envío de archivos corporativos.</p>
+<div class="mt-6 flex items-center gap-2 text-[11px] text-blue-400/60 font-mono uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity duration-300"><span>Acceder</span><i class="fa-solid fa-arrow-right text-[8px]"></i></div>
+</a>
+
+<a href="https://nicotips27.github.io/ECnews/" target="_blank" class="scard glass-card rounded-2xl p-10 group block relative reveal">
+<div class="ca absolute top-8 right-8 text-blue-400"><i class="fa-solid fa-up-right-from-square text-lg"></i></div>
+<div class="ci text-blue-500/60 mb-8"><div class="w-14 h-14 rounded-xl bg-blue-500/5 border border-blue-500/10 flex items-center justify-center"><i class="fa-regular fa-newspaper text-2xl"></i></div></div>
+<h3 class="text-xl font-medium text-white mb-3 tracking-tight">EC News</h3>
+<p class="text-zinc-400 font-light leading-relaxed text-sm">Portal oficial de noticias, comunicados y boletines informativos.</p>
+<div class="mt-6 flex items-center gap-2 text-[11px] text-blue-400/60 font-mono uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity duration-300"><span>Acceder</span><i class="fa-solid fa-arrow-right text-[8px]"></i></div>
+</a>
+
+<a href="https://nicotips27.github.io/ec-download/" target="_blank" class="scard glass-card rounded-2xl p-10 group block relative reveal">
+<div class="ca absolute top-8 right-8 text-blue-400"><i class="fa-solid fa-up-right-from-square text-lg"></i></div>
+<div class="ci text-blue-500/60 mb-8"><div class="w-14 h-14 rounded-xl bg-blue-500/5 border border-blue-500/10 flex items-center justify-center"><i class="fa-solid fa-download text-2xl"></i></div></div>
+<h3 class="text-xl font-medium text-white mb-3 tracking-tight">EC Download</h3>
+<p class="text-zinc-400 font-light leading-relaxed text-sm">Centro de recursos y descargas de software de la corporación.</p>
+<div class="mt-6 flex items-center gap-2 text-[11px] text-blue-400/60 font-mono uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity duration-300"><span>Acceder</span><i class="fa-solid fa-arrow-right text-[8px]"></i></div>
+</a>
+
+<a href="https://nicotips27.github.io/EC-OS/" target="_blank" class="scard glass-card rounded-2xl p-10 group block relative reveal">
+<div class="ca absolute top-8 right-8 text-blue-400"><i class="fa-solid fa-up-right-from-square text-lg"></i></div>
+<div class="ci text-blue-500/60 mb-8"><div class="w-14 h-14 rounded-xl bg-blue-500/5 border border-blue-500/10 flex items-center justify-center"><i class="fa-solid fa-desktop text-2xl"></i></div></div>
+<h3 class="text-xl font-medium text-white mb-3 tracking-tight">EC-OS</h3>
+<p class="text-zinc-400 font-light leading-relaxed text-sm">Entorno de sistema operativo webizado para operaciones unificadas.</p>
+<div class="mt-6 flex items-center gap-2 text-[11px] text-blue-400/60 font-mono uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity duration-300"><span>Acceder</span><i class="fa-solid fa-arrow-right text-[8px]"></i></div>
+</a>
+
+<a href="https://nicotips27.github.io/ec-Intra-net/" target="_blank" class="scard glass-card rounded-2xl p-10 group block relative reveal">
+<div class="ca absolute top-8 right-8 text-blue-400"><i class="fa-solid fa-up-right-from-square text-lg"></i></div>
+<div class="ci text-blue-500/60 mb-8"><div class="w-14 h-14 rounded-xl bg-blue-500/5 border border-blue-500/10 flex items-center justify-center"><i class="fa-solid fa-database text-2xl"></i></div></div>
+<h3 class="text-xl font-medium text-white mb-3 tracking-tight">Big Data <span class="text-zinc-600 text-sm font-normal">(Intranet)</span></h3>
+<p class="text-zinc-400 font-light leading-relaxed text-sm">Análisis, visualización y gestión de grandes volúmenes de datos.</p>
+<div class="mt-6 flex items-center gap-2 text-[11px] text-blue-400/60 font-mono uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity duration-300"><span>Acceder</span><i class="fa-solid fa-arrow-right text-[8px]"></i></div>
+</a>
+
+<a href="https://estalingradocorp.github.io/Intra-net/" target="_blank" class="scard glass-card rounded-2xl p-10 group block relative reveal md:col-span-2 lg:col-span-1">
+<div class="ca absolute top-8 right-8 text-blue-400"><i class="fa-solid fa-up-right-from-square text-lg"></i></div>
+<div class="ci text-blue-500/60 mb-8"><div class="w-14 h-14 rounded-xl bg-blue-500/5 border border-blue-500/10 flex items-center justify-center"><i class="fa-solid fa-box-archive text-2xl"></i></div></div>
+<h3 class="text-xl font-medium text-white mb-3 tracking-tight">Antigua Wiki</h3>
+<p class="text-zinc-400 font-light leading-relaxed text-sm">Archivo histórico, documentación legacy y registros de la primera Intranet.</p>
+<div class="mt-6 flex items-center gap-2 text-[11px] text-blue-400/60 font-mono uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity duration-300"><span>Acceder</span><i class="fa-solid fa-arrow-right text-[8px]"></i></div>
+</a>
+</div>
+
+<div class="mt-20 text-center reveal">
+<p class="text-zinc-500 text-sm font-light max-w-lg mx-auto"><span class="text-blue-400/80">Cada plataforma</span> es una pieza de un sistema mayor. La integridad del todo depende de la excelencia de cada parte.</p>
+</div>
+</div>
+</section>
+
+<!-- QUOTE 2 -->
+<section class="py-20 px-6 md:px-12 border-y border-white/5 relative overflow-hidden">
+<div class="absolute inset-0 bg-[radial-gradient(ellipse_at_30%_50%,rgba(37,99,235,.06),transparent_50%)]"></div>
+<div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-12 relative z-10 reveal">
+<div class="flex-1">
+<div class="flex items-center gap-3 mb-6"><div class="w-8 h-px bg-blue-500"></div><span class="text-blue-400 font-mono text-[11px] tracking-[.2em] uppercase">Filosofía Corporativa</span></div>
+<blockquote class="text-2xl md:text-3xl font-light text-white leading-relaxed italic font-serif">
+"No seguimos tendencias. <span class="tg">Las anticipamos.</span> La innovación no es un departamento, es nuestra naturaleza."
+</blockquote>
+</div>
+<div class="flex-shrink-0">
+<div class="w-32 h-32 rounded-full border border-blue-500/20 flex items-center justify-center" style="animation:float 4s ease-in-out infinite">
+<div class="w-24 h-24 rounded-full border border-blue-500/30 flex items-center justify-center">
+<i class="fa-solid fa-infinity text-3xl text-blue-500/40"></i>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- PROYECTOS -->
+<section id="proyectos" class="py-28 px-6 md:px-12 relative">
+<div class="max-w-[1400px] mx-auto">
+<div class="mb-16 reveal">
+<div class="flex items-center gap-3 mb-6"><div class="w-8 h-px bg-blue-500"></div><span class="text-blue-400 font-mono text-[11px] tracking-[.2em] uppercase">Pipeline de Desarrollo</span></div>
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<h2 class="text-4xl md:text-5xl font-light tracking-tight text-white mb-4">Proyectos <span class="tg font-medium">Activos</span></h2>
+<p class="text-zinc-400 font-light max-w-lg">Seguimiento en tiempo real del estado de nuestros sistemas. Transparencia total en cada fase del ciclo de vida.</p>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 text-xs text-zinc-500"><span class="w-2 h-2 rounded-full bg-blue-500 sd"></span><span>Todos los sistemas operativos</span></div>
+</div>
+</div>
+</div>
+
+<div class="w-full overflow-x-auto reveal">
+<table class="w-full text-left border-collapse min-w-[700px]">
+<thead><tr class="border-b border-white/10">
+<th class="pb-5 font-medium pl-6 text-[11px] uppercase tracking-[.2em] text-zinc-500">ID</th>
+<th class="pb-5 font-medium text-[11px] uppercase tracking-[.2em] text-zinc-500">Designación</th>
+<th class="pb-5 font-medium text-[11px] uppercase tracking-[.2em] text-zinc-500">Fase</th>
+<th class="pb-5 font-medium text-[11px] uppercase tracking-[.2em] text-zinc-500 text-right pr-6">Estado</th>
+</tr></thead>
+<tbody class="text-sm">
+<tr class="prow border-b border-white/5">
+<td class="py-6 pl-6 text-blue-400 font-mono text-xs tracking-wider">PRJ-101</td>
+<td class="py-6 text-white font-medium flex items-center gap-3">EC WebSend <a href="https://github.com/nicotips27/ECwebSend" target="_blank" class="rl text-zinc-500 hover:text-blue-400 transition-colors"><i class="fa-solid fa-up-right-from-square text-[12px]"></i></a></td>
+<td class="py-6 text-zinc-400 text-xs tracking-wider uppercase">Despliegue</td>
+<td class="py-6 text-right pr-6"><span class="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20"><span class="w-1.5 h-1.5 rounded-full bg-blue-500 sd"></span><span class="text-blue-300 text-xs font-medium">Activo</span></span></td>
+</tr>
+<tr class="prow border-b border-white/5">
+<td class="py-6 pl-6 text-blue-400 font-mono text-xs tracking-wider">PRJ-102</td>
+<td class="py-6 text-white font-medium flex items-center gap-3">Estalingrado Corp Buscador <a href="https://github.com/nicotips27/Estalingrado-corp-Buscador-" target="_blank" class="rl text-zinc-500 hover:text-blue-400 transition-colors"><i class="fa-solid fa-up-right-from-square text-[12px]"></i></a></td>
+<td class="py-6 text-zinc-400 text-xs tracking-wider uppercase">Producción</td>
+<td class="py-6 text-right pr-6"><span class="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span><span class="text-emerald-300 text-xs font-medium">Operativo</span></span></td>
+</tr>
+<tr class="prow border-b border-white/5">
+<td class="py-6 pl-6 text-blue-400 font-mono text-xs tracking-wider">PRJ-103</td>
+<td class="py-6 text-white font-medium flex items-center gap-3">EC News <a href="https://github.com/nicotips27/ECnews" target="_blank" class="rl text-zinc-500 hover:text-blue-400 transition-colors"><i class="fa-solid fa-up-right-from-square text-[12px]"></i></a></td>
+<td class="py-6 text-zinc-400 text-xs tracking-wider uppercase">Desarrollo</td>
+<td class="py-6 text-right pr-6"><span class="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20"><span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span><span class="text-amber-300 text-xs font-medium">En Proceso</span></span></td>
+</tr>
+<tr class="prow border-b border-white/5">
+<td class="py-6 pl-6 text-blue-400 font-mono text-xs tracking-wider">PRJ-104</td>
+<td class="py-6 text-white font-medium flex items-center gap-3">Demiurgo Box <a href="https://github.com/nicotips27/Demiurgo-box" target="_blank" class="rl text-zinc-500 hover:text-blue-400 transition-colors"><i class="fa-solid fa-up-right-from-square text-[12px]"></i></a></td>
+<td class="py-6 text-zinc-400 text-xs tracking-wider uppercase">Producción</td>
+<td class="py-6 text-right pr-6"><span class="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span><span class="text-emerald-300 text-xs font-medium">Operativo</span></span></td>
+</tr>
+<tr class="prow border-b border-white/5">
+<td class="py-6 pl-6 text-blue-400 font-mono text-xs tracking-wider">PRJ-105</td>
+<td class="py-6 text-white font-medium flex items-center gap-3">EC Download <a href="https://github.com/nicotips27/ec-download" target="_blank" class="rl text-zinc-500 hover:text-blue-400 transition-colors"><i class="fa-solid fa-up-right-from-square text-[12px]"></i></a></td>
+<td class="py-6 text-zinc-400 text-xs tracking-wider uppercase">Beta</td>
+<td class="py-6 text-right pr-6"><span class="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20"><span class="w-1.5 h-1.5 rounded-full bg-blue-500 sd"></span><span class="text-blue-300 text-xs font-medium">Activo</span></span></td>
+</tr>
+<tr class="prow border-b border-white/5">
+<td class="py-6 pl-6 text-blue-400 font-mono text-xs tracking-wider">PRJ-106</td>
+<td class="py-6 text-white font-medium flex items-center gap-3">Portal NOA <a href="https://github.com/nicotips27/PortalNOA" target="_blank" class="rl text-zinc-500 hover:text-blue-400 transition-colors"><i class="fa-solid fa-up-right-from-square text-[12px]"></i></a></td>
+<td class="py-6 text-zinc-400 text-xs tracking-wider uppercase">Despliegue</td>
+<td class="py-6 text-right pr-6"><span class="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20"><span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span><span class="text-amber-300 text-xs font-medium">En Proceso</span></span></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="mt-16 p-8 rounded-2xl border border-white/5 bg-white/[.01] reveal">
+<div class="flex flex-col md:flex-row items-start md:items-center gap-6">
+<div class="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center flex-shrink-0"><i class="fa-solid fa-rocket text-blue-400 text-lg"></i></div>
+<div>
+<p class="text-white font-medium mb-1">El progreso no tiene techo.</p>
+<p class="text-zinc-400 text-sm font-light">Cada proyecto en esta lista representa horas de dedicación, iteración y mejora continua. <span class="text-blue-400">Estalingrado</span> no construye productos; construye legados.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="py-32 px-6 md:px-12 relative overflow-hidden">
+<div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(37,99,235,.08),transparent_70%)] opacity-50"></div>
+<div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-blue-600/5 rounded-full blur-[120px]"></div>
+<div class="max-w-4xl mx-auto text-center relative z-10 reveal">
+<div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-blue-500/20 bg-blue-500/5 mb-8">
+<i class="fa-solid fa-star text-[10px] text-blue-400"></i>
+<span class="text-blue-400 font-mono text-[11px] tracking-[.2em] uppercase">Visión 2026</span>
+</div>
+<h2 class="text-4xl md:text-6xl font-light tracking-tight text-white mb-8 leading-tight">
+La excelencia no es un destino.<br><span class="tg font-medium italic font-serif">Es el camino.</span>
+</h2>
+<p class="text-zinc-400 text-lg font-light max-w-2xl mx-auto mb-12 leading-relaxed">
+En Corporación Estalingrado creemos que la tecnología debe ser invisible, potente y confiable. Cada línea de código, cada decisión de diseño y cada protocolo de seguridad está pensado para que tú solo tengas que preocuparte por lo que realmente importa.
+</p>
+<div class="flex flex-wrap justify-center gap-8 text-xs text-zinc-500 uppercase tracking-[.2em]">
+<span class="flex items-center gap-2"><i class="fa-solid fa-shield-halved text-blue-500/40"></i> Seguridad</span>
+<span class="flex items-center gap-2"><i class="fa-solid fa-bolt text-blue-500/40"></i> Velocidad</span>
+<span class="flex items-center gap-2"><i class="fa-solid fa-layer-group text-blue-500/40"></i> Escalabilidad</span>
+<span class="flex items-center gap-2"><i class="fa-solid fa-heart text-blue-500/40"></i> Pasión</span>
+</div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer class="border-t border-white/5 py-16 px-6 md:px-12 relative">
+<div class="max-w-[1400px] mx-auto">
+<div class="flex flex-col md:flex-row justify-between items-center gap-8 mb-12">
+<div class="flex items-center gap-4">
+<img src="https://64.media.tumblr.com/37c52c25279f877bd0bc2d538626c938/2f8407cc51b2210e-be/s540x810/c379bb3cd18325d6b075e62fd26ffe91f5093ee3.jpg" alt="Logo" class="h-8 w-8 object-cover rounded-full opacity-60"/>
+<div><span class="text-white text-sm tracking-[.2em] uppercase font-medium">Estalingrado</span><span class="text-zinc-600 text-xs ml-2">Corp.</span></div>
+</div>
+<div class="flex items-center gap-6">
+<a href="#servicios" class="text-zinc-500 hover:text-white text-xs uppercase tracking-wider transition-colors">Servicios</a>
+<a href="#proyectos" class="text-zinc-500 hover:text-white text-xs uppercase tracking-wider transition-colors">Proyectos</a>
+<button id="btn-open-intranet-footer" class="text-blue-500 hover:text-blue-400 text-xs uppercase tracking-wider transition-colors flex items-center gap-2"><i class="fa-solid fa-lock text-[10px]"></i> Intranet</button>
+</div>
+</div>
+<div class="glow-line mb-8"></div>
+<div class="flex flex-col md:flex-row justify-between items-center gap-4">
+<div class="text-zinc-600 text-[11px] uppercase tracking-[.2em]">Estalingrado Corp. © <span id="year"></span> — Todos los derechos reservados</div>
+<div class="flex items-center gap-3 text-[10px] font-mono text-zinc-700">
+<span class="flex items-center gap-1.5"><span class="w-1 h-1 rounded-full bg-emerald-500/60"></span>SYS: ONLINE</span>
+<span>|</span><span>SEC: CLR</span><span>|</span><span>REG: AR</span>
+</div>
+</div>
+</div>
+</footer>
+
+<!-- INTRANET MODAL -->
+<div id="intranet-modal" class="fixed inset-0 z-50 hidden">
+<div class="absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity duration-500" id="modal-backdrop"></div>
+<div class="relative z-10 w-full h-full flex flex-col md:flex-row">
+<div class="hidden md:flex md:w-1/2 bg-black border-r border-white/5 items-center justify-center relative overflow-hidden p-12">
+<div class="absolute inset-0"><div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-blue-600/5 rounded-full blur-[100px]"></div></div>
+<div class="z-10 text-center">
+<div class="relative inline-block mb-8">
+<img src="https://64.media.tumblr.com/37c52c25279f877bd0bc2d538626c938/2f8407cc51b2210e-be/s540x810/c379bb3cd18325d6b075e62fd26ffe91f5093ee3.jpg" alt="Logo" class="h-20 w-20 object-cover rounded-full mx-auto shadow-[0_0_40px_rgba(37,99,235,.3)]" style="animation:pulseGlow 3s ease-in-out infinite"/>
+<div class="absolute inset-0 rounded-full border border-blue-500/20 scale-125"></div>
+<div class="absolute inset-0 rounded-full border border-blue-500/10 scale-150"></div>
+</div>
+<h2 class="text-3xl font-light tracking-[.2em] text-white uppercase mb-3">Red Central</h2>
+<p class="text-zinc-500 text-xs font-mono tracking-[.3em] uppercase mb-8">ACCESO RESTRINGIDO — NIVEL 4</p>
+<div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-blue-500/20 bg-blue-500/5">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+<span class="text-emerald-400 text-[10px] font-mono tracking-wider">SERVIDOR CONECTADO</span>
+</div>
+</div>
+</div>
+<div class="w-full md:w-1/2 bg-[#030304] h-full flex flex-col justify-center px-8 md:px-20 relative">
+<button id="btn-close-intranet" class="absolute top-8 right-8 w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-zinc-500 hover:text-white hover:border-white/20 transition-all duration-300"><i class="fa-solid fa-xmark text-lg"></i></button>
+<div class="max-w-md w-full mx-auto">
+<div class="md:hidden text-center mb-12">
+<img src="https://64.media.tumblr.com/37c52c25279f877bd0bc2d538626c938/2f8407cc51b2210e-be/s540x810/c379bb3cd18325d6b075e62fd26ffe91f5093ee3.jpg" alt="Logo" class="h-16 w-16 object-cover rounded-full mx-auto mb-4 shadow-[0_0_30px_rgba(37,99,235,.3)]"/>
+<h2 class="text-xl font-light tracking-[.2em] text-white uppercase">Red Central</h2>
+</div>
+<div class="mb-10">
+<h3 class="text-2xl font-light text-white mb-2">Autenticación</h3>
+<p class="text-zinc-500 text-sm">Ingrese sus credenciales de empleado para acceder a la red interna.</p>
+</div>
+<form id="intranet-form" class="space-y-8">
+<div class="group">
+<label class="block text-[10px] font-medium text-zinc-500 mb-3 uppercase tracking-[.2em]">Identificador Corporativo</label>
+<input type="text" required class="w-full bg-transparent border-b border-zinc-800 py-3 text-white focus:outline-none focus:border-blue-500 transition-all duration-500 font-mono text-sm placeholder-zinc-700" placeholder="US-0000"/>
+</div>
+<div class="group">
+<label class="block text-[10px] font-medium text-zinc-500 mb-3 uppercase tracking-[.2em]">Código de Acceso</label>
+<input type="password" required class="w-full bg-transparent border-b border-zinc-800 py-3 text-white focus:outline-none focus:border-blue-500 transition-all duration-500 font-mono text-sm placeholder-zinc-700" placeholder="••••••••"/>
+</div>
+<button type="submit" class="bsh w-full bg-white hover:bg-zinc-100 text-black font-semibold py-4 px-4 mt-8 transition-all duration-300 uppercase tracking-[.2em] text-xs flex justify-center items-center gap-3 group">
+Conectar a Intranet <i class="fa-solid fa-chevron-right text-[10px] group-hover:translate-x-1 transition-transform"></i>
+</button>
+</form>
+<div class="mt-12 pt-8 border-t border-white/5">
+<p class="text-[11px] text-zinc-600 font-mono leading-relaxed"><i class="fa-solid fa-triangle-exclamation text-amber-600/60 mr-1"></i> Sistema monitorizado. Cualquier intento de intrusión será reportado a la División de Ciberdefensa según el protocolo EST-99.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<script>
+document.getElementById('year').textContent=new Date().getFullYear();
+
+// Scroll Reveal
+const revealEls=document.querySelectorAll('.reveal');
+const revObs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:.1,rootMargin:'0px 0px -50px 0px'});
+revealEls.forEach(el=>revObs.observe(el));
+
+// Navbar scroll
+const navbar=document.getElementById('navbar');
+window.addEventListener('scroll',()=>{
+if(window.pageYOffset>100){navbar.style.background='rgba(0,0,0,0.85)';navbar.classList.add('shadow-lg','shadow-blue-900/5');}
+else{navbar.style.background='rgba(0,0,0,0.6)';navbar.classList.remove('shadow-lg','shadow-blue-900/5');}
+});
+
+// Particles
+const canvas=document.getElementById('pc');
+const ctx=canvas.getContext('2d');
+let particles=[];
+function resizeCanvas(){canvas.width=canvas.parentElement.offsetWidth;canvas.height=canvas.parentElement.offsetHeight;}
+resizeCanvas();window.addEventListener('resize',resizeCanvas);
+class Particle{constructor(){this.x=Math.random()*canvas.width;this.y=Math.random()*canvas.height;this.size=Math.random()*2+.5;this.speedX=(Math.random()-.5)*.3;this.speedY=(Math.random()-.5)*.3;this.opacity=Math.random()*.5+.1;}
+update(){this.x+=this.speedX;this.y+=this.speedY;if(this.x>canvas.width)this.x=0;if(this.x<0)this.x=canvas.width;if(this.y>canvas.height)this.y=0;if(this.y<0)this.y=canvas.height;}
+draw(){ctx.beginPath();ctx.arc(this.x,this.y,this.size,0,Math.PI*2);ctx.fillStyle='rgba(37,99,235,'+this.opacity+')';ctx.fill();}}
+function initParticles(){particles=[];const count=Math.min(80,Math.floor((canvas.width*canvas.height)/15000));for(let i=0;i<count;i++)particles.push(new Particle());}
+initParticles();
+function animateParticles(){ctx.clearRect(0,0,canvas.width,canvas.height);particles.forEach((p,i)=>{p.update();p.draw();for(let j=i+1;j<particles.length;j++){const dx=particles[j].x-p.x,dy=particles[j].y-p.y,d=Math.sqrt(dx*dx+dy*dy);if(d<120){ctx.beginPath();ctx.strokeStyle='rgba(37,99,235,'+(0.08*(1-d/120))+')';ctx.lineWidth=.5;ctx.moveTo(p.x,p.y);ctx.lineTo(particles[j].x,particles[j].y);ctx.stroke();}}});requestAnimationFrame(animateParticles);}
+animateParticles();
+
+// Modal
+const modal=document.getElementById('intranet-modal');
+const backdrop=document.getElementById('modal-backdrop');
+const btnClose=document.getElementById('btn-close-intranet');
+const form=document.getElementById('intranet-form');
+
+function openModal(){modal.classList.remove('hidden');document.body.style.overflow='hidden';backdrop.style.opacity='0';setTimeout(()=>backdrop.style.opacity='1',10);}
+function closeModal(){backdrop.style.opacity='0';setTimeout(()=>{modal.classList.add('hidden');document.body.style.overflow='auto';},300);}
+
+document.getElementById('btn-open-intranet').addEventListener('click',openModal);
+document.getElementById('btn-open-intranet-mobile').addEventListener('click',()=>{document.getElementById('mobile-menu').classList.add('hidden');openModal();});
+document.getElementById('btn-open-intranet-footer').addEventListener('click',openModal);
+btnClose.addEventListener('click',closeModal);
+backdrop.addEventListener('click',closeModal);
+form.addEventListener('submit',(e)=>{e.preventDefault();alert('Conexión encriptada establecida. Credenciales enviadas.');closeModal();});
+
+// Mobile menu
+const mmenu=document.getElementById('mobile-menu');
+document.getElementById('mobile-menu-btn').addEventListener('click',()=>{mmenu.classList.remove('hidden');mmenu.classList.add('flex');});
+document.getElementById('mobile-menu-close').addEventListener('click',()=>{mmenu.classList.add('hidden');mmenu.classList.remove('flex');});
+document.querySelectorAll('.mobile-link').forEach(l=>l.addEventListener('click',()=>{mmenu.classList.add('hidden');mmenu.classList.remove('flex');}));
+</script>
+</body>
+</html>
