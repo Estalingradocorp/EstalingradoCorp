@@ -107,11 +107,8 @@ html{scroll-behavior:smooth}
 <div class="hidden md:flex items-center space-x-10 text-[11px] font-medium tracking-[.2em] uppercase text-zinc-400">
 <a href="#servicios" class="nl hover:text-white transition-colors duration-300">Servicios</a>
 <a href="#proyectos" class="nl hover:text-white transition-colors duration-300">Proyectos</a>
+<a href="empresa.html" class="nl hover:text-white transition-colors duration-300">Empresa</a>
 <a href="market.html" class="nl hover:text-white transition-colors duration-300">Market</a>
-<button id="btn-open-intranet" class="flex items-center gap-2.5 text-blue-400 hover:text-blue-300 transition-all duration-300 group">
-<span class="w-6 h-6 rounded-full border border-blue-500/30 flex items-center justify-center group-hover:border-blue-500/60 group-hover:bg-blue-500/10 transition-all duration-300"><i class="fa-solid fa-lock text-[10px]"></i></span>
-Portal Intranet
-</button>
 </div>
 <button class="md:hidden text-zinc-400 hover:text-white transition-colors" id="mobile-menu-btn"><i class="fa-solid fa-bars text-xl"></i></button>
 </div>
@@ -122,8 +119,8 @@ Portal Intranet
 <button id="mobile-menu-close" class="absolute top-6 right-6 text-zinc-400 hover:text-white"><i class="fa-solid fa-xmark text-2xl"></i></button>
 <a href="#servicios" class="text-2xl font-light text-white tracking-widest hover:text-blue-400 transition-colors mobile-link">Servicios</a>
 <a href="#proyectos" class="text-2xl font-light text-white tracking-widest hover:text-blue-400 transition-colors mobile-link">Proyectos</a>
+<a href="empresa.html" class="text-2xl font-light text-white tracking-widest hover:text-blue-400 transition-colors mobile-link">Empresa</a>
 <a href="market.html" class="text-2xl font-light text-white tracking-widest hover:text-blue-400 transition-colors mobile-link">Market</a>
-<button id="btn-open-intranet-mobile" class="text-2xl font-light text-blue-400 tracking-widest hover:text-blue-300 transition-colors flex items-center gap-3"><i class="fa-solid fa-lock text-lg"></i> Portal Intranet</button>
 </div>
 
 <!-- HERO -->
@@ -418,8 +415,8 @@ En Corporación Estalingrado creemos que la tecnología debe ser invisible, pote
 <div class="flex items-center gap-6">
 <a href="#servicios" class="text-zinc-500 hover:text-white text-xs uppercase tracking-wider transition-colors">Servicios</a>
 <a href="#proyectos" class="text-zinc-500 hover:text-white text-xs uppercase tracking-wider transition-colors">Proyectos</a>
+<a href="empresa.html" class="text-zinc-500 hover:text-white text-xs uppercase tracking-wider transition-colors">Empresa</a>
 <a href="market.html" class="text-zinc-500 hover:text-white text-xs uppercase tracking-wider transition-colors">Market</a>
-<button id="btn-open-intranet-footer" class="text-blue-500 hover:text-blue-400 text-xs uppercase tracking-wider transition-colors flex items-center gap-2"><i class="fa-solid fa-lock text-[10px]"></i> Intranet</button>
 </div>
 </div>
 <div class="glow-line mb-8"></div>
@@ -702,9 +699,6 @@ const form=document.getElementById('intranet-form');
 function openModal(){modal.classList.remove('hidden');document.body.style.overflow='hidden';backdrop.style.opacity='0';setTimeout(()=>backdrop.style.opacity='1',10);}
 function closeModal(){backdrop.style.opacity='0';setTimeout(()=>{modal.classList.add('hidden');document.body.style.overflow='auto';},300);}
 
-document.getElementById('btn-open-intranet').addEventListener('click',openModal);
-document.getElementById('btn-open-intranet-mobile').addEventListener('click',()=>{document.getElementById('mobile-menu').classList.add('hidden');openModal();});
-document.getElementById('btn-open-intranet-footer').addEventListener('click',openModal);
 btnClose.addEventListener('click',closeModal);
 backdrop.addEventListener('click',closeModal);
 form.addEventListener('submit',(e)=>{e.preventDefault();alert('Conexión encriptada establecida. Credenciales enviadas.');closeModal();});
