@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estalingrado Market — Catálogo</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+::selection{background:#2563eb;color:#fff}
+body{background:#000;color:#e5e7eb;font-family:'Inter',ui-sans-serif,system-ui,sans-serif;overflow-x:hidden}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:#000}
+::-webkit-scrollbar-thumb{background:#1e3a8a;border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:#2563eb}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.a-fu{opacity:0;animation:fadeInUp .8s cubic-bezier(.16,1,.3,1) forwards}
+.a-f{opacity:0;animation:fadeIn 1s ease-out forwards}
+.d1{animation-delay:.1s}.d2{animation-delay:.2s}.d3{animation-delay:.3s}.d4{animation-delay:.4s}.d5{animation-delay:.5s}
+.reveal{opacity:0;transform:translateY(30px);transition:all .8s cubic-bezier(.16,1,.3,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.glass{background:rgba(0,0,0,.6);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+.glass-card{background:rgba(255,255,255,.02);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.04)}
+.glow-line{height:1px;background:linear-gradient(90deg,transparent,rgba(37,99,235,.5),transparent)}
+.tg{background:linear-gradient(135deg,#60a5fa,#2563eb,#1d4ed8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.scard{position:relative;overflow:hidden;transition:all .5s cubic-bezier(.16,1,.3,1)}
+.scard::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(37,99,235,.03),transparent);transition:left .7s ease}
+.scard:hover::before{left:100%}
+.scard:hover{transform:translateY(-4px);border-color:rgba(37,99,235,.2);box-shadow:0 20px 60px -15px rgba(37,99,235,.1)}
+.scard .ci{transition:all .5s cubic-bezier(.16,1,.3,1)}
+.scard:hover .ci{transform:scale(1.1) rotate(-5deg);color:#3b82f6}
+.scard .ca{transform:translate(4px,-4px);opacity:0;transition:all .4s cubic-bezier(.16,1,.3,1)}
+.scard:hover .ca{transform:translate(0,0);opacity:1}
+.nl{position:relative}
+.nl::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:#2563eb;transition:width .3s ease}
+.nl:hover::after{width:100%}
+.bsh{position:relative;overflow:hidden}
+.bsh::after{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:linear-gradient(45deg,transparent 40%,rgba(255,255,255,.08) 50%,transparent 60%);transform:translateX(-100%) rotate(45deg);transition:transform .6s ease}
+.bsh:hover::after{transform:translateX(100%) rotate(45deg)}
+.filter-active{background:rgba(37,99,235,.15)!important;border-color:rgba(37,99,235,.5)!important;color:#60a5fa!important}
+.wsp-btn{background:#25D366;color:#fff;transition:all .3s ease}
+.wsp-btn:hover{background:#1da851;box-shadow:0 0 25px rgba(37,211,102,.4);transform:scale(1.05)}
+.os-window{position:fixed;display:none;flex-direction:column;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,.14);background:#050506;box-shadow:0 50px 140px -20px rgba(0,0,0,.85),0 0 0 .5px rgba(255,255,255,.06);opacity:0;transform:scale(.92) translateY(24px);transition:opacity .3s ease,transform .5s cubic-bezier(.16,1,.3,1)}
+.os-window:not(.hidden){display:flex}
+.os-window.open{opacity:1;transform:scale(1) translateY(0)}
+.os-min{opacity:0!important;transform:scale(.06) translateY(65vh)!important;transition:all .35s cubic-bezier(.5,0,.9,.4)}
+.os-titlebar{height:42px;flex-shrink:0;display:flex;align-items:center;padding:0 14px;background:linear-gradient(rgba(44,44,50,.95),rgba(28,28,32,.95));backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.08);user-select:none;position:relative;z-index:20}
+.os-lights{display:flex;align-items:center;gap:8px;z-index:2}
+.os-light{width:12px;height:12px;border-radius:50%;cursor:pointer;position:relative;transition:filter .15s}
+.os-light:active{filter:brightness(.75)}
+.os-light.red{background:#ff5f57}.os-light.yellow{background:#febc2e}.os-light.green{background:#28c840}
+.os-light::after{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:700 9px/1 system-ui,sans-serif;color:rgba(0,0,0,.55);opacity:0;transition:opacity .15s}
+.os-lights:hover .os-light::after{opacity:1}
+.os-light.red::after{content:'\00d7'}
+.os-light.yellow::after{content:'\2212'}
+.os-light.green::after{content:'\002B'}
+.os-tb-title{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:8px;font-size:12px;font-weight:500;color:#d1d5db;pointer-events:none;padding:0 96px;white-space:nowrap;overflow:hidden}
+.os-tb-title img{width:16px;height:16px;border-radius:4px;object-fit:cover;flex-shrink:0}
+.tb-ico{width:16px;height:16px;border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:rgba(37,99,235,.18);border:1px solid rgba(37,99,235,.35);color:#60a5fa;font-size:9px;overflow:hidden}
+.tb-ico img{width:100%;height:100%;object-fit:cover}
+.os-body{flex:1;overflow-y:auto;overflow-x:hidden;position:relative;z-index:10}
+.os-rs{position:absolute;z-index:30}
+.os-rs[data-dir="n"]{top:0;left:12px;right:12px;height:6px;cursor:ns-resize}
+.os-rs[data-dir="s"]{bottom:0;left:12px;right:12px;height:6px;cursor:ns-resize}
+.os-rs[data-dir="e"]{right:0;top:12px;bottom:12px;width:6px;cursor:ew-resize}
+.os-rs[data-dir="w"]{left:0;top:12px;bottom:12px;width:6px;cursor:ew-resize}
+.os-rs[data-dir="ne"]{top:0;right:0;width:14px;height:14px;cursor:nesw-resize}
+.os-rs[data-dir="nw"]{top:0;left:0;width:14px;height:14px;cursor:nwse-resize}
+.os-rs[data-dir="se"]{bottom:0;right:0;width:14px;height:14px;cursor:nwse-resize}
+.os-rs[data-dir="sw"]{bottom:0;left:0;width:14px;height:14px;cursor:nesw-resize}
+.dock-pill{display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:12px;background:rgba(30,30,36,.92);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.12);color:#e5e7eb;font-size:11px;font-weight:500;cursor:pointer;transition:transform .25s cubic-bezier(.16,1,.3,1),background .25s,border-color .25s}
+.dock-pill:hover{transform:scale(1.1) translateY(-2px);background:rgba(37,99,235,.25);border-color:rgba(37,99,235,.5)}
+.dock-pill i{color:#60a5fa}
+</style>
+</head>
+<body class="min-h-screen antialiased">
+
+<!-- NAVBAR -->
+<nav class="fixed w-full top-0 z-50 glass border-b border-white/5">
+<div class="px-6 md:px-12 h-20 flex items-center justify-between max-w-[1400px] mx-auto">
+<a href="index.html" class="flex items-center gap-4 group">
+<div class="relative">
+<img src="https://64.media.tumblr.com/37c52c25279f877bd0bc2d538626c938/2f8407cc51b2210e-be/s540x810/c379bb3cd18325d6b075e62fd26ffe91f5093ee3.jpg" alt="Logo" class="h-10 w-10 object-cover rounded-full shadow-[0_0_20px_rgba(37,99,235,.3)] group-hover:shadow-[0_0_30px_rgba(37,99,235,.5)] transition-all duration-500"/>
+<div class="absolute inset-0 rounded-full border border-blue-500/30 group-hover:border-blue-500/60 transition-all duration-500 scale-110"></div>
+</div>
+<div class="flex flex-col">
+<span class="text-white font-semibold text-sm tracking-[.25em] uppercase">Estalingrado</span>
+<span class="text-[10px] text-blue-500/60 tracking-[.3em] uppercase font-mono">Corp.</span>
+</div>
+</a>
+<div class="hidden md:flex items-center space-x-10 text-[11px] font-medium tracking-[.2em] uppercase text-zinc-400">
+<a href="index.html" class="nl hover:text-white transition-colors duration-300">Inicio</a>
+<a href="index.html#servicios" class="nl hover:text-white transition-colors duration-300">Servicios</a>
+<a href="index.html#proyectos" class="nl hover:text-white transition-colors duration-300">Proyectos</a>
+<a href="market.html" class="nl text-blue-400">Market</a>
+</div>
+<button class="md:hidden text-zinc-400 hover:text-white transition-colors" id="mobile-menu-btn"><i class="fa-solid fa-bars text-xl"></i></button>
+</div>
+</nav>
+
+<!-- Mobile Menu -->
+<div id="mobile-menu" class="fixed inset-0 z-40 bg-black/95 backdrop-blur-xl hidden flex-col items-center justify-center gap-8">
+<button id="mobile-menu-close" class="absolute top-6 right-6 text-zinc-400 hover:text-white"><i class="fa-solid fa-xmark text-2xl"></i></button>
+<a href="index.html" class="text-2xl font-light text-white tracking-widest hover:text-blue-400 transition-colors mobile-link">Inicio</a>
+<a href="index.html#servicios" class="text-2xl font-light text-white tracking-widest hover:text-blue-400 transition-colors mobile-link">Servicios</a>
+<a href="index.html#proyectos" class="text-2xl font-light text-white tracking-widest hover:text-blue-400 transition-colors mobile-link">Proyectos</a>
+<a href="market.html" class="text-2xl font-light text-blue-400 tracking-widest mobile-link">Market</a>
+</div>
+
+<!-- HERO -->
+<section class="relative pt-36 md:pt-40 pb-16 px-6 md:px-12 overflow-hidden">
+<div class="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(37,99,235,.12),transparent)]"></div>
+<div class="max-w-[1400px] mx-auto relative z-10">
+<div class="max-w-4xl">
+<div class="a-fu mb-8 inline-flex items-center justify-center gap-2.5 px-4 py-2 rounded-full border border-blue-500/20 bg-blue-500/5">
+<span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+<span class="text-blue-400 font-mono text-[10px] sm:text-[11px] tracking-[.1em] sm:tracking-[.2em] uppercase">Catálogo Abierto</span>
+</div>
+<h1 class="text-5xl md:text-7xl font-light tracking-tight text-white leading-[1.05] mb-6">
+<span class="block a-fu d1">Estalingrado</span>
+<span class="block a-fu d2"><span class="tg font-medium italic font-serif">Market</span></span>
+</h1>
+<p class="text-lg md:text-xl text-zinc-400 max-w-2xl font-light leading-relaxed mb-8 a-fu d3">
+Software y productos de la corporación. Hacé clic en un producto para abrirlo en una ventana y ver todos sus detalles.
+</p>
+<div class="glow-line max-w-xs"></div>
+</div>
+</div>
+</section>
+
+<!-- FILTROS -->
+<section class="px-6 md:px-12 mb-12">
+<div class="max-w-[1400px] mx-auto">
+<div class="flex flex-wrap gap-3 reveal" id="filters">
+<button data-filter="all" class="filter-btn filter-active px-5 py-2.5 rounded-full border border-zinc-800 bg-zinc-900/30 text-zinc-400 text-xs font-medium tracking-[.15em] uppercase hover:border-blue-500/30 hover:text-white transition-all duration-300">Todos</button>
+<button data-filter="fisico" class="filter-btn px-5 py-2.5 rounded-full border border-zinc-800 bg-zinc-900/30 text-zinc-400 text-xs font-medium tracking-[.15em] uppercase hover:border-blue-500/30 hover:text-white transition-all duration-300">Físico</button>
+<button data-filter="digital" class="filter-btn px-5 py-2.5 rounded-full border border-zinc-800 bg-zinc-900/30 text-zinc-400 text-xs font-medium tracking-[.15em] uppercase hover:border-blue-500/30 hover:text-white transition-all duration-300">Digital</button>
+</div>
+</div>
+</section>
+
+<!-- CATÁLOGO -->
+<section class="px-6 md:px-12 pb-24">
+<div class="max-w-[1400px] mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="catalog">
+
+<!-- Producto 1 -->
+<button type="button" class="scard glass-card rounded-2xl overflow-hidden group reveal text-left cursor-pointer prod-open" data-product="ecospro" data-type="digital">
+<div class="aspect-[4/3] bg-zinc-900/50 flex items-center justify-center relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-transparent"></div>
+<i class="ci fa-solid fa-desktop text-5xl text-blue-500/30 group-hover:text-blue-500/50 transition-colors duration-500 relative z-10"></i>
+<span class="absolute top-4 left-4 text-[10px] font-mono text-blue-400/60 tracking-[.2em] uppercase">PRD-001</span>
+</div>
+<div class="p-6">
+<div class="flex items-center gap-2 mb-3">
+<span class="px-2.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-[10px] font-medium">Digital</span>
+</div>
+<h3 class="text-lg font-medium text-white mb-2 tracking-tight">EC-OS Pro License</h3>
+<p class="text-zinc-400 font-light text-sm leading-relaxed mb-4">Licencia premium del sistema operativo webizado.</p>
+<div class="flex items-center justify-between pt-4 border-t border-white/5">
+<span class="text-blue-400 font-mono text-lg font-medium">$5.000</span>
+<span class="text-[10px] text-blue-400/60 font-mono uppercase tracking-wider">Ver detalles</span>
+</div>
+</div>
+</button>
+
+<!-- Producto 2 -->
+<button type="button" class="scard glass-card rounded-2xl overflow-hidden group reveal text-left cursor-pointer prod-open" data-product="desarrollador" data-type="digital">
+<div class="aspect-[4/3] bg-zinc-900/50 flex items-center justify-center relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent"></div>
+<i class="ci fa-solid fa-code text-5xl text-emerald-500/30 group-hover:text-emerald-500/50 transition-colors duration-500 relative z-10"></i>
+<span class="absolute top-4 left-4 text-[10px] font-mono text-emerald-400/60 tracking-[.2em] uppercase">PRD-002</span>
+</div>
+<div class="p-6">
+<div class="flex items-center gap-2 mb-3">
+<span class="px-2.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-[10px] font-medium">Digital</span>
+</div>
+<h3 class="text-lg font-medium text-white mb-2 tracking-tight">Pack Desarrollador</h3>
+<p class="text-zinc-400 font-light text-sm leading-relaxed mb-4">Herramientas de desarrollo integradas de la corporación.</p>
+<div class="flex items-center justify-between pt-4 border-t border-white/5">
+<span class="text-blue-400 font-mono text-lg font-medium">$3.500</span>
+<span class="text-[10px] text-blue-400/60 font-mono uppercase tracking-wider">Ver detalles</span>
+</div>
+</div>
+</button>
+
+<!-- Producto 3 -->
+<button type="button" class="scard glass-card rounded-2xl overflow-hidden group reveal text-left cursor-pointer prod-open" data-product="camiseta" data-type="fisico">
+<div class="aspect-[4/3] bg-zinc-900/50 relative overflow-hidden">
+<img src="https://64.media.tumblr.com/ec98e900d6eb4ab197c3e2338a38ce2c/57f65f68dfcb861e-a3/s1280x1920/fb9d81960acf51d1075b4a4b38a031ef36d77b9d.pnj" alt="Camiseta Estalingrado" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+<span class="absolute top-4 left-4 text-[10px] font-mono text-purple-300/90 tracking-[.2em] uppercase bg-black/60 px-2 py-1 rounded-full border border-white/10">PRD-003</span>
+</div>
+<div class="p-6">
+<div class="flex items-center gap-2 mb-3">
+<span class="px-2.5 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-[10px] font-medium">Físico</span>
+</div>
+<h3 class="text-lg font-medium text-white mb-2 tracking-tight">Camiseta Estalingrado</h3>
+<p class="text-zinc-400 font-light text-sm leading-relaxed mb-4">Camiseta oficial de la corporación. Algodón premium.</p>
+<div class="flex items-center justify-between pt-4 border-t border-white/5">
+<span class="text-blue-400 font-mono text-lg font-medium">$8.000</span>
+<span class="text-[10px] text-blue-400/60 font-mono uppercase tracking-wider">Ver detalles</span>
+</div>
+</div>
+</button>
+
+<!-- Producto 4 -->
+<button type="button" class="scard glass-card rounded-2xl overflow-hidden group reveal text-left cursor-pointer prod-open" data-product="stickers" data-type="fisico">
+<div class="aspect-[4/3] bg-zinc-900/50 flex items-center justify-center relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-transparent"></div>
+<i class="ci fa-solid fa-star text-5xl text-amber-500/30 group-hover:text-amber-500/50 transition-colors duration-500 relative z-10"></i>
+<span class="absolute top-4 left-4 text-[10px] font-mono text-amber-400/60 tracking-[.2em] uppercase">PRD-004</span>
+</div>
+<div class="p-6">
+<div class="flex items-center gap-2 mb-3">
+<span class="px-2.5 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-[10px] font-medium">Físico</span>
+</div>
+<h3 class="text-lg font-medium text-white mb-2 tracking-tight">Sticker Pack</h3>
+<p class="text-zinc-400 font-light text-sm leading-relaxed mb-4">Pack de stickers oficiales de la corporación.</p>
+<div class="flex items-center justify-between pt-4 border-t border-white/5">
+<span class="text-blue-400 font-mono text-lg font-medium">$2.000</span>
+<span class="text-[10px] text-blue-400/60 font-mono uppercase tracking-wider">Ver detalles</span>
+</div>
+</div>
+</button>
+
+<!-- Producto 5 -->
+<button type="button" class="scard glass-card rounded-2xl overflow-hidden group reveal text-left cursor-pointer prod-open" data-product="ia27fisico" data-type="fisico">
+<div class="aspect-[4/3] bg-zinc-900/50 relative overflow-hidden">
+<img src="https://64.media.tumblr.com/74f37b3987410a0fa12e5eb32209c60a/74a07994a91cfcfd-2d/s540x810/9ba16f8485bc17e90fe7ba0152e7bd0b27e5c75a.jpg" alt="IA 27 — Atenea Omega" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+<span class="absolute top-4 left-4 text-[10px] font-mono text-purple-300/90 tracking-[.2em] uppercase bg-black/60 px-2 py-1 rounded-full border border-white/10">PRD-007</span>
+<span class="absolute top-4 right-4 px-2.5 py-1 rounded-full bg-amber-400/90 text-black text-[10px] font-semibold">Próximamente</span>
+</div>
+<div class="p-6">
+<div class="flex items-center gap-2 mb-3">
+<span class="px-2.5 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-[10px] font-medium">Físico</span>
+</div>
+<h3 class="text-lg font-medium text-white mb-2 tracking-tight">IA 27 — Atenea Omega</h3>
+<p class="text-zinc-400 font-light text-sm leading-relaxed mb-4">La nueva IA local de Estalingrado Corp, en formato físico.</p>
+<div class="flex items-center justify-between pt-4 border-t border-white/5">
+<span class="text-amber-400 font-mono text-lg font-medium">Próximamente</span>
+<span class="text-[10px] text-blue-400/60 font-mono uppercase tracking-wider">Ver detalles</span>
+</div>
+</div>
+</button>
+
+<!-- Producto 6 -->
+<button type="button" class="scard glass-card rounded-2xl overflow-hidden group reveal text-left cursor-pointer prod-open" data-product="ia27" data-type="digital">
+<div class="aspect-[4/3] bg-zinc-900/50 flex items-center justify-center relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-transparent"></div>
+<i class="ci fa-solid fa-robot text-5xl text-cyan-500/30 group-hover:text-cyan-500/50 transition-colors duration-500 relative z-10"></i>
+<span class="absolute top-4 left-4 text-[10px] font-mono text-cyan-400/60 tracking-[.2em] uppercase">PRD-005</span>
+</div>
+<div class="p-6">
+<div class="flex items-center gap-2 mb-3">
+<span class="px-2.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-[10px] font-medium">Digital</span>
+</div>
+<h3 class="text-lg font-medium text-white mb-2 tracking-tight">Acceso IA 27 Beta</h3>
+<p class="text-zinc-400 font-light text-sm leading-relaxed mb-4">Acceso anticipado al agente con Atenea Omega Beta.</p>
+<div class="flex items-center justify-between pt-4 border-t border-white/5">
+<span class="text-emerald-400 font-mono text-lg font-medium">Gratis</span>
+<span class="text-[10px] text-blue-400/60 font-mono uppercase tracking-wider">Ver detalles</span>
+</div>
+</div>
+</button>
+
+<!-- Producto 7 -->
+<button type="button" class="scard glass-card rounded-2xl overflow-hidden group reveal text-left cursor-pointer prod-open" data-product="tools" data-type="digital">
+<div class="aspect-[4/3] bg-zinc-900/50 flex items-center justify-center relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-br from-rose-500/5 to-transparent"></div>
+<i class="ci fa-solid fa-toolbox text-5xl text-rose-500/30 group-hover:text-rose-500/50 transition-colors duration-500 relative z-10"></i>
+<span class="absolute top-4 left-4 text-[10px] font-mono text-rose-400/60 tracking-[.2em] uppercase">PRD-006</span>
+</div>
+<div class="p-6">
+<div class="flex items-center gap-2 mb-3">
+<span class="px-2.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-[10px] font-medium">Digital</span>
+</div>
+<h3 class="text-lg font-medium text-white mb-2 tracking-tight">Pack EC Tools</h3>
+<p class="text-zinc-400 font-light text-sm leading-relaxed mb-4">Suite completa de herramientas corporativas.</p>
+<div class="flex items-center justify-between pt-4 border-t border-white/5">
+<span class="text-blue-400 font-mono text-lg font-medium">$6.000</span>
+<span class="text-[10px] text-blue-400/60 font-mono uppercase tracking-wider">Ver detalles</span>
+</div>
+</div>
+</button>
+
+</div>
+
+<div id="no-results" class="hidden text-center py-20">
+<i class="fa-solid fa-box-open text-4xl text-zinc-700 mb-4"></i>
+<p class="text-zinc-500 text-sm font-light">No hay productos en esta categoría.</p>
+</div>
+
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer class="border-t border-white/5 py-16 px-6 md:px-12 relative">
+<div class="max-w-[1400px] mx-auto">
+<div class="flex flex-col md:flex-row justify-between items-center gap-8 mb-12">
+<div class="flex items-center gap-4">
+<img src="https://64.media.tumblr.com/37c52c25279f877bd0bc2d538626c938/2f8407cc51b2210e-be/s540x810/c379bb3cd18325d6b075e62fd26ffe91f5093ee3.jpg" alt="Logo" class="h-8 w-8 object-cover rounded-full opacity-60"/>
+<div><span class="text-white text-sm tracking-[.2em] uppercase font-medium">Estalingrado</span><span class="text-zinc-600 text-xs ml-2">Corp.</span></div>
+</div>
+<div class="flex items-center gap-6">
+<a href="index.html" class="text-zinc-500 hover:text-white text-xs uppercase tracking-wider transition-colors">Inicio</a>
+<a href="index.html#servicios" class="text-zinc-500 hover:text-white text-xs uppercase tracking-wider transition-colors">Servicios</a>
+<a href="index.html#proyectos" class="text-zinc-500 hover:text-white text-xs uppercase tracking-wider transition-colors">Proyectos</a>
+<a href="market.html" class="text-blue-500 text-xs uppercase tracking-wider">Market</a>
+</div>
+</div>
+<div class="glow-line mb-8"></div>
+<div class="flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="text-zinc-600 text-[11px] uppercase tracking-[.2em] text-center md:text-left">Estalingrado Corp. © <span id="year"></span></div>
+<div class="flex items-center gap-4">
+<a href="https://www.youtube.com/@Estalingradocorp" target="_blank" class="text-zinc-600 hover:text-red-500 transition-colors" title="YouTube"><i class="fa-brands fa-youtube text-[16px]"></i></a>
+<a href="https://web.facebook.com/estalingradocorp" target="_blank" class="text-zinc-600 hover:text-blue-600 transition-colors" title="Facebook"><i class="fa-brands fa-facebook text-[16px]"></i></a>
+<a href="https://x.com/estalingrado27" target="_blank" class="text-zinc-600 hover:text-white transition-colors" title="X (Twitter)"><i class="fa-brands fa-x-twitter text-[16px]"></i></a>
+<a href="https://t.me/estalingradocorp" target="_blank" class="text-zinc-600 hover:text-blue-400 transition-colors" title="Telegram"><i class="fa-brands fa-telegram text-[16px]"></i></a>
+</div>
+<div class="flex items-center gap-3 text-[10px] font-mono text-zinc-700">
+<span class="flex items-center gap-1.5"><span class="w-1 h-1 rounded-full bg-emerald-500/60"></span>SYS: ONLINE</span>
+</div>
+</div>
+</div>
+</footer>
+
+<!-- PRODUCT MODAL -->
+<div id="prod-modal" class="fixed inset-0 z-50 hidden">
+  <div class="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-500 opacity-0" id="prod-backdrop"></div>
+  <div id="prod-win" class="os-window hidden">
+    <div class="os-titlebar">
+      <div class="os-lights">
+        <span class="os-light red" title="Cerrar"></span>
+        <span class="os-light yellow" title="Minimizar"></span>
+        <span class="os-light green" title="Ampliar"></span>
+      </div>
+      <div class="os-tb-title"><span class="tb-ico" id="prod-tb-ico"><i class="fa-solid fa-box"></i></span><span id="prod-tb-txt">Producto · Estalingrado Corp</span></div>
+    </div>
+    <div class="os-body">
+      <div class="p-6 md:p-10">
+        <div class="flex flex-col md:flex-row gap-8 mb-8">
+          <div id="prod-img" class="w-full md:w-56 aspect-square rounded-2xl bg-zinc-900/60 border border-white/5 flex items-center justify-center flex-shrink-0 overflow-hidden relative">
+            <div id="prod-img-grad" class="absolute inset-0"></div>
+            <i id="prod-img-icon" class="relative z-10 text-6xl text-blue-500/40"></i>
+          </div>
+          <div class="flex-1">
+            <div class="flex flex-wrap items-center gap-3 mb-3">
+              <span id="prod-type" class="px-2.5 py-1 rounded-full text-[10px] font-medium"></span>
+              <span id="prod-sku" class="text-[10px] font-mono text-zinc-600 tracking-[.2em] uppercase"></span>
+            </div>
+            <h2 id="prod-title" class="text-3xl font-light tracking-tight text-white mb-3"></h2>
+            <p class="text-zinc-500 text-xs font-mono tracking-[.25em] uppercase mb-6" id="prod-tag"></p>
+            <p id="prod-desc" class="text-zinc-300 font-light leading-relaxed mb-6"></p>
+            <div class="flex items-baseline gap-2 mb-6">
+              <span id="prod-price" class="text-3xl font-light text-white"></span>
+              <span id="prod-price-label" class="text-zinc-500 text-sm font-light"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="glow-line mb-8"></div>
+
+        <div class="flex items-center gap-3 mb-5"><div class="w-6 h-px bg-blue-500"></div><span class="text-blue-400 font-mono text-[10px] tracking-[.25em] uppercase">Características</span></div>
+        <div id="prod-feats" class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10"></div>
+
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-6 border-t border-white/5">
+          <p class="text-[11px] text-zinc-600 font-mono"><i class="fa-solid fa-fingerprint text-blue-500/40 mr-1.5"></i>Producto oficial · Estalingrado Corp</p>
+          <a id="prod-buy" href="#" target="_blank" rel="noopener" class="wsp-btn inline-flex items-center gap-2.5 px-6 py-3 rounded-full text-xs font-semibold">
+            <i class="fa-brands fa-whatsapp text-sm"></i> Comprar por WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="os-rs" data-dir="n"></div>
+    <div class="os-rs" data-dir="s"></div>
+    <div class="os-rs" data-dir="e"></div>
+    <div class="os-rs" data-dir="w"></div>
+    <div class="os-rs" data-dir="ne"></div>
+    <div class="os-rs" data-dir="nw"></div>
+    <div class="os-rs" data-dir="se"></div>
+    <div class="os-rs" data-dir="sw"></div>
+  </div>
+</div>
+
+<div id="os-dock" class="fixed bottom-4 left-1/2 -translate-x-1/2 z-[500] hidden items-center gap-2 px-3 py-2 rounded-2xl glass border border-white/10 shadow-2xl"></div>
+
+<script>
+document.getElementById('year').textContent=new Date().getFullYear();
+
+// Scroll Reveal
+const revealEls=document.querySelectorAll('.reveal');
+const revObs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:.1,rootMargin:'0px 0px -50px 0px'});
+revealEls.forEach(el=>revObs.observe(el));
+
+// Filtros
+const filterBtns=document.querySelectorAll('.filter-btn');
+const products=document.querySelectorAll('#catalog .scard');
+const noResults=document.getElementById('no-results');
+filterBtns.forEach(btn=>{
+btn.addEventListener('click',()=>{
+filterBtns.forEach(b=>b.classList.remove('filter-active'));
+btn.classList.add('filter-active');
+const f=btn.dataset.filter;
+let vis=0;
+products.forEach(p=>{
+if(f==='all'||p.dataset.type===f){p.style.display='';vis++;}
+else{p.style.display='none';}
+});
+noResults.classList.toggle('hidden',vis>0);
+});
+});
+
+// PRODUCTOS
+const PRODUCTS={
+ ecospro:{title:'EC-OS Pro License',tag:'Sistema Operativo Webizado · Licencia Premium',icon:'fa-desktop',tone:'#60a5fa',type:['digital','Digital'],sku:'PRD-001',price:'$5.000',label:'pago único',desc:'Licencia premium del sistema operativo webizado de la corporación. Acceso ilimitado a todas las aplicaciones, actualizaciones de por vida y soporte prioritario.',feats:[['fa-window-maximize','Acceso ilimitado','Todas las aplicaciones del ecosistema incluídas.'],['fa-arrows-rotate','Actualizaciones','Mejoras de por vida sin costos adicionales.'],['fa-headset','Soporte prioritario','Asistencia directa de la división técnica.'],['fa-user-check','Multi-dispositivo','Instalación en todos tus equipos.']],buy:'https://wa.me/TU-NUMERO?text=Hola%2C%20me%20interesa%20EC-OS%20Pro%20License%20de%20Estalingrado%20Corp'},
+ desarrollador:{title:'Pack Desarrollador',tag:'Herramientas de Desarrollo Integradas',icon:'fa-code',tone:'#34d399',type:['digital','Digital'],sku:'PRD-002',price:'$3.500',label:'pago único',desc:'Suite de herramientas para desarrolladores: terminal integrada, editor de código, aplicaciones de linting y acceso a las APIs corporativas documentadas.',feats:[['fa-terminal','Terminal integrada','Consola completa dentro del ecosistema.'],['fa-code','Editor avanzado','Con soporte para los lenguajes del stack.'],['fa-plug','Acceso APIs','Documentación y niveles de acceso.'],['fa-layer-group','Múltiples lenguajes','JS, Python, Go y más.']],buy:'https://wa.me/TU-NUMERO?text=Hola%2C%20me%20interesa%20Pack%20Desarrollador%20de%20Estalingrado%20Corp'},
+ camiseta:{title:'Camiseta Estalingrado',tag:'Remera Oficial EC · Merchandising',icon:'fa-shirt',tone:'#a78bfa',type:['fisico','Físico'],sku:'PRD-003',price:'$8.000',label:'envío a todo el país',desc:'Representá la identidad de Estalingrado Corp con nuestra remera oficial EC. Un diseño minimalista y moderno, confeccionado en color negro y con el icónico logo EC en blanco sobre el pecho.',feats:[['fa-shirt','Color: negro','🖤 Confeccionada en color negro.'],['fa-star','Logo oficial EC','⚪ Logo EC en blanco sobre el pecho.'],['fa-palette','Diseño moderno','👕 Minimalista, cómodo y versátil.'],['fa-building-columns','Producto oficial','🏢 Tecnología, identidad y futuro.']],buy:'https://wa.me/TU-NUMERO?text=Hola%2C%20me%20interesa%20Camiseta%20Estalingrado%20de%20Estalingrado%20Corp',imgs:['https://64.media.tumblr.com/ec98e900d6eb4ab197c3e2338a38ce2c/57f65f68dfcb861e-a3/s1280x1920/fb9d81960acf51d1075b4a4b38a031ef36d77b9d.pnj']},
+ stickers:{title:'Sticker Pack',tag:'Merchandising · Diseños Originales',icon:'fa-star',tone:'#fbbf24',type:['fisico','Físico'],sku:'PRD-004',price:'$2.000',label:'envío a todo el país',desc:'Pack de stickers oficiales de la corporación. Diseños originales en vinilo resistente, perfectos para laptops, equipos y espacios de trabajo.',feats:[['fa-pen-fancy','Diseños originales','Ilustraciones exclusivas de la marca.'],['fa-shield-halved','Vinilo resistente','Aguanta agua y rayones.'],['fa-th-large','20 unidades','Combinados entre varios diseños.'],['fa-truck-fast','Envíos','A todo el país.']],buy:'https://wa.me/TU-NUMERO?text=Hola%2C%20me%20interesa%20Sticker%20Pack%20de%20Estalingrado%20Corp'},
+ ia27:{title:'Acceso IA 27 Beta',tag:'Inteligencia Artificial Local · Beta',icon:'fa-robot',tone:'#22d3ee',type:['digital','Digital'],sku:'PRD-005',price:'Gratis',label:'acceso anticipado',desc:'Acceso anticipado a la versión beta del agente IA 27 con el modelo Atenea Omega. Inteligencia artificial 100% local, privada y en tu equipo.',feats:[['fa-microchip','100% local','Todo el procesamiento en tu equipo.'],['fa-lock','Privado','Tus datos nunca salen de tu computadora.'],['fa-brain','Atenea Omega','Modelo de comprensión y razonamiento.'],['fa-rocket','Beta abierta','Sé de los primeros en probarla.']],buy:'https://wa.me/TU-NUMERO?text=Hola%2C%20quiero%20acceso%20a%20IA%2027%20Beta%20de%20Estalingrado%20Corp'},
+ tools:{title:'Pack EC Tools',tag:'Suite de Herramientas Corporativas',icon:'fa-toolbox',tone:'#fb7185',type:['digital','Digital'],sku:'PRD-006',price:'$6.000',label:'pago único',desc:'Suite completa de herramientas de la corporación: EC WebSend, EC Download y utilidades de transferencia y gestión unificadas en un solo pack.',feats:[['fa-paper-plane','EC WebSend','Transferencia segura incluída.'],['fa-download','EC Download','Centro de recursos integrado.'],['fa-lock','Cifrado','Toda la suite protegida de extremo a extremo.'],['fa-box-open','Todo en uno','Una licencia, todas las herramientas.']],buy:'https://wa.me/TU-NUMERO?text=Hola%2C%20me%20interesa%20Pack%20EC%20Tools%20de%20Estalingrado%20Corp'},
+ ia27fisico:{title:'IA 27 — Atenea Omega',tag:'IA Local · Edición Física',icon:'fa-robot',tone:'#a78bfa',type:['fisico','Físico'],sku:'PRD-007',price:'A confirmar',label:'precio próximamente',coming:true,desc:'IA 27 — Atenea Omega 🤖🇦🇷 La nueva IA local de Estalingrado Corp, diseñada para ofrecer inteligencia artificial avanzada directamente en tu equipo, sin depender de la nube. Un modelo potente, privado y desarrollado en Argentina.',feats:[['fa-robot','IA 100% local','Toda la potencia de Atenea Omega en tu equipo.'],['fa-flag','Hecha en Argentina','Desarrollada y producida en el país. 🤖🇦🇷'],['fa-lock','Privacidad total','Sin depender de servicios externos en la nube.'],['fa-gift','Edición física','Formato coleccionista exclusivo.']],buy:'',imgs:['https://64.media.tumblr.com/74f37b3987410a0fa12e5eb32209c60a/74a07994a91cfcfd-2d/s540x810/9ba16f8485bc17e90fe7ba0152e7bd0b27e5c75a.jpg','https://64.media.tumblr.com/e1283cdce02cb0ea82bfc8c9b019eb79/965d26a4cbb855c1-d5/s540x810/fc5455be39f9ee47b38895a68f9669a0c9f30865.pnj']}
+};
+
+// OS Window Manager (estilo macOS)
+const OS={z:300,wins:{}};
+function osLock(){
+  const any=Object.values(OS.wins).some(w=>!w.el.classList.contains('hidden'));
+  document.body.style.overflow=any?'hidden':'auto';
+}
+function osRegister(id,bId,cfg){
+  const win=document.getElementById(id);
+  const backdrop=document.getElementById(bId);
+  const layer=win.parentElement;
+  const w={el:win,backdrop,layer,min:false,max:false,prev:null,placed:false,dockBtn:null,cfg:cfg||{}};
+  OS.wins[id]=w;
+  win.addEventListener('mousedown',()=>win.style.zIndex=++OS.z);
+  const tb=win.querySelector('.os-titlebar');
+  tb.addEventListener('mousedown',e=>{
+    if(e.target.closest('.os-light')||w.max)return;
+    const r=win.getBoundingClientRect(),dx=e.clientX-r.left,dy=e.clientY-r.top;
+    const mv=ev=>{
+      win.style.left=Math.min(Math.max(72-r.width,ev.clientX-dx),innerWidth-72)+'px';
+      win.style.top=Math.min(Math.max(0,ev.clientY-dy),innerHeight-40)+'px';
+    };
+    const up=()=>{removeEventListener('mousemove',mv);removeEventListener('mouseup',up);document.body.style.userSelect='';};
+    addEventListener('mousemove',mv);addEventListener('mouseup',up);
+    document.body.style.userSelect='none';
+  });
+  tb.addEventListener('dblclick',e=>{if(!e.target.closest('.os-light'))osToggleMax(id);});
+  win.querySelectorAll('.os-rs').forEach(h=>h.addEventListener('mousedown',e=>{
+    if(w.max)return;
+    e.preventDefault();e.stopPropagation();
+    const dir=h.dataset.dir,r=win.getBoundingClientRect(),sx=e.clientX,sy=e.clientY;
+    const mv=ev=>{
+      const ddx=ev.clientX-sx,ddy=ev.clientY-sy;
+      let L=r.left,T=r.top,W=r.width,H=r.height;
+      if(dir.indexOf('e')>-1)W=Math.max(380,r.width+ddx);
+      if(dir.indexOf('s')>-1)H=Math.max(300,r.height+ddy);
+      if(dir.indexOf('w')>-1){W=Math.max(380,r.width-ddx);L=r.left+(r.width-W);}
+      if(dir.indexOf('n')>-1){H=Math.max(300,r.height-ddy);T=r.top+(r.height-H);}
+      win.style.left=L+'px';win.style.top=T+'px';win.style.width=W+'px';win.style.height=H+'px';
+    };
+    const up=()=>{removeEventListener('mousemove',mv);removeEventListener('mouseup',up);document.body.style.userSelect='';};
+    addEventListener('mousemove',mv);addEventListener('mouseup',up);
+    document.body.style.userSelect='none';
+  }));
+  win.querySelector('.os-light.red').addEventListener('click',()=>osClose(id));
+  win.querySelector('.os-light.yellow').addEventListener('click',()=>osMinimize(id));
+  win.querySelector('.os-light.green').addEventListener('click',()=>osToggleMax(id));
+  backdrop.addEventListener('mousedown',()=>osClose(id));
+  return w;
+}
+function osPlace(id){
+  const w=OS.wins[id],win=w.el;
+  const W=Math.min(980,innerWidth-24),H=Math.min(760,innerHeight-24);
+  const off=w.cfg.offset||0;
+  win.style.width=W+'px';win.style.height=H+'px';
+  win.style.left=Math.max(12,(innerWidth-W)/2+off)+'px';
+  win.style.top=Math.max(12,(innerHeight-H)/2+off)+'px';
+}
+function osOpen(id){
+  const w=OS.wins[id];
+  w.layer.classList.remove('hidden');
+  w.backdrop.classList.remove('hidden');
+  requestAnimationFrame(()=>requestAnimationFrame(()=>w.backdrop.style.opacity='1'));
+  if(!w.placed){osPlace(id);w.placed=true;}
+  w.el.classList.remove('hidden');
+  w.el.style.zIndex=++OS.z;
+  requestAnimationFrame(()=>requestAnimationFrame(()=>w.el.classList.add('open')));
+  const body=w.el.querySelector('.os-body');if(body)body.scrollTop=0;
+  osLock();
+}
+function osClose(id){
+  const w=OS.wins[id];
+  w.backdrop.style.opacity='0';
+  w.el.classList.remove('open');
+  setTimeout(()=>{w.backdrop.classList.add('hidden');w.el.classList.add('hidden');w.layer.classList.add('hidden');w.min=false;osLock();},380);
+}
+function osMinimize(id){
+  const w=OS.wins[id];if(w.min)return;
+  w.min=true;
+  w.el.classList.add('os-min');
+  setTimeout(()=>{w.el.classList.add('hidden');osDockAdd(id);},340);
+}
+function osRestore(id){
+  const w=OS.wins[id];
+  osDockRemove(id);
+  w.el.classList.remove('hidden');
+  requestAnimationFrame(()=>requestAnimationFrame(()=>w.el.classList.remove('os-min')));
+  w.el.style.zIndex=++OS.z;
+  osLock();
+}
+function osToggleMax(id){
+  const w=OS.wins[id],win=w.el;
+  if(w.max){
+    w.max=false;
+    Object.assign(win.style,w.prev);
+  }else{
+    w.max=true;
+    w.prev={left:win.style.left,top:win.style.top,width:win.style.width,height:win.style.height};
+    win.style.left='10px';win.style.top='10px';
+    win.style.width='calc(100vw - 20px)';win.style.height='calc(100vh - 20px)';
+  }
+}
+function osDockAdd(id){
+  const w=OS.wins[id],dock=document.getElementById('os-dock');
+  dock.classList.remove('hidden');dock.classList.add('flex');
+  const b=document.createElement('button');
+  b.className='dock-pill';
+  b.innerHTML=w.cfg.dock||'Ventana';
+  b.addEventListener('click',()=>osRestore(id));
+  dock.appendChild(b);
+  w.dockBtn=b;
+}
+function osDockRemove(id){
+  const w=OS.wins[id],dock=document.getElementById('os-dock');
+  if(w.dockBtn){w.dockBtn.remove();w.dockBtn=null;}
+  if(!dock.children.length){dock.classList.add('hidden');dock.classList.remove('flex');}
+}
+osRegister('prod-win','prod-backdrop',{dock:'<i class="fa-solid fa-box"></i> Producto'});
+
+function openProduct(key){
+  const p=PRODUCTS[key];if(!p)return;
+  const img=document.getElementById('prod-img');
+  img.style.background='linear-gradient(135deg,'+p.tone+'14,transparent 70%)';
+  img.innerHTML='';
+  if(p.imgs&&p.imgs.length){
+    const main=document.createElement('img');
+    main.src=p.imgs[0];
+    main.alt=p.title;
+    main.className='absolute inset-0 w-full h-full object-cover transition-opacity duration-300';
+    img.appendChild(main);
+    if(p.imgs.length>1){
+      const thumbs=document.createElement('div');
+      thumbs.className='absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5 z-10';
+      p.imgs.forEach((src,i)=>{
+        const b=document.createElement('button');
+        b.type='button';
+        b.title=(i===0?'Foto del producto':'Muestra de la interfaz');
+        b.className='w-2.5 h-2.5 rounded-full border '+(i===0?'bg-white border-white':'bg-white/30 border-white/60')+' transition-all cursor-pointer';
+        b.addEventListener('click',()=>{
+          main.style.opacity='0';
+          setTimeout(()=>{main.src=src;main.style.opacity='1';},150);
+          thumbs.querySelectorAll('button').forEach((x,j)=>{x.className='w-2.5 h-2.5 rounded-full border '+(j===i?'bg-white border-white':'bg-white/30 border-white/60')+' transition-all cursor-pointer';});
+        });
+        thumbs.appendChild(b);
+      });
+      img.appendChild(thumbs);
+    }
+  }else{
+    const icon=document.createElement('i');
+    icon.className='relative z-10 text-6xl fa-solid '+p.icon;
+    icon.style.color=p.tone+'88';
+    img.appendChild(icon);
+  }
+  const pt=document.getElementById('prod-type');
+  const isFisico=p.type[0]==='fisico';
+  pt.textContent=p.type[1];
+  pt.className='px-2.5 py-1 rounded-full text-[10px] font-medium border '+(isFisico?'bg-purple-500/10 border-purple-500/20 text-purple-300':'bg-cyan-500/10 border-cyan-500/20 text-cyan-300');
+  document.getElementById('prod-sku').textContent=p.sku;
+  document.getElementById('prod-title').textContent=p.title;
+  document.getElementById('prod-tag').textContent=p.tag;
+  document.getElementById('prod-desc').textContent=p.desc;
+  document.getElementById('prod-price').textContent=p.price;
+  document.getElementById('prod-price-label').textContent=p.label;
+  document.getElementById('prod-feats').innerHTML=p.feats.map(f=>'<div class="glass-card rounded-xl p-5 flex items-start gap-4"><i class="fa-solid '+f[0]+' text-blue-500/60 mt-1"></i><div><p class="text-white text-sm font-medium mb-1">'+f[1]+'</p><p class="text-zinc-500 text-xs font-light leading-relaxed">'+f[2]+'</p></div></div>').join('');
+  const buy=document.getElementById('prod-buy');
+  if(p.coming){
+    buy.removeAttribute('href');
+    buy.className='inline-flex items-center gap-2.5 px-6 py-3 rounded-full text-xs font-semibold bg-zinc-700/60 text-zinc-300 cursor-not-allowed';
+    buy.innerHTML='<i class="fa-solid fa-hourglass-half text-sm"></i> Próximamente';
+  }else{
+    buy.href=p.buy;
+    buy.className='wsp-btn inline-flex items-center gap-2.5 px-6 py-3 rounded-full text-xs font-semibold';
+    buy.innerHTML='<i class="fa-brands fa-whatsapp text-sm"></i> Comprar por WhatsApp';
+  }
+  document.getElementById('prod-tb-ico').innerHTML='<i class="fa-solid '+p.icon+'"></i>';
+  document.getElementById('prod-tb-txt').textContent=p.title+' · Market Estalingrado';
+  osOpen('prod-win');
+}
+document.querySelectorAll('.prod-open').forEach(b=>b.addEventListener('click',()=>openProduct(b.dataset.product)));
+document.addEventListener('keydown',(e)=>{
+ if(e.key==='Escape'){
+  Object.keys(OS.wins).forEach(id=>{const w=OS.wins[id];if(!w.el.classList.contains('hidden')&&!w.min)osClose(id);});
+ }
+});
+addEventListener('resize',()=>{
+ Object.values(OS.wins).forEach(w=>{
+  if(w.max||w.el.classList.contains('hidden'))return;
+  const r=w.el.getBoundingClientRect();
+  if(r.left>innerWidth-72)w.el.style.left=Math.max(0,innerWidth-72)+'px';
+  if(r.top>innerHeight-40)w.el.style.top=Math.max(0,innerHeight-40)+'px';
+ });
+});
+
+// Mobile menu
+const mmenu=document.getElementById('mobile-menu');
+document.getElementById('mobile-menu-btn').addEventListener('click',()=>{mmenu.classList.remove('hidden');mmenu.classList.add('flex');});
+document.getElementById('mobile-menu-close').addEventListener('click',()=>{mmenu.classList.add('hidden');mmenu.classList.remove('flex');});
+document.querySelectorAll('.mobile-link').forEach(l=>l.addEventListener('click',()=>{mmenu.classList.add('hidden');mmenu.classList.remove('flex');}));
+</script>
+</body>
+</html>

@@ -17,6 +17,7 @@ Portal oficial de la Corporación Estalingrado. Plataforma central que agrupa to
 | [EC-OS](https://nicotips27.github.io/EC-OS/) | Sistema operativo webizado |
 | [Big Data (Intranet)](https://nicotips27.github.io/ec-Intra-net/) | Análisis de datos |
 | [Antigua Wiki](https://estalingradocorp.github.io/Intra-net/) | Documentación legacy |
+| [IA 27](https://estalingradocorp.github.io/agente-IA27-/) | Página explicativa del Agente IA |
 
 ## Stack
 

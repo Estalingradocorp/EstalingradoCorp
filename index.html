@@ -55,6 +55,37 @@ body{background:#000;color:#e5e7eb;font-family:'Inter',ui-sans-serif,system-ui,s
 .gridl{background-image:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);background-size:60px 60px}
 #pc{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1}
 .qm{font-family:'Playfair Display',Georgia,serif;font-size:6rem;line-height:1;color:rgba(37,99,235,.15);position:absolute;top:-10px;left:-10px}
+.os-window{position:fixed;display:none;flex-direction:column;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,.14);background:#050506;box-shadow:0 50px 140px -20px rgba(0,0,0,.85),0 0 0 .5px rgba(255,255,255,.06);opacity:0;transform:scale(.92) translateY(24px);transition:opacity .3s ease,transform .5s cubic-bezier(.16,1,.3,1)}
+.os-window:not(.hidden){display:flex}
+.os-window.open{opacity:1;transform:scale(1) translateY(0)}
+.os-min{opacity:0!important;transform:scale(.06) translateY(65vh)!important;transition:all .35s cubic-bezier(.5,0,.9,.4)}
+.os-titlebar{height:42px;flex-shrink:0;display:flex;align-items:center;padding:0 14px;background:linear-gradient(rgba(44,44,50,.95),rgba(28,28,32,.95));backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.08);user-select:none;position:relative;z-index:20}
+.os-lights{display:flex;align-items:center;gap:8px;z-index:2}
+.os-light{width:12px;height:12px;border-radius:50%;cursor:pointer;position:relative;transition:filter .15s}
+.os-light:active{filter:brightness(.75)}
+.os-light.red{background:#ff5f57}.os-light.yellow{background:#febc2e}.os-light.green{background:#28c840}
+.os-light::after{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:700 9px/1 system-ui,sans-serif;color:rgba(0,0,0,.55);opacity:0;transition:opacity .15s}
+.os-lights:hover .os-light::after{opacity:1}
+.os-light.red::after{content:'\00d7'}
+.os-light.yellow::after{content:'\2212'}
+.os-light.green::after{content:'\002B'}
+.os-tb-title{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:8px;font-size:12px;font-weight:500;color:#d1d5db;pointer-events:none;padding:0 96px;white-space:nowrap;overflow:hidden}
+.os-tb-title img{width:16px;height:16px;border-radius:4px;object-fit:cover;flex-shrink:0}
+.tb-ico{width:16px;height:16px;border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:rgba(37,99,235,.18);border:1px solid rgba(37,99,235,.35);color:#60a5fa;font-size:9px;overflow:hidden}
+.tb-ico img{width:100%;height:100%;object-fit:cover}
+.os-body{flex:1;overflow-y:auto;overflow-x:hidden;position:relative;z-index:10}
+.os-rs{position:absolute;z-index:30}
+.os-rs[data-dir="n"]{top:0;left:12px;right:12px;height:6px;cursor:ns-resize}
+.os-rs[data-dir="s"]{bottom:0;left:12px;right:12px;height:6px;cursor:ns-resize}
+.os-rs[data-dir="e"]{right:0;top:12px;bottom:12px;width:6px;cursor:ew-resize}
+.os-rs[data-dir="w"]{left:0;top:12px;bottom:12px;width:6px;cursor:ew-resize}
+.os-rs[data-dir="ne"]{top:0;right:0;width:14px;height:14px;cursor:nesw-resize}
+.os-rs[data-dir="nw"]{top:0;left:0;width:14px;height:14px;cursor:nwse-resize}
+.os-rs[data-dir="se"]{bottom:0;right:0;width:14px;height:14px;cursor:nwse-resize}
+.os-rs[data-dir="sw"]{bottom:0;left:0;width:14px;height:14px;cursor:nesw-resize}
+.dock-pill{display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:12px;background:rgba(30,30,36,.92);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.12);color:#e5e7eb;font-size:11px;font-weight:500;cursor:pointer;transition:transform .25s cubic-bezier(.16,1,.3,1),background .25s,border-color .25s}
+.dock-pill:hover{transform:scale(1.1) translateY(-2px);background:rgba(37,99,235,.25);border-color:rgba(37,99,235,.5)}
+.dock-pill i{color:#60a5fa}
 html{scroll-behavior:smooth}
 </style>
 </head>
@@ -76,6 +107,7 @@ html{scroll-behavior:smooth}
 <div class="hidden md:flex items-center space-x-10 text-[11px] font-medium tracking-[.2em] uppercase text-zinc-400">
 <a href="#servicios" class="nl hover:text-white transition-colors duration-300">Servicios</a>
 <a href="#proyectos" class="nl hover:text-white transition-colors duration-300">Proyectos</a>
+<a href="market.html" class="nl hover:text-white transition-colors duration-300">Market</a>
 <button id="btn-open-intranet" class="flex items-center gap-2.5 text-blue-400 hover:text-blue-300 transition-all duration-300 group">
 <span class="w-6 h-6 rounded-full border border-blue-500/30 flex items-center justify-center group-hover:border-blue-500/60 group-hover:bg-blue-500/10 transition-all duration-300"><i class="fa-solid fa-lock text-[10px]"></i></span>
 Portal Intranet
@@ -90,6 +122,7 @@ Portal Intranet
 <button id="mobile-menu-close" class="absolute top-6 right-6 text-zinc-400 hover:text-white"><i class="fa-solid fa-xmark text-2xl"></i></button>
 <a href="#servicios" class="text-2xl font-light text-white tracking-widest hover:text-blue-400 transition-colors mobile-link">Servicios</a>
 <a href="#proyectos" class="text-2xl font-light text-white tracking-widest hover:text-blue-400 transition-colors mobile-link">Proyectos</a>
+<a href="market.html" class="text-2xl font-light text-white tracking-widest hover:text-blue-400 transition-colors mobile-link">Market</a>
 <button id="btn-open-intranet-mobile" class="text-2xl font-light text-blue-400 tracking-widest hover:text-blue-300 transition-colors flex items-center gap-3"><i class="fa-solid fa-lock text-lg"></i> Portal Intranet</button>
 </div>
 
@@ -168,69 +201,69 @@ La tecnología no es el fin, es el <span class="tg">camino</span>. Construimos i
 </div>
 
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-<a href="https://estalingradocorp.qzz.io/" target="_blank" class="scard glass-card rounded-2xl p-10 group block relative reveal">
-<div class="ca absolute top-8 right-8 text-blue-400"><i class="fa-solid fa-up-right-from-square text-lg"></i></div>
-<div class="ci text-blue-500/60 mb-8"><div class="w-14 h-14 rounded-xl bg-blue-500/5 border border-blue-500/10 flex items-center justify-center"><i class="fa-solid fa-magnifying-glass text-2xl"></i></div></div>
-<h3 class="text-xl font-medium text-white mb-3 tracking-tight">Buscador Estalingrado</h3>
-<p class="text-zinc-400 font-light leading-relaxed text-sm">Motor de búsqueda principal de la corporación. Indexación y acceso de alta velocidad.</p>
-<div class="mt-6 flex items-center gap-2 text-[11px] text-blue-400/60 font-mono uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity duration-300"><span>Acceder</span><i class="fa-solid fa-arrow-right text-[8px]"></i></div>
-</a>
+<button id="btn-open-ia27" type="button" class="scard glass-card rounded-2xl p-10 group block relative reveal text-left w-full cursor-pointer">
+    <div class="ca absolute top-8 right-8 text-blue-400"><i class="fa-solid fa-plus text-lg"></i></div>
+    <div class="ci text-blue-500/60 mb-8"><img src="https://64.media.tumblr.com/42cb4f83b88bd360490ea56972eff037/4e3931f07c2eabb0-75/s540x810/6f760b340126d505697cb62d47d3a92faaa4262c.jpg" alt="IA 27 Logo" class="w-14 h-14 object-cover rounded-xl border border-blue-500/10 shadow-[0_0_20px_rgba(37,99,235,.25)]"/></div>
+    <h3 class="text-xl font-medium text-white mb-3 tracking-tight">IA 27</h3>
+    <p class="text-zinc-400 font-light leading-relaxed text-sm">Proyecto de IA local con el modelo Atenea Omega Beta. Descubre su historia y características.</p>
+    <div class="mt-6 flex items-center gap-2 text-[11px] text-blue-400/60 font-mono uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity duration-300"><span>Ver detalles</span><i class="fa-solid fa-arrow-right text-[8px]"></i></div>
+  </button>
 
-<a href="https://nicotips27.github.io/ECwebSend/" target="_blank" class="scard glass-card rounded-2xl p-10 group block relative reveal">
-<div class="ca absolute top-8 right-8 text-blue-400"><i class="fa-solid fa-up-right-from-square text-lg"></i></div>
-<div class="ci text-blue-500/60 mb-8"><div class="w-14 h-14 rounded-xl bg-blue-500/5 border border-blue-500/10 flex items-center justify-center"><i class="fa-regular fa-paper-plane text-2xl"></i></div></div>
+<button type="button" class="svc-open scard glass-card rounded-2xl p-10 group block relative reveal text-left w-full cursor-pointer" data-service="ecsend">
+<div class="ca absolute top-8 right-8 text-blue-400"><i class="fa-solid fa-plus text-lg"></i></div>
+<div class="ci text-blue-500/60 mb-8"><img src="https://64.media.tumblr.com/776cae41f78ae861c5f6374b25a8ffcf/d2c356c1dcc6e266-11/s540x810/c42f60d876229a4a21b3d3a880b9ce830ae2764d.pnj" alt="EC WebSend Logo" class="w-14 h-14 object-cover rounded-xl border border-blue-500/10 shadow-[0_0_20px_rgba(37,99,235,.25)]"/></div>
 <h3 class="text-xl font-medium text-white mb-3 tracking-tight">EC WebSend</h3>
 <p class="text-zinc-400 font-light leading-relaxed text-sm">Plataforma segura para la transferencia y envío de archivos corporativos.</p>
-<div class="mt-6 flex items-center gap-2 text-[11px] text-blue-400/60 font-mono uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity duration-300"><span>Acceder</span><i class="fa-solid fa-arrow-right text-[8px]"></i></div>
-</a>
+<div class="mt-6 flex items-center gap-2 text-[11px] text-blue-400/60 font-mono uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity duration-300"><span>Ver detalles</span><i class="fa-solid fa-arrow-right text-[8px]"></i></div>
+</button>
 
-<a href="https://nicotips27.github.io/ECnews/" target="_blank" class="scard glass-card rounded-2xl p-10 group block relative reveal">
-<div class="ca absolute top-8 right-8 text-blue-400"><i class="fa-solid fa-up-right-from-square text-lg"></i></div>
-<div class="ci text-blue-500/60 mb-8"><div class="w-14 h-14 rounded-xl bg-blue-500/5 border border-blue-500/10 flex items-center justify-center"><i class="fa-regular fa-newspaper text-2xl"></i></div></div>
+<button type="button" class="svc-open scard glass-card rounded-2xl p-10 group block relative reveal text-left w-full cursor-pointer" data-service="ecnews">
+<div class="ca absolute top-8 right-8 text-blue-400"><i class="fa-solid fa-plus text-lg"></i></div>
+<div class="ci text-blue-500/60 mb-8"><img src="https://64.media.tumblr.com/527332b08521675a2cf2ee6f30c96a68/c124e1e4e331179f-ec/s500x750/ac10b6fb2ded5c5b8d16c32099bb49e2904104fa.jpg" alt="EC News Logo" class="w-14 h-14 object-cover rounded-xl border border-blue-500/10 shadow-[0_0_20px_rgba(37,99,235,.25)]"/></div>
 <h3 class="text-xl font-medium text-white mb-3 tracking-tight">EC News</h3>
 <p class="text-zinc-400 font-light leading-relaxed text-sm">Portal oficial de noticias, comunicados y boletines informativos.</p>
-<div class="mt-6 flex items-center gap-2 text-[11px] text-blue-400/60 font-mono uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity duration-300"><span>Acceder</span><i class="fa-solid fa-arrow-right text-[8px]"></i></div>
-</a>
+<div class="mt-6 flex items-center gap-2 text-[11px] text-blue-400/60 font-mono uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity duration-300"><span>Ver detalles</span><i class="fa-solid fa-arrow-right text-[8px]"></i></div>
+</button>
 
-<a href="https://nicotips27.github.io/ec-download/" target="_blank" class="scard glass-card rounded-2xl p-10 group block relative reveal">
-<div class="ca absolute top-8 right-8 text-blue-400"><i class="fa-solid fa-up-right-from-square text-lg"></i></div>
-<div class="ci text-blue-500/60 mb-8"><div class="w-14 h-14 rounded-xl bg-blue-500/5 border border-blue-500/10 flex items-center justify-center"><i class="fa-solid fa-download text-2xl"></i></div></div>
+<button type="button" class="svc-open scard glass-card rounded-2xl p-10 group block relative reveal text-left w-full cursor-pointer" data-service="ecdownload">
+<div class="ca absolute top-8 right-8 text-blue-400"><i class="fa-solid fa-plus text-lg"></i></div>
+<div class="ci text-blue-500/60 mb-8"><img src="https://64.media.tumblr.com/5e77caddca38e2f1b3fa07d22df4635a/d28c11561400dc7c-d3/s1280x1920/3ffad9be2e1786129b597444e73f969e686c4e47.pnj" alt="EC Download Logo" class="w-14 h-14 object-cover rounded-xl border border-blue-500/10 shadow-[0_0_20px_rgba(37,99,235,.25)]"/></div>
 <h3 class="text-xl font-medium text-white mb-3 tracking-tight">EC Download</h3>
 <p class="text-zinc-400 font-light leading-relaxed text-sm">Centro de recursos y descargas de software de la corporación.</p>
-<div class="mt-6 flex items-center gap-2 text-[11px] text-blue-400/60 font-mono uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity duration-300"><span>Acceder</span><i class="fa-solid fa-arrow-right text-[8px]"></i></div>
-</a>
+<div class="mt-6 flex items-center gap-2 text-[11px] text-blue-400/60 font-mono uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity duration-300"><span>Ver detalles</span><i class="fa-solid fa-arrow-right text-[8px]"></i></div>
+</button>
 
-<a href="https://nicotips27.github.io/EC-OS/" target="_blank" class="scard glass-card rounded-2xl p-10 group block relative reveal">
-<div class="ca absolute top-8 right-8 text-blue-400"><i class="fa-solid fa-up-right-from-square text-lg"></i></div>
+<button type="button" class="svc-open scard glass-card rounded-2xl p-10 group block relative reveal text-left w-full cursor-pointer" data-service="ecos">
+<div class="ca absolute top-8 right-8 text-blue-400"><i class="fa-solid fa-plus text-lg"></i></div>
 <div class="ci text-blue-500/60 mb-8"><div class="w-14 h-14 rounded-xl bg-blue-500/5 border border-blue-500/10 flex items-center justify-center"><i class="fa-solid fa-desktop text-2xl"></i></div></div>
 <h3 class="text-xl font-medium text-white mb-3 tracking-tight">EC-OS</h3>
 <p class="text-zinc-400 font-light leading-relaxed text-sm">Entorno de sistema operativo webizado para operaciones unificadas.</p>
-<div class="mt-6 flex items-center gap-2 text-[11px] text-blue-400/60 font-mono uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity duration-300"><span>Acceder</span><i class="fa-solid fa-arrow-right text-[8px]"></i></div>
-</a>
+<div class="mt-6 flex items-center gap-2 text-[11px] text-blue-400/60 font-mono uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity duration-300"><span>Ver detalles</span><i class="fa-solid fa-arrow-right text-[8px]"></i></div>
+</button>
 
-<a href="https://nicotips27.github.io/ec-Intra-net/" target="_blank" class="scard glass-card rounded-2xl p-10 group block relative reveal">
-<div class="ca absolute top-8 right-8 text-blue-400"><i class="fa-solid fa-up-right-from-square text-lg"></i></div>
+<button type="button" class="svc-open scard glass-card rounded-2xl p-10 group block relative reveal text-left w-full cursor-pointer" data-service="bigdata">
+<div class="ca absolute top-8 right-8 text-blue-400"><i class="fa-solid fa-plus text-lg"></i></div>
 <div class="ci text-blue-500/60 mb-8"><div class="w-14 h-14 rounded-xl bg-blue-500/5 border border-blue-500/10 flex items-center justify-center"><i class="fa-solid fa-database text-2xl"></i></div></div>
 <h3 class="text-xl font-medium text-white mb-3 tracking-tight">Big Data <span class="text-zinc-600 text-sm font-normal">(Intranet)</span></h3>
 <p class="text-zinc-400 font-light leading-relaxed text-sm">Análisis, visualización y gestión de grandes volúmenes de datos.</p>
-<div class="mt-6 flex items-center gap-2 text-[11px] text-blue-400/60 font-mono uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity duration-300"><span>Acceder</span><i class="fa-solid fa-arrow-right text-[8px]"></i></div>
-</a>
+<div class="mt-6 flex items-center gap-2 text-[11px] text-blue-400/60 font-mono uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity duration-300"><span>Ver detalles</span><i class="fa-solid fa-arrow-right text-[8px]"></i></div>
+</button>
 
-  <a href="https://estalingradocorp.github.io/Intra-net/" target="_blank" class="scard glass-card rounded-2xl p-10 group block relative reveal md:col-span-2 lg:col-span-1">
-    <div class="ca absolute top-8 right-8 text-blue-400"><i class="fa-solid fa-up-right-from-square text-lg"></i></div>
+  <button type="button" class="svc-open scard glass-card rounded-2xl p-10 group block relative reveal md:col-span-2 lg:col-span-1 text-left w-full cursor-pointer" data-service="wiki">
+    <div class="ca absolute top-8 right-8 text-blue-400"><i class="fa-solid fa-plus text-lg"></i></div>
     <div class="ci text-blue-500/60 mb-8"><div class="w-14 h-14 rounded-xl bg-blue-500/5 border border-blue-500/10 flex items-center justify-center"><i class="fa-solid fa-box-archive text-2xl"></i></div></div>
     <h3 class="text-xl font-medium text-white mb-3 tracking-tight">Antigua Wiki</h3>
     <p class="text-zinc-400 font-light leading-relaxed text-sm">Archivo histórico, documentación legacy y registros de la primera Intranet.</p>
-    <div class="mt-6 flex items-center gap-2 text-[11px] text-blue-400/60 font-mono uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity duration-300"><span>Acceder</span><i class="fa-solid fa-arrow-right text-[8px]"></i></div>
-  </a>
+    <div class="mt-6 flex items-center gap-2 text-[11px] text-blue-400/60 font-mono uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity duration-300"><span>Ver detalles</span><i class="fa-solid fa-arrow-right text-[8px]"></i></div>
+  </button>
 
-  <a href="https://estalingradocorp.github.io/Intra-net/" target="_blank" class="scard glass-card rounded-2xl p-10 group block relative reveal md:col-span-2 lg:col-span-1">
-    <div class="ca absolute top-8 right-8 text-blue-400"><i class="fa-solid fa-up-right-from-square text-lg"></i></div>
-    <div class="ci text-blue-500/60 mb-8"><div class="w-14 h-14 rounded-xl bg-blue-500/5 border border-blue-500/10 flex items-center justify-center"><i class="fa-solid fa-box-archive text-2xl"></i></div></div>
-    <h3 class="text-xl font-medium text-white mb-3 tracking-tight">Antigua Wiki</h3>
-    <p class="text-zinc-400 font-light leading-relaxed text-sm">Archivo histórico, documentación legacy y registros de la primera Intranet.</p>
-    <div class="mt-6 flex items-center gap-2 text-[11px] text-blue-400/60 font-mono uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity duration-300"><span>Acceder</span><i class="fa-solid fa-arrow-right text-[8px]"></i></div>
-  </a>
+  <button type="button" class="svc-open scard glass-card rounded-2xl p-10 group block relative reveal md:col-span-2 lg:col-span-1 text-left w-full cursor-pointer" data-service="buscador">
+    <div class="ca absolute top-8 right-8 text-blue-400"><i class="fa-solid fa-plus text-lg"></i></div>
+    <div class="ci text-blue-500/60 mb-8"><div class="w-14 h-14 rounded-xl bg-blue-500/5 border border-blue-500/10 flex items-center justify-center"><i class="fa-solid fa-magnifying-glass text-2xl"></i></div></div>
+    <h3 class="text-xl font-medium text-white mb-3 tracking-tight">Buscador Estalingrado</h3>
+    <p class="text-zinc-400 font-light leading-relaxed text-sm">Motor de búsqueda principal de la corporación. Indexación y acceso de alta velocidad.</p>
+    <div class="mt-6 flex items-center gap-2 text-[11px] text-blue-400/60 font-mono uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity duration-300"><span>Ver detalles</span><i class="fa-solid fa-arrow-right text-[8px]"></i></div>
+  </button>
 </div>
 
 <div class="mt-20 text-center reveal">
@@ -385,6 +418,7 @@ En Corporación Estalingrado creemos que la tecnología debe ser invisible, pote
 <div class="flex items-center gap-6">
 <a href="#servicios" class="text-zinc-500 hover:text-white text-xs uppercase tracking-wider transition-colors">Servicios</a>
 <a href="#proyectos" class="text-zinc-500 hover:text-white text-xs uppercase tracking-wider transition-colors">Proyectos</a>
+<a href="market.html" class="text-zinc-500 hover:text-white text-xs uppercase tracking-wider transition-colors">Market</a>
 <button id="btn-open-intranet-footer" class="text-blue-500 hover:text-blue-400 text-xs uppercase tracking-wider transition-colors flex items-center gap-2"><i class="fa-solid fa-lock text-[10px]"></i> Intranet</button>
 </div>
 </div>
@@ -459,6 +493,177 @@ Conectar a Intranet <i class="fa-solid fa-chevron-right text-[10px] group-hover:
 </div>
 </div>
 
+<!-- IA27 MODAL -->
+<div id="ia27-modal" class="fixed inset-0 z-50 hidden">
+  <div class="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-500 opacity-0" id="ia27-backdrop"></div>
+  <div id="ia27-win" class="os-window hidden">
+    <div class="os-titlebar">
+      <div class="os-lights">
+        <span class="os-light red" title="Cerrar"></span>
+        <span class="os-light yellow" title="Minimizar"></span>
+        <span class="os-light green" title="Ampliar"></span>
+      </div>
+      <div class="os-tb-title"><img src="https://64.media.tumblr.com/42cb4f83b88bd360490ea56972eff037/4e3931f07c2eabb0-75/s540x810/6f760b340126d505697cb62d47d3a92faaa4262c.jpg" alt="IA 27"/>IA 27 — Atenea Omega · Estalingrado Corp</div>
+    </div>
+    <div class="os-body">
+      <div class="p-6 md:p-10">
+        <div class="flex flex-col md:flex-row md:items-center gap-6 mb-8">
+          <img src="https://64.media.tumblr.com/42cb4f83b88bd360490ea56972eff037/4e3931f07c2eabb0-75/s540x810/6f760b340126d505697cb62d47d3a92faaa4262c.jpg" alt="IA 27 Logo" class="w-16 h-16 object-cover rounded-xl border border-blue-500/20 flex-shrink-0 shadow-[0_0_30px_rgba(37,99,235,.25)]"/>
+          <div class="flex-1">
+            <h2 class="text-3xl font-light tracking-tight text-white mb-1">IA <span class="tg font-medium">27</span></h2>
+            <p class="text-zinc-500 text-xs font-mono tracking-[.25em] uppercase">IA Atenea Omega — Inteligencia Artificial Local</p>
+          </div>
+          <span class="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 self-start md:self-auto"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span><span class="text-emerald-300 text-xs font-medium">Operativo</span></span>
+        </div>
+
+        <div class="glow-line mb-8"></div>
+
+        <p class="text-zinc-300 font-light leading-relaxed mb-4">
+          <span class="text-blue-400 font-medium">IA27</span> es un proyecto de inteligencia artificial local desarrollado por Estalingrado Corp, orientado a ofrecer una experiencia de IA potente, privada y completamente ejecutada en el equipo del usuario.
+        </p>
+        <p class="text-zinc-500 font-light leading-relaxed text-sm mb-8">
+          Integra <span class="text-blue-400/80 font-medium">Atenea Omega Beta</span>, un modelo diseñado para tareas de comprensión, razonamiento y generación de texto, con el objetivo de aprovechar los recursos de la computadora sin depender de servicios externos en la nube.
+        </p>
+
+        <figure id="ia27-shot" class="rounded-xl overflow-hidden border border-white/10 bg-black mb-10 shadow-[0_20px_60px_-20px_rgba(37,99,235,.3)]">
+          <img src="https://64.media.tumblr.com/e1283cdce02cb0ea82bfc8c9b019eb79/965d26a4cbb855c1-d5/s2048x3072/b62f02f681569e3478d506b4bf607b5ca1f19cf2.pnj" alt="IA-27 — Estalingrado Corp" class="block mx-auto w-full max-h-[70vh] object-contain" onerror="this.closest('figure').style.display='none'"/>
+          <figcaption class="text-[11px] text-zinc-600 font-mono px-4 py-3 border-t border-white/5"><i class="fa-solid fa-terminal text-blue-500/40 mr-1.5"></i>IA-27 — Estalingrado Corp</figcaption>
+        </figure>
+
+        <div class="flex items-center gap-3 mb-5"><div class="w-6 h-px bg-blue-500"></div><span class="text-blue-400 font-mono text-[10px] tracking-[.25em] uppercase">Características principales</span></div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
+          <div class="glass-card rounded-xl p-5 flex items-start gap-4">
+            <i class="fa-solid fa-microchip text-blue-500/60 mt-1"></i>
+            <div><p class="text-white text-sm font-medium mb-1">IA 100% local</p><p class="text-zinc-500 text-xs font-light leading-relaxed">El procesamiento se realiza directamente en el equipo.</p></div>
+          </div>
+          <div class="glass-card rounded-xl p-5 flex items-start gap-4">
+            <i class="fa-solid fa-lock text-blue-500/60 mt-1"></i>
+            <div><p class="text-white text-sm font-medium mb-1">Privacidad</p><p class="text-zinc-500 text-xs font-light leading-relaxed">Los datos y conversaciones permanecen en la computadora del usuario.</p></div>
+          </div>
+          <div class="glass-card rounded-xl p-5 flex items-start gap-4">
+            <i class="fa-solid fa-brain text-blue-500/60 mt-1"></i>
+            <div><p class="text-white text-sm font-medium mb-1">Atenea Omega Beta</p><p class="text-zinc-500 text-xs font-light leading-relaxed">Modelo orientado a comprensión, razonamiento y generación de contenido.</p></div>
+          </div>
+          <div class="glass-card rounded-xl p-5 flex items-start gap-4">
+            <i class="fa-solid fa-window-maximize text-blue-500/60 mt-1"></i>
+            <div><p class="text-white text-sm font-medium mb-1">Interfaz moderna</p><p class="text-zinc-500 text-xs font-light leading-relaxed">Diseñada para ofrecer una experiencia rápida, sencilla y accesible.</p></div>
+          </div>
+          <div class="glass-card rounded-xl p-5 flex items-start gap-4">
+            <i class="fa-solid fa-cubes text-blue-500/60 mt-1"></i>
+            <div><p class="text-white text-sm font-medium mb-1">Compatibilidad</p><p class="text-zinc-500 text-xs font-light leading-relaxed">Preparada para trabajar con diferentes formatos de datos y comandos.</p></div>
+          </div>
+          <div class="glass-card rounded-xl p-5 flex items-start gap-4">
+            <i class="fa-solid fa-sliders text-blue-500/60 mt-1"></i>
+            <div><p class="text-white text-sm font-medium mb-1">Enfoque en autonomía</p><p class="text-zinc-500 text-xs font-light leading-relaxed">Busca brindar al usuario mayor control sobre su propia inteligencia artificial.</p></div>
+          </div>
+        </div>
+
+        <p class="text-zinc-400 font-light leading-relaxed text-sm mb-3">
+          El proyecto representa una apuesta por el desarrollo de IA local y soberana, llevando herramientas avanzadas de inteligencia artificial directamente a las computadoras personales.
+        </p>
+        <p class="tg font-serif italic text-lg md:text-xl mb-10">IA27 — Tu inteligencia. Tu privacidad. Tu control.</p>
+
+        <div class="flex items-center gap-3 mb-5"><div class="w-6 h-px bg-blue-500"></div><span class="text-blue-400 font-mono text-[10px] tracking-[.25em] uppercase">Archivo audiovisual</span></div>
+
+        <div class="relative w-full aspect-video rounded-xl overflow-hidden border border-white/10 bg-black mb-2 shadow-[0_20px_60px_-20px_rgba(37,99,235,.3)]">
+          <iframe src="https://player.vimeo.com/video/1220725535" title="Video explicativo — IA 27" class="absolute inset-0 w-full h-full" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <p class="text-[11px] text-zinc-600 font-mono mb-6"><i class="fa-solid fa-circle-info text-blue-500/40 mr-1.5"></i>Video explicativo — IA 27</p>
+
+        <div class="relative w-full aspect-video rounded-xl overflow-hidden border border-white/10 bg-black mb-2 shadow-[0_20px_60px_-20px_rgba(37,99,235,.3)]">
+          <iframe src="https://www.youtube.com/embed/9Uuhd8f4R9A" title="Video realizado hace 4 años — IA 27" class="absolute inset-0 w-full h-full" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <p class="text-[11px] text-zinc-600 font-mono mb-6"><i class="fa-solid fa-video text-blue-500/40 mr-1.5"></i>Video realizado hace 4 años</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
+          <div>
+            <div class="relative w-full aspect-video rounded-xl overflow-hidden border border-white/10 bg-black mb-2">
+              <iframe src="https://www.youtube.com/embed/sZfyJhMeEVk" title="Video de estrenamiento — 2007" class="absolute inset-0 w-full h-full" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <p class="text-[11px] text-zinc-600 font-mono"><i class="fa-solid fa-clapperboard text-blue-500/40 mr-1.5"></i>Video de estrenamiento — 2007</p>
+          </div>
+          <div>
+            <div class="relative w-full aspect-video rounded-xl overflow-hidden border border-white/10 bg-black mb-2">
+              <iframe src="https://www.youtube.com/embed/zDNjM8rclrA" title="Primer video hecho por ella — hace 8 años" class="absolute inset-0 w-full h-full" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <p class="text-[11px] text-zinc-600 font-mono"><i class="fa-solid fa-film text-blue-500/40 mr-1.5"></i>Primer video hecho por ella — hace 8 años</p>
+          </div>
+        </div>
+
+        <div class="relative w-full aspect-video rounded-xl overflow-hidden border border-white/10 bg-black mb-2 shadow-[0_20px_60px_-20px_rgba(37,99,235,.3)]">
+          <iframe src="https://player.vimeo.com/video/1216560105" title="Video — IA 27" class="absolute inset-0 w-full h-full" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <p class="text-[11px] text-zinc-600 font-mono"><i class="fa-solid fa-video text-blue-500/40 mr-1.5"></i>Video — IA 27</p>
+
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-6 border-t border-white/5">
+          <p class="text-[11px] text-zinc-600 font-mono"><i class="fa-solid fa-fingerprint text-blue-500/40 mr-1.5"></i>Desarrollado por Estalingrado Corp · PRJ-107</p>
+          <button id="btn-beta-ia27" type="button" class="bsh inline-flex items-center gap-3 bg-white text-black px-6 py-3 text-[11px] font-semibold tracking-[.2em] uppercase hover:bg-zinc-100 transition-all duration-300">
+            Descargar Beta <i class="fa-solid fa-download text-[9px]"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="os-rs" data-dir="n"></div>
+    <div class="os-rs" data-dir="s"></div>
+    <div class="os-rs" data-dir="e"></div>
+    <div class="os-rs" data-dir="w"></div>
+    <div class="os-rs" data-dir="ne"></div>
+    <div class="os-rs" data-dir="nw"></div>
+    <div class="os-rs" data-dir="se"></div>
+    <div class="os-rs" data-dir="sw"></div>
+  </div>
+</div>
+
+<!-- SERVICES MODAL -->
+<div id="svc-modal" class="fixed inset-0 z-50 hidden">
+  <div class="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-500 opacity-0" id="svc-backdrop"></div>
+  <div id="svc-win" class="os-window hidden">
+    <div class="os-titlebar">
+      <div class="os-lights">
+        <span class="os-light red" title="Cerrar"></span>
+        <span class="os-light yellow" title="Minimizar"></span>
+        <span class="os-light green" title="Ampliar"></span>
+      </div>
+      <div class="os-tb-title"><span class="tb-ico" id="svc-tb-ico"></span><span id="svc-tb-txt">Servicios · Estalingrado Corp</span></div>
+    </div>
+    <div class="os-body">
+      <div class="p-6 md:p-10">
+        <div class="flex flex-col md:flex-row md:items-center gap-6 mb-8">
+          <div id="svc-logo" class="flex-shrink-0"></div>
+          <div class="flex-1">
+            <h2 id="svc-title" class="text-3xl font-light tracking-tight text-white mb-1"></h2>
+            <p id="svc-tag" class="text-zinc-500 text-xs font-mono tracking-[.25em] uppercase"></p>
+          </div>
+          <span id="svc-badge" class="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-full self-start md:self-auto"></span>
+        </div>
+
+        <div class="glow-line mb-8"></div>
+
+        <p id="svc-desc" class="text-zinc-300 font-light leading-relaxed mb-10"></p>
+
+        <div class="flex items-center gap-3 mb-5"><div class="w-6 h-px bg-blue-500"></div><span class="text-blue-400 font-mono text-[10px] tracking-[.25em] uppercase">Características principales</span></div>
+        <div id="svc-feats" class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10"></div>
+
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-6 border-t border-white/5">
+          <p class="text-[11px] text-zinc-600 font-mono"><i class="fa-solid fa-fingerprint text-blue-500/40 mr-1.5"></i>Servicio oficial · Estalingrado Corp</p>
+          <a id="svc-cta" href="#" target="_blank" rel="noopener" class="bsh inline-flex items-center gap-3 bg-white text-black px-6 py-3 text-[11px] font-semibold tracking-[.2em] uppercase hover:bg-zinc-100 transition-all duration-300">Abrir servicio <i class="fa-solid fa-up-right-from-square text-[9px]"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="os-rs" data-dir="n"></div>
+    <div class="os-rs" data-dir="s"></div>
+    <div class="os-rs" data-dir="e"></div>
+    <div class="os-rs" data-dir="w"></div>
+    <div class="os-rs" data-dir="ne"></div>
+    <div class="os-rs" data-dir="nw"></div>
+    <div class="os-rs" data-dir="se"></div>
+    <div class="os-rs" data-dir="sw"></div>
+  </div>
+</div>
+
+<div id="os-dock" class="fixed bottom-4 left-1/2 -translate-x-1/2 z-[500] hidden items-center gap-2 px-3 py-2 rounded-2xl glass border border-white/10 shadow-2xl"></div>
+
 <script>
 document.getElementById('year').textContent=new Date().getFullYear();
 
@@ -503,6 +708,181 @@ document.getElementById('btn-open-intranet-footer').addEventListener('click',ope
 btnClose.addEventListener('click',closeModal);
 backdrop.addEventListener('click',closeModal);
 form.addEventListener('submit',(e)=>{e.preventDefault();alert('Conexión encriptada establecida. Credenciales enviadas.');closeModal();});
+
+// OS Window Manager (estilo macOS)
+const OS={z:300,wins:{}};
+function osLock(){
+  const any=Object.values(OS.wins).some(w=>!w.el.classList.contains('hidden'));
+  document.body.style.overflow=any?'hidden':'auto';
+}
+function osRegister(id,bId,cfg){
+  const win=document.getElementById(id);
+  const backdrop=document.getElementById(bId);
+  const layer=win.parentElement;
+  const w={el:win,backdrop,layer,min:false,max:false,prev:null,placed:false,dockBtn:null,cfg:cfg||{}};
+  OS.wins[id]=w;
+  win.addEventListener('mousedown',()=>win.style.zIndex=++OS.z);
+  const tb=win.querySelector('.os-titlebar');
+  tb.addEventListener('mousedown',e=>{
+    if(e.target.closest('.os-light')||w.max)return;
+    const r=win.getBoundingClientRect(),dx=e.clientX-r.left,dy=e.clientY-r.top;
+    const mv=ev=>{
+      win.style.left=Math.min(Math.max(72-r.width,ev.clientX-dx),innerWidth-72)+'px';
+      win.style.top=Math.min(Math.max(0,ev.clientY-dy),innerHeight-40)+'px';
+    };
+    const up=()=>{removeEventListener('mousemove',mv);removeEventListener('mouseup',up);document.body.style.userSelect='';};
+    addEventListener('mousemove',mv);addEventListener('mouseup',up);
+    document.body.style.userSelect='none';
+  });
+  tb.addEventListener('dblclick',e=>{if(!e.target.closest('.os-light'))osToggleMax(id);});
+  win.querySelectorAll('.os-rs').forEach(h=>h.addEventListener('mousedown',e=>{
+    if(w.max)return;
+    e.preventDefault();e.stopPropagation();
+    const dir=h.dataset.dir,r=win.getBoundingClientRect(),sx=e.clientX,sy=e.clientY;
+    const mv=ev=>{
+      const ddx=ev.clientX-sx,ddy=ev.clientY-sy;
+      let L=r.left,T=r.top,W=r.width,H=r.height;
+      if(dir.indexOf('e')>-1)W=Math.max(380,r.width+ddx);
+      if(dir.indexOf('s')>-1)H=Math.max(300,r.height+ddy);
+      if(dir.indexOf('w')>-1){W=Math.max(380,r.width-ddx);L=r.left+(r.width-W);}
+      if(dir.indexOf('n')>-1){H=Math.max(300,r.height-ddy);T=r.top+(r.height-H);}
+      win.style.left=L+'px';win.style.top=T+'px';win.style.width=W+'px';win.style.height=H+'px';
+    };
+    const up=()=>{removeEventListener('mousemove',mv);removeEventListener('mouseup',up);document.body.style.userSelect='';};
+    addEventListener('mousemove',mv);addEventListener('mouseup',up);
+    document.body.style.userSelect='none';
+  }));
+  win.querySelector('.os-light.red').addEventListener('click',()=>osClose(id));
+  win.querySelector('.os-light.yellow').addEventListener('click',()=>osMinimize(id));
+  win.querySelector('.os-light.green').addEventListener('click',()=>osToggleMax(id));
+  backdrop.addEventListener('mousedown',()=>osClose(id));
+  return w;
+}
+function osPlace(id){
+  const w=OS.wins[id],win=w.el;
+  const W=Math.min(940,innerWidth-24),H=Math.min(780,innerHeight-24);
+  const off=w.cfg.offset||0;
+  win.style.width=W+'px';win.style.height=H+'px';
+  win.style.left=Math.max(12,(innerWidth-W)/2+off)+'px';
+  win.style.top=Math.max(12,(innerHeight-H)/2+off)+'px';
+}
+function osOpen(id){
+  const w=OS.wins[id];
+  w.layer.classList.remove('hidden');
+  w.backdrop.classList.remove('hidden');
+  requestAnimationFrame(()=>requestAnimationFrame(()=>w.backdrop.style.opacity='1'));
+  if(!w.placed){osPlace(id);w.placed=true;}
+  w.el.classList.remove('hidden');
+  w.el.style.zIndex=++OS.z;
+  requestAnimationFrame(()=>requestAnimationFrame(()=>w.el.classList.add('open')));
+  const body=w.el.querySelector('.os-body');if(body)body.scrollTop=0;
+  osLock();
+}
+function osClose(id){
+  const w=OS.wins[id];
+  w.backdrop.style.opacity='0';
+  w.el.classList.remove('open');
+  setTimeout(()=>{w.backdrop.classList.add('hidden');w.el.classList.add('hidden');w.layer.classList.add('hidden');w.min=false;osLock();},380);
+}
+function osMinimize(id){
+  const w=OS.wins[id];if(w.min)return;
+  w.min=true;
+  w.el.classList.add('os-min');
+  setTimeout(()=>{w.el.classList.add('hidden');osDockAdd(id);},340);
+}
+function osRestore(id){
+  const w=OS.wins[id];
+  osDockRemove(id);
+  w.el.classList.remove('hidden');
+  requestAnimationFrame(()=>requestAnimationFrame(()=>w.el.classList.remove('os-min')));
+  w.el.style.zIndex=++OS.z;
+  osLock();
+}
+function osToggleMax(id){
+  const w=OS.wins[id],win=w.el;
+  if(w.max){
+    w.max=false;
+    Object.assign(win.style,w.prev);
+  }else{
+    w.max=true;
+    w.prev={left:win.style.left,top:win.style.top,width:win.style.width,height:win.style.height};
+    win.style.left='10px';win.style.top='10px';
+    win.style.width='calc(100vw - 20px)';win.style.height='calc(100vh - 20px)';
+  }
+}
+function osDockAdd(id){
+  const w=OS.wins[id],dock=document.getElementById('os-dock');
+  dock.classList.remove('hidden');dock.classList.add('flex');
+  const b=document.createElement('button');
+  b.className='dock-pill';
+  b.innerHTML=w.cfg.dock||'Ventana';
+  b.addEventListener('click',()=>osRestore(id));
+  dock.appendChild(b);
+  w.dockBtn=b;
+}
+function osDockRemove(id){
+  const w=OS.wins[id],dock=document.getElementById('os-dock');
+  if(w.dockBtn){w.dockBtn.remove();w.dockBtn=null;}
+  if(!dock.children.length){dock.classList.add('hidden');dock.classList.remove('flex');}
+}
+osRegister('ia27-win','ia27-backdrop',{dock:'<i class="fa-solid fa-robot"></i> IA 27'});
+osRegister('svc-win','svc-backdrop',{dock:'<i class="fa-solid fa-square-plus"></i> Servicio',offset:40});
+
+document.getElementById('btn-open-ia27').addEventListener('click',()=>osOpen('ia27-win'));
+document.getElementById('btn-beta-ia27').addEventListener('click',()=>{alert('Este equipo no está en la lista de Tests BETA. Comuníquese con el proveedor.');});
+
+// Services Modal
+const SVC_BADGES={
+ ok:'bg-emerald-500/10 border-emerald-500/20',
+ act:'bg-blue-500/10 border-blue-500/20',
+ dev:'bg-amber-500/10 border-amber-500/20',
+ arc:'bg-zinc-500/10 border-zinc-500/20'
+};
+const SVC_DOTS={ok:'bg-emerald-500',act:'bg-blue-500',dev:'bg-amber-500',arc:'bg-zinc-400'};
+const SVC_TXTS={ok:'text-emerald-300',act:'text-blue-300',dev:'text-amber-300',arc:'text-zinc-300'};
+const SVC={
+ ecsend:{title:'EC WebSend',tag:'Transferencia Segura de Archivos',logo:'https://64.media.tumblr.com/776cae41f78ae861c5f6374b25a8ffcf/d2c356c1dcc6e266-11/s540x810/c42f60d876229a4a21b3d3a880b9ce830ae2764d.pnj',st:['act','Activo'],desc:'Plataforma segura para la transferencia y envío de archivos corporativos. Diseñada para mover información entre equipos y divisiones sin exponer datos a terceros.',feats:[['fa-lock','Cifrado','Los archivos viajan protegidos de extremo a extremo.'],['fa-bolt','Alta velocidad','Transferencias optimizadas incluso con archivos pesados.'],['fa-globe','Desde el navegador','Sin instalaciones: funciona en cualquier equipo.'],['fa-clock-rotate-left','Historial','Registro de cada envío realizado.']],url:'https://nicotips27.github.io/ECwebSend/'},
+ ecnews:{title:'EC News',tag:'Portal de Noticias Corporativas',logo:'https://64.media.tumblr.com/527332b08521675a2cf2ee6f30c96a68/c124e1e4e331179f-ec/s500x750/ac10b6fb2ded5c5b8d16c32099bb49e2904104fa.jpg',st:['dev','En Proceso'],desc:'Portal oficial de noticias, comunicados y boletines informativos de la corporación. La fuente autorizada de todo lo que ocurre dentro de Estalingrado Corp.',feats:[['fa-bullhorn','Comunicados oficiales','Anuncios directamente de la dirección.'],['fa-newspaper','Boletines periódicos','Resúmenes de novedades y avances.'],['fa-box-archive','Archivo histórico','Todas las ediciones anteriores disponibles.'],['fa-pen-nib','Redacción propia','Contenido original de la división de prensa.']],url:'https://nicotips27.github.io/ECnews/'},
+ ecdownload:{title:'EC Download',tag:'Centro de Descargas Oficial',logo:'https://64.media.tumblr.com/5e77caddca38e2f1b3fa07d22df4635a/d28c11561400dc7c-d3/s1280x1920/3ffad9be2e1786129b597444e73f969e686c4e47.pnj',st:['act','Beta'],desc:'Centro de recursos y descargas de software de la corporación. Todos los instaladores oficiales, verificados y listos para instalar.',feats:[['fa-shield-halved','Software verificado','Cada archivo es revisado antes de publicarse.'],['fa-tags','Versiones claras','Estables y betas claramente identificadas.'],['fa-arrows-rotate','Actualizaciones','Nuevas versiones apenas salen del horno.'],['fa-gauge-high','Descarga rápida','Servidor optimizado para alta demanda.']],url:'https://nicotips27.github.io/ec-download/'},
+ ecos:{title:'EC-OS',tag:'Sistema Operativo Webizado',icon:'fa-desktop',st:['ok','Operativo'],desc:'Entorno de sistema operativo webizado para operaciones unificadas. Un escritorio completo dentro del navegador, conectado a todo el ecosistema.',feats:[['fa-window-maximize','Escritorio web','Ventanas, apps y barra de tareas en el navegador.'],['fa-puzzle-piece','Apps integradas','Acceso directo al ecosistema Estalingrado.'],['fa-user','Sesión personalizada','Tu espacio de trabajo siempre igual.'],['fa-laptop','Multiplataforma','Funciona en PC, tablet y celular.']],url:'https://nicotips27.github.io/EC-OS/'},
+ bigdata:{title:'Big Data',tag:'Intranet · Análisis de Datos',icon:'fa-database',st:['ok','Operativo'],desc:'Análisis, visualización y gestión de grandes volúmenes de datos. El centro nervioso de la información corporativa.',feats:[['fa-chart-line','Visualización','Paneles interactivos con métricas en vivo.'],['fa-database','Grandes volúmenes','Procesamiento de datos masivos sin fricción.'],['fa-file-export','Reportes','Exportación de análisis para cada división.'],['fa-magnifying-glass-chart','Exploración','Consulta y filtrado avanzado de datos.']],url:'https://nicotips27.github.io/ec-Intra-net/'},
+ wiki:{title:'Antigua Wiki',tag:'Archivo Histórico Corporativo',icon:'fa-box-archive',st:['arc','Archivo'],desc:'Archivo histórico, documentación legacy y registros de la primera Intranet de Estalingrado Corp. Preservamos dónde empezó todo.',feats:[['fa-box-archive','Documentación legacy','Las páginas originales de la primera Intranet.'],['fa-clock-rotate-left','Registros históricos','La evolución de la corporación documento a documento.'],['fa-book-open','Consulta libre','Disponible para lectura en cualquier momento.'],['fa-building-columns','Memoria institucional','La base sobre la que se construyó todo lo demás.']],url:'https://estalingradocorp.github.io/Intra-net/'},
+ buscador:{title:'Buscador Estalingrado',tag:'Motor de Búsqueda Principal',icon:'fa-magnifying-glass',st:['ok','Operativo'],desc:'Motor de búsqueda principal de la corporación. Indexación y acceso de alta velocidad a todo el ecosistema Estalingrado.',feats:[['fa-bolt','Alta velocidad','Resultados al instante, sin importar la consulta.'],['fa-layer-group','Indexación total','Todos los servicios de la corporación en un solo lugar.'],['fa-sliders','Búsqueda afinada','Filtros y operadores para resultados precisos.'],['fa-shield-halved','Privada','Sin rastreo: tus búsquedas son tuyas.']],url:'https://estalingradocorp.qzz.io/'}
+};
+const svcModal=document.getElementById('svc-modal');
+function openService(key){
+ const s=SVC[key];if(!s)return;
+ const logoEl=document.getElementById('svc-logo');
+ if(s.logo){logoEl.innerHTML='<img src="'+s.logo+'" alt="'+s.title+' Logo" class="w-16 h-16 object-cover rounded-xl border border-blue-500/20 shadow-[0_0_30px_rgba(37,99,235,.25)]"/>';}
+ else{logoEl.innerHTML='<div class="w-16 h-16 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center shadow-[0_0_30px_rgba(37,99,235,.15)]"><i class="fa-solid '+s.icon+' text-2xl text-blue-400"></i></div>';}
+ document.getElementById('svc-title').textContent=s.title;
+ document.getElementById('svc-tag').textContent=s.tag;
+ document.getElementById('svc-desc').textContent=s.desc;
+ const badge=document.getElementById('svc-badge');
+ badge.className='inline-flex items-center gap-2.5 px-3 py-1.5 rounded-full self-start md:self-auto border '+SVC_BADGES[s.st[0]];
+ badge.innerHTML='<span class="w-1.5 h-1.5 rounded-full '+SVC_DOTS[s.st[0]]+'"></span><span class="text-xs font-medium '+SVC_TXTS[s.st[0]]+'">'+s.st[1]+'</span>';
+ document.getElementById('svc-feats').innerHTML=s.feats.map(f=>'<div class="glass-card rounded-xl p-5 flex items-start gap-4"><i class="fa-solid '+f[0]+' text-blue-500/60 mt-1"></i><div><p class="text-white text-sm font-medium mb-1">'+f[1]+'</p><p class="text-zinc-500 text-xs font-light leading-relaxed">'+f[2]+'</p></div></div>').join('');
+ document.getElementById('svc-cta').href=s.url;
+ const tbIco=document.getElementById('svc-tb-ico');
+ if(s.logo){tbIco.innerHTML='<img src="'+s.logo+'" alt=""/>';}
+ else{tbIco.innerHTML='<i class="fa-solid '+s.icon+'"></i>';}
+ document.getElementById('svc-tb-txt').textContent=s.title+' · Estalingrado Corp';
+ osOpen('svc-win');
+}
+document.querySelectorAll('.svc-open').forEach(b=>b.addEventListener('click',()=>openService(b.dataset.service)));
+document.addEventListener('keydown',(e)=>{
+ if(e.key==='Escape'){
+  Object.keys(OS.wins).forEach(id=>{const w=OS.wins[id];if(!w.el.classList.contains('hidden')&&!w.min)osClose(id);});
+ }
+});
+addEventListener('resize',()=>{
+ Object.values(OS.wins).forEach(w=>{
+  if(w.max||w.el.classList.contains('hidden'))return;
+  const r=w.el.getBoundingClientRect();
+  if(r.left>innerWidth-72)w.el.style.left=Math.max(0,innerWidth-72)+'px';
+  if(r.top>innerHeight-40)w.el.style.top=Math.max(0,innerHeight-40)+'px';
+ });
+});
 
 // Mobile menu
 const mmenu=document.getElementById('mobile-menu');
