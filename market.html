@@ -11,6 +11,8 @@
 <style>
 ::selection{background:#2563eb;color:#fff}
 body{background:#000;color:#e5e7eb;font-family:'Inter',ui-sans-serif,system-ui,sans-serif;overflow-x:hidden}
+html{scroll-behavior:smooth}
+
 ::-webkit-scrollbar{width:6px}
 ::-webkit-scrollbar-track{background:#000}
 ::-webkit-scrollbar-thumb{background:#1e3a8a;border-radius:3px}
@@ -20,6 +22,8 @@ body{background:#000;color:#e5e7eb;font-family:'Inter',ui-sans-serif,system-ui,s
 .a-fu{opacity:0;animation:fadeInUp .8s cubic-bezier(.16,1,.3,1) forwards}
 .a-f{opacity:0;animation:fadeIn 1s ease-out forwards}
 .d1{animation-delay:.1s}.d2{animation-delay:.2s}.d3{animation-delay:.3s}.d4{animation-delay:.4s}.d5{animation-delay:.5s}
+@keyframes catIn{from{opacity:0;transform:translateY(24px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+.cat-in{animation:catIn .45s cubic-bezier(.16,1,.3,1) backwards}
 .reveal{opacity:0;transform:translateY(30px);transition:all .8s cubic-bezier(.16,1,.3,1)}
 .reveal.visible{opacity:1;transform:translateY(0)}
 .glass{background:rgba(0,0,0,.6);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
@@ -35,8 +39,6 @@ body{background:#000;color:#e5e7eb;font-family:'Inter',ui-sans-serif,system-ui,s
 .scard .ca{transform:translate(4px,-4px);opacity:0;transition:all .4s cubic-bezier(.16,1,.3,1)}
 .scard:hover .ca{transform:translate(0,0);opacity:1}
 .nl{position:relative}
-.nl::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:#2563eb;transition:width .3s ease}
-.nl:hover::after{width:100%}
 .bsh{position:relative;overflow:hidden}
 .bsh::after{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:linear-gradient(45deg,transparent 40%,rgba(255,255,255,.08) 50%,transparent 60%);transform:translateX(-100%) rotate(45deg);transition:transform .6s ease}
 .bsh:hover::after{transform:translateX(100%) rotate(45deg)}
@@ -81,10 +83,10 @@ body{background:#000;color:#e5e7eb;font-family:'Inter',ui-sans-serif,system-ui,s
 <!-- NAVBAR -->
 <nav class="fixed w-full top-0 z-50 glass border-b border-white/5">
 <div class="px-6 md:px-12 h-20 flex items-center justify-between max-w-[1400px] mx-auto">
-<a href="index.html" class="flex items-center gap-4 group">
+<a href="index.html" class="flex items-center gap-4">
 <div class="relative">
-<img src="https://64.media.tumblr.com/37c52c25279f877bd0bc2d538626c938/2f8407cc51b2210e-be/s540x810/c379bb3cd18325d6b075e62fd26ffe91f5093ee3.jpg" alt="Logo" class="h-10 w-10 object-cover rounded-full shadow-[0_0_20px_rgba(37,99,235,.3)] group-hover:shadow-[0_0_30px_rgba(37,99,235,.5)] transition-all duration-500"/>
-<div class="absolute inset-0 rounded-full border border-blue-500/30 group-hover:border-blue-500/60 transition-all duration-500 scale-110"></div>
+<img src="https://64.media.tumblr.com/37c52c25279f877bd0bc2d538626c938/2f8407cc51b2210e-be/s540x810/c379bb3cd18325d6b075e62fd26ffe91f5093ee3.jpg" alt="Logo" class="h-10 w-10 object-cover rounded-full shadow-[0_0_20px_rgba(37,99,235,.3)]"/>
+<div class="absolute inset-0 rounded-full border border-blue-500/30 scale-110"></div>
 </div>
 <div class="flex flex-col">
 <span class="text-white font-semibold text-sm tracking-[.25em] uppercase">Estalingrado</span>
@@ -92,13 +94,11 @@ body{background:#000;color:#e5e7eb;font-family:'Inter',ui-sans-serif,system-ui,s
 </div>
 </a>
 <div class="hidden md:flex items-center space-x-10 text-[11px] font-medium tracking-[.2em] uppercase text-zinc-400">
-<a href="index.html" class="nl hover:text-white transition-colors duration-300">Inicio</a>
-<a href="index.html#servicios" class="nl hover:text-white transition-colors duration-300">Servicios</a>
-<a href="index.html#proyectos" class="nl hover:text-white transition-colors duration-300">Proyectos</a>
-<a href="empresa.html" class="nl hover:text-white transition-colors duration-300">Empresa</a>
+<a href="index.html" class="nl hover:text-white">Inicio</a>
 <a href="market.html" class="nl text-blue-400">Market</a>
+<a href="empresa.html" class="nl hover:text-white">Empresa</a>
 </div>
-<button class="md:hidden text-zinc-400 hover:text-white transition-colors" id="mobile-menu-btn"><i class="fa-solid fa-bars text-xl"></i></button>
+<button class="md:hidden text-zinc-400 hover:text-white" id="mobile-menu-btn"><i class="fa-solid fa-bars text-xl"></i></button>
 </div>
 </nav>
 
@@ -106,15 +106,15 @@ body{background:#000;color:#e5e7eb;font-family:'Inter',ui-sans-serif,system-ui,s
 <div id="mobile-menu" class="fixed inset-0 z-40 bg-black/95 backdrop-blur-xl hidden flex-col items-center justify-center gap-8">
 <button id="mobile-menu-close" class="absolute top-6 right-6 text-zinc-400 hover:text-white"><i class="fa-solid fa-xmark text-2xl"></i></button>
 <a href="index.html" class="text-2xl font-light text-white tracking-widest hover:text-blue-400 transition-colors mobile-link">Inicio</a>
-<a href="index.html#servicios" class="text-2xl font-light text-white tracking-widest hover:text-blue-400 transition-colors mobile-link">Servicios</a>
-<a href="index.html#proyectos" class="text-2xl font-light text-white tracking-widest hover:text-blue-400 transition-colors mobile-link">Proyectos</a>
-<a href="empresa.html" class="text-2xl font-light text-white tracking-widest hover:text-blue-400 transition-colors mobile-link">Empresa</a>
 <a href="market.html" class="text-2xl font-light text-blue-400 tracking-widest mobile-link">Market</a>
+<a href="empresa.html" class="text-2xl font-light text-white tracking-widest hover:text-blue-400 transition-colors mobile-link">Empresa</a>
 </div>
 
 <!-- HERO -->
 <section class="relative pt-36 md:pt-40 pb-16 px-6 md:px-12 overflow-hidden">
-<div class="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(37,99,235,.12),transparent)]"></div>
+<div class="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(37,99,235,.18),transparent)]"></div>
+<div class="absolute inset-0" style="background:url('https://64.media.tumblr.com/37c52c25279f877bd0bc2d538626c938/2f8407cc51b2210e-be/s540x810/c379bb3cd18325d6b075e62fd26ffe91f5093ee3.jpg') center/600px no-repeat;opacity:.04;filter:blur(40px)"></div>
+<div class="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0)_0%,rgba(0,0,0,.6)_100%)]"></div>
 <div class="max-w-[1400px] mx-auto relative z-10">
 <div class="max-w-4xl">
 <div class="a-fu mb-8 inline-flex items-center justify-center gap-2.5 px-4 py-2 rounded-full border border-blue-500/20 bg-blue-500/5">
@@ -151,10 +151,10 @@ Software y productos de la corporación. Hacé clic en un producto para abrirlo 
 
 <!-- Producto 1 -->
 <button type="button" class="scard glass-card rounded-2xl overflow-hidden group reveal text-left cursor-pointer prod-open" data-product="ecospro" data-type="digital">
-<div class="aspect-[4/3] bg-zinc-900/50 flex items-center justify-center relative overflow-hidden">
-<div class="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-transparent"></div>
-<i class="ci fa-solid fa-desktop text-5xl text-blue-500/30 group-hover:text-blue-500/50 transition-colors duration-500 relative z-10"></i>
-<span class="absolute top-4 left-4 text-[10px] font-mono text-blue-400/60 tracking-[.2em] uppercase">PRD-001</span>
+<div class="aspect-[4/3] bg-zinc-900/50 relative overflow-hidden">
+<img src="https://64.media.tumblr.com/cdc0b2522145ff9be512d2c2e3e37df1/44180efb3630df79-14/s640x960/c2545953229e83683132287461267ad0af793196.pnj" alt="EC-OS Pro License" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+<span class="absolute top-4 left-4 text-[10px] font-mono text-blue-400/60 tracking-[.2em] uppercase bg-black/60 px-2 py-1 rounded-full border border-white/10">PRD-001</span>
 </div>
 <div class="p-6">
 <div class="flex items-center gap-2 mb-3">
@@ -210,20 +210,20 @@ Software y productos de la corporación. Hacé clic en un producto para abrirlo 
 </button>
 
 <!-- Producto 4 -->
-<button type="button" class="scard glass-card rounded-2xl overflow-hidden group reveal text-left cursor-pointer prod-open" data-product="stickers" data-type="fisico">
-<div class="aspect-[4/3] bg-zinc-900/50 flex items-center justify-center relative overflow-hidden">
-<div class="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-transparent"></div>
-<i class="ci fa-solid fa-star text-5xl text-amber-500/30 group-hover:text-amber-500/50 transition-colors duration-500 relative z-10"></i>
-<span class="absolute top-4 left-4 text-[10px] font-mono text-amber-400/60 tracking-[.2em] uppercase">PRD-004</span>
+<button type="button" class="scard glass-card rounded-2xl overflow-hidden group reveal text-left cursor-pointer prod-open" data-product="centinela" data-type="fisico">
+<div class="aspect-[4/3] bg-zinc-900/50 relative overflow-hidden">
+<img src="https://64.media.tumblr.com/2b05c131be5a70f74a398c04885d40ac/83c7bf6126b76b6d-de/s640x960/f5260efc3a865f94ba8af50c55d46d420a20628e.pnj" alt="C-01 CENTINELA" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+<span class="absolute top-4 left-4 text-[10px] font-mono text-purple-300/90 tracking-[.2em] uppercase bg-black/60 px-2 py-1 rounded-full border border-white/10">PRD-004</span>
 </div>
 <div class="p-6">
 <div class="flex items-center gap-2 mb-3">
 <span class="px-2.5 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-[10px] font-medium">Físico</span>
 </div>
-<h3 class="text-lg font-medium text-white mb-2 tracking-tight">Sticker Pack</h3>
-<p class="text-zinc-400 font-light text-sm leading-relaxed mb-4">Pack de stickers oficiales de la corporación.</p>
+<h3 class="text-lg font-medium text-white mb-2 tracking-tight">C-01 «CENTINELA»</h3>
+<p class="text-zinc-400 font-light text-sm leading-relaxed mb-4">Plataforma aérea autónoma con IA 100% local y modelo Atenea Omega.</p>
 <div class="flex items-center justify-between pt-4 border-t border-white/5">
-<span class="text-blue-400 font-mono text-lg font-medium">$2.000</span>
+<span class="text-blue-400 font-mono text-lg font-medium">A consultar</span>
 <span class="text-[10px] text-blue-400/60 font-mono uppercase tracking-wider">Ver detalles</span>
 </div>
 </div>
@@ -252,10 +252,11 @@ Software y productos de la corporación. Hacé clic en un producto para abrirlo 
 
 <!-- Producto 6 -->
 <button type="button" class="scard glass-card rounded-2xl overflow-hidden group reveal text-left cursor-pointer prod-open" data-product="ia27" data-type="digital">
-<div class="aspect-[4/3] bg-zinc-900/50 flex items-center justify-center relative overflow-hidden">
-<div class="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-transparent"></div>
-<i class="ci fa-solid fa-robot text-5xl text-cyan-500/30 group-hover:text-cyan-500/50 transition-colors duration-500 relative z-10"></i>
-<span class="absolute top-4 left-4 text-[10px] font-mono text-cyan-400/60 tracking-[.2em] uppercase">PRD-005</span>
+<div class="aspect-[4/3] bg-zinc-900/50 relative overflow-hidden">
+<img src="https://64.media.tumblr.com/42cb4f83b88bd360490ea56972eff037/4e3931f07c2eabb0-75/s640x960/f9129ef47ad14c206a425227d49ca2fae0cc44af.jpg" alt="Acceso IA 27 Beta" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+<span class="absolute top-4 left-4 text-[10px] font-mono text-cyan-400/60 tracking-[.2em] uppercase bg-black/60 px-2 py-1 rounded-full border border-white/10">PRD-005</span>
+<span class="absolute top-4 right-4 px-2.5 py-1 rounded-full bg-amber-400/90 text-black text-[10px] font-semibold">Próximamente</span>
 </div>
 <div class="p-6">
 <div class="flex items-center gap-2 mb-3">
@@ -264,7 +265,7 @@ Software y productos de la corporación. Hacé clic en un producto para abrirlo 
 <h3 class="text-lg font-medium text-white mb-2 tracking-tight">Acceso IA 27 Beta</h3>
 <p class="text-zinc-400 font-light text-sm leading-relaxed mb-4">Acceso anticipado al agente con Atenea Omega Beta.</p>
 <div class="flex items-center justify-between pt-4 border-t border-white/5">
-<span class="text-emerald-400 font-mono text-lg font-medium">Gratis</span>
+<span class="text-amber-400 font-mono text-lg font-medium">Próximamente</span>
 <span class="text-[10px] text-blue-400/60 font-mono uppercase tracking-wider">Ver detalles</span>
 </div>
 </div>
@@ -303,19 +304,6 @@ Software y productos de la corporación. Hacé clic en un producto para abrirlo 
 <!-- FOOTER -->
 <footer class="border-t border-white/5 py-16 px-6 md:px-12 relative">
 <div class="max-w-[1400px] mx-auto">
-<div class="flex flex-col md:flex-row justify-between items-center gap-8 mb-12">
-<div class="flex items-center gap-4">
-<img src="https://64.media.tumblr.com/37c52c25279f877bd0bc2d538626c938/2f8407cc51b2210e-be/s540x810/c379bb3cd18325d6b075e62fd26ffe91f5093ee3.jpg" alt="Logo" class="h-8 w-8 object-cover rounded-full opacity-60"/>
-<div><span class="text-white text-sm tracking-[.2em] uppercase font-medium">Estalingrado</span><span class="text-zinc-600 text-xs ml-2">Corp.</span></div>
-</div>
-<div class="flex items-center gap-6">
-<a href="index.html" class="text-zinc-500 hover:text-white text-xs uppercase tracking-wider transition-colors">Inicio</a>
-<a href="index.html#servicios" class="text-zinc-500 hover:text-white text-xs uppercase tracking-wider transition-colors">Servicios</a>
-<a href="index.html#proyectos" class="text-zinc-500 hover:text-white text-xs uppercase tracking-wider transition-colors">Proyectos</a>
-<a href="empresa.html" class="text-zinc-500 hover:text-white text-xs uppercase tracking-wider transition-colors">Empresa</a>
-<a href="market.html" class="text-blue-500 text-xs uppercase tracking-wider">Market</a>
-</div>
-</div>
 <div class="glow-line mb-8"></div>
 <div class="flex flex-col md:flex-row justify-between items-center gap-6">
 <div class="text-zinc-600 text-[11px] uppercase tracking-[.2em] text-center md:text-left">Estalingrado Corp. © <span id="year"></span></div>
@@ -371,6 +359,13 @@ Software y productos de la corporación. Hacé clic en un producto para abrirlo 
         <div class="flex items-center gap-3 mb-5"><div class="w-6 h-px bg-blue-500"></div><span class="text-blue-400 font-mono text-[10px] tracking-[.25em] uppercase">Características</span></div>
         <div id="prod-feats" class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10"></div>
 
+        <div id="prod-video-wrap" class="hidden mb-10">
+          <div class="flex items-center gap-3 mb-5"><div class="w-6 h-px bg-blue-500"></div><span class="text-blue-400 font-mono text-[10px] tracking-[.25em] uppercase">Detalles</span></div>
+          <div class="relative aspect-video rounded-2xl overflow-hidden border border-white/10 bg-black">
+            <iframe id="prod-video" src="" title="Detalle del producto" class="absolute inset-0 w-full h-full" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+
         <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-6 border-t border-white/5">
           <p class="text-[11px] text-zinc-600 font-mono"><i class="fa-solid fa-fingerprint text-blue-500/40 mr-1.5"></i>Producto oficial · Estalingrado Corp</p>
           <a id="prod-buy" href="#" target="_blank" rel="noopener" class="wsp-btn inline-flex items-center gap-2.5 px-6 py-3 rounded-full text-xs font-semibold">
@@ -400,6 +395,18 @@ const revealEls=document.querySelectorAll('.reveal');
 const revObs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:.1,rootMargin:'0px 0px -50px 0px'});
 revealEls.forEach(el=>revObs.observe(el));
 
+// Orden aleatorio de productos
+(function(){
+  const cat=document.getElementById('catalog');
+  if(!cat)return;
+  const cards=Array.from(cat.querySelectorAll('.scard'));
+  for(let i=cards.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    const a=cards[i],b=cards[j];
+    cat.insertBefore(a,b);
+  }
+})();
+
 // Filtros
 const filterBtns=document.querySelectorAll('.filter-btn');
 const products=document.querySelectorAll('#catalog .scard');
@@ -415,16 +422,24 @@ if(f==='all'||p.dataset.type===f){p.style.display='';vis++;}
 else{p.style.display='none';}
 });
 noResults.classList.toggle('hidden',vis>0);
+// Transición entre categorías
+let i=0;
+const total=vis;
+products.forEach(p=>{
+  if(p.style.display===''){p.classList.remove('cat-in');void p.offsetWidth;p.style.animation='none';void p.offsetWidth;p.style.animation='';p.classList.add('cat-in');p.style.animationDelay=((i*0.06)+0.05)+'s';i++;}
+  else{p.classList.remove('cat-in');p.style.animationDelay='';}
+});
+setTimeout(()=>{products.forEach(p=>{p.style.animation='';p.style.animationDelay='';});},total*60+550);
 });
 });
 
 // PRODUCTOS
 const PRODUCTS={
- ecospro:{title:'EC-OS Pro License',tag:'Sistema Operativo Webizado · Licencia Premium',icon:'fa-desktop',tone:'#60a5fa',type:['digital','Digital'],sku:'PRD-001',price:'$5.000',label:'pago único',desc:'Licencia premium del sistema operativo webizado de la corporación. Acceso ilimitado a todas las aplicaciones, actualizaciones de por vida y soporte prioritario.',feats:[['fa-window-maximize','Acceso ilimitado','Todas las aplicaciones del ecosistema incluídas.'],['fa-arrows-rotate','Actualizaciones','Mejoras de por vida sin costos adicionales.'],['fa-headset','Soporte prioritario','Asistencia directa de la división técnica.'],['fa-user-check','Multi-dispositivo','Instalación en todos tus equipos.']],buy:'https://wa.me/TU-NUMERO?text=Hola%2C%20me%20interesa%20EC-OS%20Pro%20License%20de%20Estalingrado%20Corp'},
+ ecospro:{title:'EC-OS Pro License',tag:'Sistema Operativo Webizado · Licencia Premium',icon:'fa-desktop',tone:'#60a5fa',type:['digital','Digital'],sku:'PRD-001',price:'$5.000',label:'pago único',desc:'Licencia premium del sistema operativo webizado de la corporación. Acceso ilimitado a todas las aplicaciones, actualizaciones de por vida y soporte prioritario.',feats:[['fa-window-maximize','Acceso ilimitado','Todas las aplicaciones del ecosistema incluídas.'],['fa-arrows-rotate','Actualizaciones','Mejoras de por vida sin costos adicionales.'],['fa-headset','Soporte prioritario','Asistencia directa de la división técnica.'],['fa-user-check','Multi-dispositivo','Instalación en todos tus equipos.']],buy:'https://wa.me/TU-NUMERO?text=Hola%2C%20me%20interesa%20EC-OS%20Pro%20License%20de%20Estalingrado%20Corp',imgs:['https://64.media.tumblr.com/cdc0b2522145ff9be512d2c2e3e37df1/44180efb3630df79-14/s640x960/c2545953229e83683132287461267ad0af793196.pnj']},
  desarrollador:{title:'Pack Desarrollador',tag:'Herramientas de Desarrollo Integradas',icon:'fa-code',tone:'#34d399',type:['digital','Digital'],sku:'PRD-002',price:'$3.500',label:'pago único',desc:'Suite de herramientas para desarrolladores: terminal integrada, editor de código, aplicaciones de linting y acceso a las APIs corporativas documentadas.',feats:[['fa-terminal','Terminal integrada','Consola completa dentro del ecosistema.'],['fa-code','Editor avanzado','Con soporte para los lenguajes del stack.'],['fa-plug','Acceso APIs','Documentación y niveles de acceso.'],['fa-layer-group','Múltiples lenguajes','JS, Python, Go y más.']],buy:'https://wa.me/TU-NUMERO?text=Hola%2C%20me%20interesa%20Pack%20Desarrollador%20de%20Estalingrado%20Corp'},
  camiseta:{title:'Camiseta Estalingrado',tag:'Remera Oficial EC · Merchandising',icon:'fa-shirt',tone:'#a78bfa',type:['fisico','Físico'],sku:'PRD-003',price:'$8.000',label:'envío a todo el país',desc:'Representá la identidad de Estalingrado Corp con nuestra remera oficial EC. Un diseño minimalista y moderno, confeccionado en color negro y con el icónico logo EC en blanco sobre el pecho.',feats:[['fa-shirt','Color: negro','🖤 Confeccionada en color negro.'],['fa-star','Logo oficial EC','⚪ Logo EC en blanco sobre el pecho.'],['fa-palette','Diseño moderno','👕 Minimalista, cómodo y versátil.'],['fa-building-columns','Producto oficial','🏢 Tecnología, identidad y futuro.']],buy:'https://wa.me/TU-NUMERO?text=Hola%2C%20me%20interesa%20Camiseta%20Estalingrado%20de%20Estalingrado%20Corp',imgs:['https://64.media.tumblr.com/ec98e900d6eb4ab197c3e2338a38ce2c/57f65f68dfcb861e-a3/s1280x1920/fb9d81960acf51d1075b4a4b38a031ef36d77b9d.pnj']},
- stickers:{title:'Sticker Pack',tag:'Merchandising · Diseños Originales',icon:'fa-star',tone:'#fbbf24',type:['fisico','Físico'],sku:'PRD-004',price:'$2.000',label:'envío a todo el país',desc:'Pack de stickers oficiales de la corporación. Diseños originales en vinilo resistente, perfectos para laptops, equipos y espacios de trabajo.',feats:[['fa-pen-fancy','Diseños originales','Ilustraciones exclusivas de la marca.'],['fa-shield-halved','Vinilo resistente','Aguanta agua y rayones.'],['fa-th-large','20 unidades','Combinados entre varios diseños.'],['fa-truck-fast','Envíos','A todo el país.']],buy:'https://wa.me/TU-NUMERO?text=Hola%2C%20me%20interesa%20Sticker%20Pack%20de%20Estalingrado%20Corp'},
- ia27:{title:'Acceso IA 27 Beta',tag:'Inteligencia Artificial Local · Beta',icon:'fa-robot',tone:'#22d3ee',type:['digital','Digital'],sku:'PRD-005',price:'Gratis',label:'acceso anticipado',desc:'Acceso anticipado a la versión beta del agente IA 27 con el modelo Atenea Omega. Inteligencia artificial 100% local, privada y en tu equipo.',feats:[['fa-microchip','100% local','Todo el procesamiento en tu equipo.'],['fa-lock','Privado','Tus datos nunca salen de tu computadora.'],['fa-brain','Atenea Omega','Modelo de comprensión y razonamiento.'],['fa-rocket','Beta abierta','Sé de los primeros en probarla.']],buy:'https://wa.me/TU-NUMERO?text=Hola%2C%20quiero%20acceso%20a%20IA%2027%20Beta%20de%20Estalingrado%20Corp'},
+ centinela:{title:'C-01 «CENTINELA»',tag:'Plataforma Aérea Autónoma · IA Local',icon:'fa-robot',tone:'#a78bfa',type:['fisico','Físico'],sku:'PRD-004',price:'A consultar',label:'contacto comercial',desc:'El C-01 CENTINELA es una plataforma aérea autónoma desarrollada por Estalingrado Corp, diseñada para operar mediante procesamiento de inteligencia artificial 100% local. Integra una variante especializada del modelo Atenea Omega, optimizada para tareas de percepción, análisis del entorno, planificación de navegación y toma de decisiones en tiempo real. La gestión integral del sistema se realiza mediante Centinela, el software propietario de Estalingrado Corp, que proporciona la interfaz de configuración, supervisión y coordinación entre el sistema de vuelo y el módulo de IA. Arquitectura: IA local · Procesamiento en el dispositivo · Navegación autónoma · Control mediante software Centinela · Modelo Atenea Omega.',feats:[['fa-microchip','IA 100% local','Procesamiento totalmente en el dispositivo.'],['fa-brain','Atenea Omega','Variante optimizada para percepción y decisión en tiempo real.'],['fa-route','Navegación autónoma','Planificación de trayectorias y análisis del entorno.'],['fa-gamepad','Software Centinela','Configuración y supervisión integral con software propietario.']],buy:'https://wa.me/TU-NUMERO?text=Hola%2C%20me%20interesa%20el%20C-01%20CENTINELA%20de%20Estalingrado%20Corp',imgs:['https://64.media.tumblr.com/2b05c131be5a70f74a398c04885d40ac/83c7bf6126b76b6d-de/s640x960/f5260efc3a865f94ba8af50c55d46d420a20628e.pnj']},
+ ia27:{title:'Acceso IA 27 Beta',tag:'Inteligencia Artificial Local · Beta',icon:'fa-robot',tone:'#22d3ee',type:['digital','Digital'],sku:'PRD-005',price:'Próximamente',label:'acceso anticipado',coming:true,desc:'Acceso anticipado a la versión beta del agente IA 27 con el modelo Atenea Omega. Inteligencia artificial 100% local, privada y en tu equipo.',feats:[['fa-microchip','100% local','Todo el procesamiento en tu equipo.'],['fa-lock','Privado','Tus datos nunca salen de tu computadora.'],['fa-brain','Atenea Omega','Modelo de comprensión y razonamiento.'],['fa-rocket','Beta abierta','Sé de los primeros en probarla.']],buy:'',imgs:['https://64.media.tumblr.com/42cb4f83b88bd360490ea56972eff037/4e3931f07c2eabb0-75/s640x960/f9129ef47ad14c206a425227d49ca2fae0cc44af.jpg'],video:'https://player.vimeo.com/video/1216560105'},
  tools:{title:'Pack EC Tools',tag:'Suite de Herramientas Corporativas',icon:'fa-toolbox',tone:'#fb7185',type:['digital','Digital'],sku:'PRD-006',price:'$6.000',label:'pago único',desc:'Suite completa de herramientas de la corporación: EC WebSend, EC Download y utilidades de transferencia y gestión unificadas en un solo pack.',feats:[['fa-paper-plane','EC WebSend','Transferencia segura incluída.'],['fa-download','EC Download','Centro de recursos integrado.'],['fa-lock','Cifrado','Toda la suite protegida de extremo a extremo.'],['fa-box-open','Todo en uno','Una licencia, todas las herramientas.']],buy:'https://wa.me/TU-NUMERO?text=Hola%2C%20me%20interesa%20Pack%20EC%20Tools%20de%20Estalingrado%20Corp'},
  ia27fisico:{title:'IA 27 — Atenea Omega',tag:'IA Local · Edición Física',icon:'fa-robot',tone:'#a78bfa',type:['fisico','Físico'],sku:'PRD-007',price:'A confirmar',label:'precio próximamente',coming:true,desc:'IA 27 — Atenea Omega 🤖🇦🇷 La nueva IA local de Estalingrado Corp, diseñada para ofrecer inteligencia artificial avanzada directamente en tu equipo, sin depender de la nube. Un modelo potente, privado y desarrollado en Argentina.',feats:[['fa-robot','IA 100% local','Toda la potencia de Atenea Omega en tu equipo.'],['fa-flag','Hecha en Argentina','Desarrollada y producida en el país. 🤖🇦🇷'],['fa-lock','Privacidad total','Sin depender de servicios externos en la nube.'],['fa-gift','Edición física','Formato coleccionista exclusivo.']],buy:'',imgs:['https://64.media.tumblr.com/74f37b3987410a0fa12e5eb32209c60a/74a07994a91cfcfd-2d/s540x810/9ba16f8485bc17e90fe7ba0152e7bd0b27e5c75a.jpg','https://64.media.tumblr.com/e1283cdce02cb0ea82bfc8c9b019eb79/965d26a4cbb855c1-d5/s540x810/fc5455be39f9ee47b38895a68f9669a0c9f30865.pnj']}
 };
@@ -502,6 +517,7 @@ function osClose(id){
   const w=OS.wins[id];
   w.backdrop.style.opacity='0';
   w.el.classList.remove('open');
+  const vf=w.el.querySelector('#prod-video');if(vf){vf.src='';}
   setTimeout(()=>{w.backdrop.classList.add('hidden');w.el.classList.add('hidden');w.layer.classList.add('hidden');w.min=false;osLock();},380);
 }
 function osMinimize(id){
@@ -592,6 +608,14 @@ function openProduct(key){
   document.getElementById('prod-price').textContent=p.price;
   document.getElementById('prod-price-label').textContent=p.label;
   document.getElementById('prod-feats').innerHTML=p.feats.map(f=>'<div class="glass-card rounded-xl p-5 flex items-start gap-4"><i class="fa-solid '+f[0]+' text-blue-500/60 mt-1"></i><div><p class="text-white text-sm font-medium mb-1">'+f[1]+'</p><p class="text-zinc-500 text-xs font-light leading-relaxed">'+f[2]+'</p></div></div>').join('');
+  const vw=document.getElementById('prod-video-wrap'),vf=document.getElementById('prod-video');
+  if(p.video){
+    vf.src=p.video;
+    vw.classList.remove('hidden');
+  }else{
+    vf.src='';
+    vw.classList.add('hidden');
+  }
   const buy=document.getElementById('prod-buy');
   if(p.coming){
     buy.removeAttribute('href');

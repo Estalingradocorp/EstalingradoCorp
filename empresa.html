@@ -11,6 +11,8 @@
 <style>
 ::selection{background:#2563eb;color:#fff}
 body{background:#000;color:#e5e7eb;font-family:'Inter',ui-sans-serif,system-ui,sans-serif;overflow-x:hidden}
+html{scroll-behavior:smooth}
+
 ::-webkit-scrollbar{width:6px}
 ::-webkit-scrollbar-track{background:#000}
 ::-webkit-scrollbar-thumb{background:#1e3a8a;border-radius:3px}
@@ -33,8 +35,6 @@ body{background:#000;color:#e5e7eb;font-family:'Inter',ui-sans-serif,system-ui,s
 .scard:hover::before{left:100%}
 .scard:hover{transform:translateY(-4px);border-color:rgba(37,99,235,.2);box-shadow:0 20px 60px -15px rgba(37,99,235,.1)}
 .nl{position:relative}
-.nl::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:#2563eb;transition:width .3s ease}
-.nl:hover::after{width:100%}
 .bsh{position:relative;overflow:hidden}
 .bsh::after{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:linear-gradient(45deg,transparent 40%,rgba(255,255,255,.08) 50%,transparent 60%);transform:translateX(-100%) rotate(45deg);transition:transform .6s ease}
 .bsh:hover::after{transform:translateX(100%) rotate(45deg)}
@@ -45,10 +45,10 @@ body{background:#000;color:#e5e7eb;font-family:'Inter',ui-sans-serif,system-ui,s
 <!-- NAVBAR -->
 <nav class="fixed w-full top-0 z-50 glass border-b border-white/5">
 <div class="px-6 md:px-12 h-20 flex items-center justify-between max-w-[1400px] mx-auto">
-<a href="index.html" class="flex items-center gap-4 group">
+<a href="index.html" class="flex items-center gap-4">
 <div class="relative">
-<img src="https://64.media.tumblr.com/37c52c25279f877bd0bc2d538626c938/2f8407cc51b2210e-be/s540x810/c379bb3cd18325d6b075e62fd26ffe91f5093ee3.jpg" alt="Logo" class="h-10 w-10 object-cover rounded-full shadow-[0_0_20px_rgba(37,99,235,.3)] group-hover:shadow-[0_0_30px_rgba(37,99,235,.5)] transition-all duration-500"/>
-<div class="absolute inset-0 rounded-full border border-blue-500/30 group-hover:border-blue-500/60 transition-all duration-500 scale-110"></div>
+<img src="https://64.media.tumblr.com/37c52c25279f877bd0bc2d538626c938/2f8407cc51b2210e-be/s540x810/c379bb3cd18325d6b075e62fd26ffe91f5093ee3.jpg" alt="Logo" class="h-10 w-10 object-cover rounded-full shadow-[0_0_20px_rgba(37,99,235,.3)]"/>
+<div class="absolute inset-0 rounded-full border border-blue-500/30 scale-110"></div>
 </div>
 <div class="flex flex-col">
 <span class="text-white font-semibold text-sm tracking-[.25em] uppercase">Estalingrado</span>
@@ -56,13 +56,11 @@ body{background:#000;color:#e5e7eb;font-family:'Inter',ui-sans-serif,system-ui,s
 </div>
 </a>
 <div class="hidden md:flex items-center space-x-10 text-[11px] font-medium tracking-[.2em] uppercase text-zinc-400">
-<a href="index.html" class="nl hover:text-white transition-colors duration-300">Inicio</a>
-<a href="index.html#servicios" class="nl hover:text-white transition-colors duration-300">Servicios</a>
-<a href="index.html#proyectos" class="nl hover:text-white transition-colors duration-300">Proyectos</a>
+<a href="index.html" class="nl hover:text-white">Inicio</a>
+<a href="market.html" class="nl hover:text-white">Market</a>
 <a href="empresa.html" class="nl text-blue-400">Empresa</a>
-<a href="market.html" class="nl hover:text-white transition-colors duration-300">Market</a>
 </div>
-<button class="md:hidden text-zinc-400 hover:text-white transition-colors" id="mobile-menu-btn"><i class="fa-solid fa-bars text-xl"></i></button>
+<button class="md:hidden text-zinc-400 hover:text-white" id="mobile-menu-btn"><i class="fa-solid fa-bars text-xl"></i></button>
 </div>
 </nav>
 
@@ -70,10 +68,8 @@ body{background:#000;color:#e5e7eb;font-family:'Inter',ui-sans-serif,system-ui,s
 <div id="mobile-menu" class="fixed inset-0 z-40 bg-black/95 backdrop-blur-xl hidden flex-col items-center justify-center gap-8">
 <button id="mobile-menu-close" class="absolute top-6 right-6 text-zinc-400 hover:text-white"><i class="fa-solid fa-xmark text-2xl"></i></button>
 <a href="index.html" class="text-2xl font-light text-white tracking-widest hover:text-blue-400 transition-colors mobile-link">Inicio</a>
-<a href="index.html#servicios" class="text-2xl font-light text-white tracking-widest hover:text-blue-400 transition-colors mobile-link">Servicios</a>
-<a href="index.html#proyectos" class="text-2xl font-light text-white tracking-widest hover:text-blue-400 transition-colors mobile-link">Proyectos</a>
-<a href="empresa.html" class="text-2xl font-light text-blue-400 tracking-widest mobile-link">Empresa</a>
 <a href="market.html" class="text-2xl font-light text-white tracking-widest hover:text-blue-400 transition-colors mobile-link">Market</a>
+<a href="empresa.html" class="text-2xl font-light text-blue-400 tracking-widest mobile-link">Empresa</a>
 </div>
 
 <!-- HERO -->
@@ -123,6 +119,77 @@ Cada plataforma que construimos es una pieza de un sistema mayor. La integridad 
 </div>
 </div>
 </div>
+</div>
+</div>
+</section>
+
+<!-- HISTORIA -->
+<section class="py-24 px-6 md:px-12 relative overflow-hidden">
+<div class="absolute inset-0 bg-[radial-gradient(ellipse_at_30%_20%,rgba(37,99,235,.07),transparent_50%)]"></div>
+<div class="max-w-[1400px] mx-auto relative z-10">
+<div class="mb-16 reveal">
+<div class="flex items-center gap-3 mb-6"><div class="w-8 h-px bg-blue-500"></div><span class="text-blue-400 font-mono text-[11px] tracking-[.2em] uppercase">Trayectoria</span></div>
+<h2 class="text-4xl md:text-5xl font-light tracking-tight text-white mb-4">Historia: de Salta al <span class="tg font-medium">Mundo Digital</span></h2>
+<p class="text-zinc-400 font-light max-w-2xl leading-relaxed">Fecha de fundación: <span class="text-blue-300">8 de julio de 2009</span> · Fundador: <span class="text-blue-300">Facundo Nicolas Escobar Figueroa</span></p>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
+<div class="reveal">
+<p class="text-zinc-400 font-light leading-relaxed mb-5">
+En el corazón de Salta Capital, nació Estalingrado Corp con un propósito claro y visionario: ayudar a los negocios locales a digitalizarse en una época en la que la presencia en Google era un hito significativo. Fundada por Facundo Nicolas Escobar Figueroa el 8 de julio de 2009, la empresa rápidamente se convirtió en un pilar para aquellos que buscaban navegar el incipiente mundo de Internet.
+</p>
+<p class="text-zinc-400 font-light leading-relaxed mb-5">
+Desde sus inicios, Estalingrado Corp se ganó el cariño y la confianza de sus clientes bajo el lema <span class="text-blue-300 italic font-serif">"Tu amigo de Internet"</span>. Este lema refleja nuestra dedicación a facilitar el camino digital para nuestros clientes mediante concursos, servicios, y mucho más.
+</p>
+<p class="text-zinc-400 font-light leading-relaxed mb-5">
+En 2010, la empresa dio un paso decisivo al entrar en el campo de la programación, creando bots bajo el proyecto conocido como <span class="text-blue-300">"Proyecto Titán"</span>. Este proyecto evolucionó con el tiempo y hoy en día ha dado lugar a dos avanzadas inteligencias artificiales, IBA 1 e IBA 2, que operan bajo el nuevo nombre de <span class="text-blue-300">"IA 27"</span>.
+</p>
+<p class="text-zinc-400 font-light leading-relaxed">
+IBA 1 tiene la capacidad de analizar la audiencia de nuestros clientes y proporcionar los datos correctos para desarrollar campañas de marketing efectivas. IBA 2, por su parte, maneja múltiples perfiles en diversas plataformas de redes sociales, utilizando los datos proporcionados por IBA 1 para crear personalidades auténticas y efectivas para las campañas.
+</p>
+</div>
+<div class="reveal">
+<div class="rounded-2xl overflow-hidden border border-blue-500/10 shadow-[0_30px_80px_-20px_rgba(37,99,235,.3)]">
+<img src="https://static.wixstatic.com/media/9dbdc2_86b517a1e93743279a6b82229ceb1b70~mv2.png/v1/fill/w_740,h_493,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/9dbdc2_86b517a1e93743279a6b82229ceb1b70~mv2.png" alt="Historia de Estalingrado Corp" class="w-full object-cover"/>
+</div>
+<p class="text-[11px] text-zinc-600 font-mono mt-3"><i class="fa-solid fa-image text-blue-500/40 mr-1.5"></i>Estalingrado Corp — Tu amigo de Internet</p>
+</div>
+</div>
+
+<!-- INTRA-NET -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+<div class="reveal">
+<div class="rounded-2xl overflow-hidden border border-blue-500/10 shadow-[0_30px_80px_-20px_rgba(37,99,235,.25)]">
+<div class="aspect-[4/3] bg-zinc-900/60 flex items-center justify-center relative">
+<div class="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-transparent"></div>
+<i class="fa-solid fa-shield-halved text-6xl text-blue-500/30 relative z-10"></i>
+</div>
+</div>
+<p class="text-[11px] text-zinc-600 font-mono mt-3"><i class="fa-solid fa-lock text-blue-500/40 mr-1.5"></i>Intranet Estalingrado Corp — Acceso libre, seguro y selectivo</p>
+</div>
+<div class="reveal">
+<div class="flex items-center gap-3 mb-6"><div class="w-6 h-px bg-blue-500"></div><span class="text-blue-400 font-mono text-[10px] tracking-[.25em] uppercase">Intranet</span></div>
+<h3 class="text-2xl font-light text-white mb-4">Un acceso más libre, seguro y <span class="tg">selectivo</span></h3>
+<p class="text-zinc-400 font-light leading-relaxed mb-4">
+En Estalingrado Corp desarrollamos una intranet propia, diseñada para ofrecer un acceso más filtrado, seleccionado y seguro al vasto mundo de la información digital. A diferencia de los buscadores tradicionales como Google, nuestro sistema no está enfocado en indexar todo el internet occidental, sino en proporcionar un entorno donde los datos sean relevantes, verificados y diversos en origen.
+</p>
+<p class="text-zinc-400 font-light leading-relaxed mb-4">
+Este sistema opera a través de nuestro propio buscador interno, que muchas veces es confundido con un motor de búsqueda general. Sin embargo, su función es específica: navegar dentro de nuestra red informativa, alimentada tanto por fuentes occidentales como por aquellas menos exploradas de países orientales como Rusia, Japón, e incluso, ocasionalmente, Corea del Norte.
+</p>
+<p class="text-zinc-400 font-light leading-relaxed mb-4">
+El objetivo es claro: liberar el acceso al conocimiento, pero sin sacrificar la calidad ni la seguridad. Por eso, nuestra intranet está cuidadosamente diseñada para ser un espacio donde la información es curada, contextualizada y accesible para quienes buscan una visión más amplia y menos sesgada del mundo.
+</p>
+<p class="text-zinc-400 font-light leading-relaxed mb-4">
+Este desarrollo ha sido posible gracias a la colaboración con <span class="text-blue-300">Software Lab</span>, empresa especializada en arquitectura de redes inteligentes, quienes han potenciado nuestra infraestructura con tecnología de vanguardia.
+</p>
+<p class="text-zinc-500 font-light leading-relaxed">
+En Estalingrado Corp creemos que el conocimiento debe estar al servicio de la verdad y el progreso. Por eso, nuestra intranet no es una simple red: es una alternativa real a la desinformación globalizada.
+</p>
+</div>
+</div>
+
+<div class="mt-16 text-center reveal">
+<p class="text-zinc-500 text-sm font-light max-w-xl mx-auto"><span class="text-blue-400/80">Estamos orgullosos de nuestro recorrido</span> y comprometidos a seguir siendo "Tu amigo de Internet", ayudando a nuestros clientes a navegar y prosperar en el siempre cambiante paisaje digital.</p>
 </div>
 </div>
 </section>
@@ -247,19 +314,6 @@ Acceso restringido para empleados. Ingresá tus credenciales corporativas para c
 <!-- FOOTER -->
 <footer class="border-t border-white/5 py-16 px-6 md:px-12 relative">
 <div class="max-w-[1400px] mx-auto">
-<div class="flex flex-col md:flex-row justify-between items-center gap-8 mb-12">
-<div class="flex items-center gap-4">
-<img src="https://64.media.tumblr.com/37c52c25279f877bd0bc2d538626c938/2f8407cc51b2210e-be/s540x810/c379bb3cd18325d6b075e62fd26ffe91f5093ee3.jpg" alt="Logo" class="h-8 w-8 object-cover rounded-full opacity-60"/>
-<div><span class="text-white text-sm tracking-[.2em] uppercase font-medium">Estalingrado</span><span class="text-zinc-600 text-xs ml-2">Corp.</span></div>
-</div>
-<div class="flex items-center gap-6">
-<a href="index.html" class="text-zinc-500 hover:text-white text-xs uppercase tracking-wider transition-colors">Inicio</a>
-<a href="index.html#servicios" class="text-zinc-500 hover:text-white text-xs uppercase tracking-wider transition-colors">Servicios</a>
-<a href="index.html#proyectos" class="text-zinc-500 hover:text-white text-xs uppercase tracking-wider transition-colors">Proyectos</a>
-<a href="empresa.html" class="text-blue-500 text-xs uppercase tracking-wider">Empresa</a>
-<a href="market.html" class="text-zinc-500 hover:text-white text-xs uppercase tracking-wider transition-colors">Market</a>
-</div>
-</div>
 <div class="glow-line mb-8"></div>
 <div class="flex flex-col md:flex-row justify-between items-center gap-6">
 <div class="text-zinc-600 text-[11px] uppercase tracking-[.2em] text-center md:text-left">Estalingrado Corp. © <span id="year"></span></div>
