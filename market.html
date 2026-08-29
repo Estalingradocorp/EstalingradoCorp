@@ -46,6 +46,8 @@ html{scroll-behavior:smooth}
 .filter-active{background:rgba(37,99,235,.15)!important;border-color:rgba(37,99,235,.5)!important;color:#60a5fa!important}
 .wsp-btn{background:#25D366;color:#fff;transition:all .3s ease}
 .wsp-btn:hover{background:#1da851;box-shadow:0 0 25px rgba(37,211,102,.4);transform:scale(1.05)}
+.dl-btn{background:#2563eb;color:#fff;transition:all .3s ease}
+.dl-btn:hover{background:#1d4ed8;box-shadow:0 0 25px rgba(37,99,235,.4);transform:scale(1.05)}
 .os-window{position:fixed;display:none;flex-direction:column;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,.14);background:#050506;box-shadow:0 50px 140px -20px rgba(0,0,0,.85),0 0 0 .5px rgba(255,255,255,.06);opacity:0;transform:scale(.92) translateY(24px);transition:opacity .3s ease,transform .5s cubic-bezier(.16,1,.3,1)}
 .os-window:not(.hidden){display:flex}
 .os-window.open{opacity:1;transform:scale(1) translateY(0)}
@@ -171,20 +173,20 @@ Software y productos de la corporación. Hacé clic en un producto para abrirlo 
 </button>
 
 <!-- Producto 2 -->
-<button type="button" class="scard glass-card rounded-2xl overflow-hidden group reveal text-left cursor-pointer prod-open" data-product="desarrollador" data-type="digital">
-<div class="aspect-[4/3] bg-zinc-900/50 flex items-center justify-center relative overflow-hidden">
-<div class="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent"></div>
-<i class="ci fa-solid fa-code text-5xl text-emerald-500/30 group-hover:text-emerald-500/50 transition-colors duration-500 relative z-10"></i>
-<span class="absolute top-4 left-4 text-[10px] font-mono text-emerald-400/60 tracking-[.2em] uppercase">PRD-002</span>
+<button type="button" class="scard glass-card rounded-2xl overflow-hidden group reveal text-left cursor-pointer prod-open" data-product="appgallery" data-type="digital">
+<div class="aspect-[4/3] bg-zinc-900/50 relative overflow-hidden">
+<img src="https://64.media.tumblr.com/4042f72a8315f6293acf8d19389911f4/5cb0ddebcdf5f973-e1/s500x750/179243e75907a917e9504f58cd6b80a6c899ea0d.pnj" alt="AppGallery HUAWEI" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+<span class="absolute top-4 left-4 text-[10px] font-mono text-emerald-400/60 tracking-[.2em] uppercase bg-black/60 px-2 py-1 rounded-full border border-white/10">PRD-002</span>
 </div>
 <div class="p-6">
 <div class="flex items-center gap-2 mb-3">
 <span class="px-2.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-[10px] font-medium">Digital</span>
 </div>
-<h3 class="text-lg font-medium text-white mb-2 tracking-tight">Pack Desarrollador</h3>
-<p class="text-zinc-400 font-light text-sm leading-relaxed mb-4">Herramientas de desarrollo integradas de la corporación.</p>
+<h3 class="text-lg font-medium text-white mb-2 tracking-tight">AppGallery HUAWEI</h3>
+<p class="text-zinc-400 font-light text-sm leading-relaxed mb-4">Tu puerta de entrada al ecosistema HMS.</p>
 <div class="flex items-center justify-between pt-4 border-t border-white/5">
-<span class="text-blue-400 font-mono text-lg font-medium">$3.500</span>
+<span class="text-emerald-400 font-mono text-lg font-medium">Gratis</span>
 <span class="text-[10px] text-blue-400/60 font-mono uppercase tracking-wider">Ver detalles</span>
 </div>
 </div>
@@ -273,20 +275,40 @@ Software y productos de la corporación. Hacé clic en un producto para abrirlo 
 </button>
 
 <!-- Producto 7 -->
-<button type="button" class="scard glass-card rounded-2xl overflow-hidden group reveal text-left cursor-pointer prod-open" data-product="tools" data-type="digital">
-<div class="aspect-[4/3] bg-zinc-900/50 flex items-center justify-center relative overflow-hidden">
-<div class="absolute inset-0 bg-gradient-to-br from-rose-500/5 to-transparent"></div>
-<i class="ci fa-solid fa-toolbox text-5xl text-rose-500/30 group-hover:text-rose-500/50 transition-colors duration-500 relative z-10"></i>
-<span class="absolute top-4 left-4 text-[10px] font-mono text-rose-400/60 tracking-[.2em] uppercase">PRD-006</span>
+<button type="button" class="scard glass-card rounded-2xl overflow-hidden group reveal text-left cursor-pointer prod-open" data-product="libreoffice" data-type="digital">
+<div class="aspect-[4/3] bg-zinc-900/50 relative overflow-hidden">
+<img src="https://imgs.search.brave.com/NcESbIl3yOG_IMEeCZVkH7lhHKI3-RN2PyHkBByHYWc/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly93d3cu/Y29tcGFyYXNvZnR3/YXJlLmNvbS5hci9p/bWFnZS1hc3NldHMv/NDEyL05ERXlmSGR3/TFdOdmJuUmxiblF2/ZFhCc2IyRmtjeTh5/TURFNEx6QTRMMnh2/WjI5TWFXSnlaVTlt/Wm1salpTNXdibWMu/d2VicA" alt="LibreOffice" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+<span class="absolute top-4 left-4 text-[10px] font-mono text-rose-400/60 tracking-[.2em] uppercase bg-black/60 px-2 py-1 rounded-full border border-white/10">PRD-006</span>
 </div>
 <div class="p-6">
 <div class="flex items-center gap-2 mb-3">
 <span class="px-2.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-[10px] font-medium">Digital</span>
 </div>
-<h3 class="text-lg font-medium text-white mb-2 tracking-tight">Pack EC Tools</h3>
-<p class="text-zinc-400 font-light text-sm leading-relaxed mb-4">Suite completa de herramientas corporativas.</p>
+<h3 class="text-lg font-medium text-white mb-2 tracking-tight">LibreOffice</h3>
+<p class="text-zinc-400 font-light text-sm leading-relaxed mb-4">La suite ofimática libre y gratuita más completa.</p>
 <div class="flex items-center justify-between pt-4 border-t border-white/5">
-<span class="text-blue-400 font-mono text-lg font-medium">$6.000</span>
+<span class="text-emerald-400 font-mono text-lg font-medium">Gratis</span>
+<span class="text-[10px] text-blue-400/60 font-mono uppercase tracking-wider">Ver detalles</span>
+</div>
+</div>
+</button>
+
+<!-- Producto 8 -->
+<button type="button" class="scard glass-card rounded-2xl overflow-hidden group reveal text-left cursor-pointer prod-open" data-product="malwarebytes" data-type="digital">
+<div class="aspect-[4/3] bg-zinc-900/50 relative overflow-hidden">
+<img src="https://imgs.search.brave.com/BqPBRaHIcUwi1GOhLfk4o-gGgkoL3DD8ItVQn_TvwAU/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly91cGxv/YWQud2lraW1lZGlh/Lm9yZy93aWtpcGVk/aWEvY29tbW9ucy9k/L2Q1L01hbHdhcmVi/eXRlc19BbnRpbWFs/d2FyZS5wbmc" alt="Malwarebytes" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+<span class="absolute top-4 left-4 text-[10px] font-mono text-cyan-400/60 tracking-[.2em] uppercase bg-black/60 px-2 py-1 rounded-full border border-white/10">PRD-008</span>
+</div>
+<div class="p-6">
+<div class="flex items-center gap-2 mb-3">
+<span class="px-2.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-[10px] font-medium">Digital</span>
+</div>
+<h3 class="text-lg font-medium text-white mb-2 tracking-tight">Malwarebytes</h3>
+<p class="text-zinc-400 font-light text-sm leading-relaxed mb-4">Antimalware líder en protección contra amenazas.</p>
+<div class="flex items-center justify-between pt-4 border-t border-white/5">
+<span class="text-emerald-400 font-mono text-lg font-medium">Gratis</span>
 <span class="text-[10px] text-blue-400/60 font-mono uppercase tracking-wider">Ver detalles</span>
 </div>
 </div>
@@ -437,12 +459,13 @@ setTimeout(()=>{products.forEach(p=>{p.style.animation='';p.style.animationDelay
 // PRODUCTOS
 const PRODUCTS={
  ecospro:{title:'EC-OS Pro License',tag:'Sistema Operativo Webizado · Licencia Premium',icon:'fa-desktop',tone:'#60a5fa',type:['digital','Digital'],sku:'PRD-001',price:'$5.000',label:'pago único',desc:'Licencia premium del sistema operativo webizado de la corporación. Acceso ilimitado a todas las aplicaciones, actualizaciones de por vida y soporte prioritario.',feats:[['fa-window-maximize','Acceso ilimitado','Todas las aplicaciones del ecosistema incluídas.'],['fa-arrows-rotate','Actualizaciones','Mejoras de por vida sin costos adicionales.'],['fa-headset','Soporte prioritario','Asistencia directa de la división técnica.'],['fa-user-check','Multi-dispositivo','Instalación en todos tus equipos.']],buy:'https://wa.me/TU-NUMERO?text=Hola%2C%20me%20interesa%20EC-OS%20Pro%20License%20de%20Estalingrado%20Corp',imgs:['https://64.media.tumblr.com/cdc0b2522145ff9be512d2c2e3e37df1/44180efb3630df79-14/s640x960/c2545953229e83683132287461267ad0af793196.pnj']},
- desarrollador:{title:'Pack Desarrollador',tag:'Herramientas de Desarrollo Integradas',icon:'fa-code',tone:'#34d399',type:['digital','Digital'],sku:'PRD-002',price:'$3.500',label:'pago único',desc:'Suite de herramientas para desarrolladores: terminal integrada, editor de código, aplicaciones de linting y acceso a las APIs corporativas documentadas.',feats:[['fa-terminal','Terminal integrada','Consola completa dentro del ecosistema.'],['fa-code','Editor avanzado','Con soporte para los lenguajes del stack.'],['fa-plug','Acceso APIs','Documentación y niveles de acceso.'],['fa-layer-group','Múltiples lenguajes','JS, Python, Go y más.']],buy:'https://wa.me/TU-NUMERO?text=Hola%2C%20me%20interesa%20Pack%20Desarrollador%20de%20Estalingrado%20Corp'},
+ appgallery:{title:'AppGallery HUAWEI',tag:'Ecosistema HMS · App Store',icon:'fa-store',tone:'#34d399',type:['digital','Digital'],sku:'PRD-002',price:'Gratis',label:'descarga gratuita',desc:'AppGallery de Huawei – Tu puerta de entrada al ecosistema HMS. Versión: 14.4.0.300 (o última disponible). Compatibilidad: Android 6.0 (API 23) o superior. Arquitecturas: arm64-v8a, armeabi-v7a. Permisos requeridos: Almacenamiento, red, notificaciones (gestionados en tiempo de ejecución).',feats:[['fa-mobile-screen-button','Android 6.0+','Compatible con API 23 o superior.'],['fa-microchip','Arquitecturas','arm64-v8a y armeabi-v7a.'],['fa-shield-halved','Permisos gestionados','Almacenamiento, red y notificaciones en tiempo de ejecución.'],['fa-store','Ecosistema HMS','Tu puerta de entrada al ecosistema Huawei.']],buy:'',download:'https://www.apkmirror.com/apk/huawei/huawei-appgallery/',imgs:['https://64.media.tumblr.com/4042f72a8315f6293acf8d19389911f4/5cb0ddebcdf5f973-e1/s500x750/179243e75907a917e9504f58cd6b80a6c899ea0d.pnj']},
  camiseta:{title:'Camiseta Estalingrado',tag:'Remera Oficial EC · Merchandising',icon:'fa-shirt',tone:'#a78bfa',type:['fisico','Físico'],sku:'PRD-003',price:'$8.000',label:'envío a todo el país',desc:'Representá la identidad de Estalingrado Corp con nuestra remera oficial EC. Un diseño minimalista y moderno, confeccionado en color negro y con el icónico logo EC en blanco sobre el pecho.',feats:[['fa-shirt','Color: negro','🖤 Confeccionada en color negro.'],['fa-star','Logo oficial EC','⚪ Logo EC en blanco sobre el pecho.'],['fa-palette','Diseño moderno','👕 Minimalista, cómodo y versátil.'],['fa-building-columns','Producto oficial','🏢 Tecnología, identidad y futuro.']],buy:'https://wa.me/TU-NUMERO?text=Hola%2C%20me%20interesa%20Camiseta%20Estalingrado%20de%20Estalingrado%20Corp',imgs:['https://64.media.tumblr.com/ec98e900d6eb4ab197c3e2338a38ce2c/57f65f68dfcb861e-a3/s1280x1920/fb9d81960acf51d1075b4a4b38a031ef36d77b9d.pnj']},
  centinela:{title:'C-01 «CENTINELA»',tag:'Plataforma Aérea Autónoma · IA Local',icon:'fa-robot',tone:'#a78bfa',type:['fisico','Físico'],sku:'PRD-004',price:'A consultar',label:'contacto comercial',desc:'El C-01 CENTINELA es una plataforma aérea autónoma desarrollada por Estalingrado Corp, diseñada para operar mediante procesamiento de inteligencia artificial 100% local. Integra una variante especializada del modelo Atenea Omega, optimizada para tareas de percepción, análisis del entorno, planificación de navegación y toma de decisiones en tiempo real. La gestión integral del sistema se realiza mediante Centinela, el software propietario de Estalingrado Corp, que proporciona la interfaz de configuración, supervisión y coordinación entre el sistema de vuelo y el módulo de IA. Arquitectura: IA local · Procesamiento en el dispositivo · Navegación autónoma · Control mediante software Centinela · Modelo Atenea Omega.',feats:[['fa-microchip','IA 100% local','Procesamiento totalmente en el dispositivo.'],['fa-brain','Atenea Omega','Variante optimizada para percepción y decisión en tiempo real.'],['fa-route','Navegación autónoma','Planificación de trayectorias y análisis del entorno.'],['fa-gamepad','Software Centinela','Configuración y supervisión integral con software propietario.']],buy:'https://wa.me/TU-NUMERO?text=Hola%2C%20me%20interesa%20el%20C-01%20CENTINELA%20de%20Estalingrado%20Corp',imgs:['https://64.media.tumblr.com/2b05c131be5a70f74a398c04885d40ac/83c7bf6126b76b6d-de/s640x960/f5260efc3a865f94ba8af50c55d46d420a20628e.pnj']},
  ia27:{title:'Acceso IA 27 Beta',tag:'Inteligencia Artificial Local · Beta',icon:'fa-robot',tone:'#22d3ee',type:['digital','Digital'],sku:'PRD-005',price:'Próximamente',label:'acceso anticipado',coming:true,desc:'Acceso anticipado a la versión beta del agente IA 27 con el modelo Atenea Omega. Inteligencia artificial 100% local, privada y en tu equipo.',feats:[['fa-microchip','100% local','Todo el procesamiento en tu equipo.'],['fa-lock','Privado','Tus datos nunca salen de tu computadora.'],['fa-brain','Atenea Omega','Modelo de comprensión y razonamiento.'],['fa-rocket','Beta abierta','Sé de los primeros en probarla.']],buy:'',imgs:['https://64.media.tumblr.com/42cb4f83b88bd360490ea56972eff037/4e3931f07c2eabb0-75/s640x960/f9129ef47ad14c206a425227d49ca2fae0cc44af.jpg'],video:'https://player.vimeo.com/video/1216560105'},
- tools:{title:'Pack EC Tools',tag:'Suite de Herramientas Corporativas',icon:'fa-toolbox',tone:'#fb7185',type:['digital','Digital'],sku:'PRD-006',price:'$6.000',label:'pago único',desc:'Suite completa de herramientas de la corporación: EC WebSend, EC Download y utilidades de transferencia y gestión unificadas en un solo pack.',feats:[['fa-paper-plane','EC WebSend','Transferencia segura incluída.'],['fa-download','EC Download','Centro de recursos integrado.'],['fa-lock','Cifrado','Toda la suite protegida de extremo a extremo.'],['fa-box-open','Todo en uno','Una licencia, todas las herramientas.']],buy:'https://wa.me/TU-NUMERO?text=Hola%2C%20me%20interesa%20Pack%20EC%20Tools%20de%20Estalingrado%20Corp'},
- ia27fisico:{title:'IA 27 — Atenea Omega',tag:'IA Local · Edición Física',icon:'fa-robot',tone:'#a78bfa',type:['fisico','Físico'],sku:'PRD-007',price:'A confirmar',label:'precio próximamente',coming:true,desc:'IA 27 — Atenea Omega 🤖🇦🇷 La nueva IA local de Estalingrado Corp, diseñada para ofrecer inteligencia artificial avanzada directamente en tu equipo, sin depender de la nube. Un modelo potente, privado y desarrollado en Argentina.',feats:[['fa-robot','IA 100% local','Toda la potencia de Atenea Omega en tu equipo.'],['fa-flag','Hecha en Argentina','Desarrollada y producida en el país. 🤖🇦🇷'],['fa-lock','Privacidad total','Sin depender de servicios externos en la nube.'],['fa-gift','Edición física','Formato coleccionista exclusivo.']],buy:'',imgs:['https://64.media.tumblr.com/74f37b3987410a0fa12e5eb32209c60a/74a07994a91cfcfd-2d/s540x810/9ba16f8485bc17e90fe7ba0152e7bd0b27e5c75a.jpg','https://64.media.tumblr.com/e1283cdce02cb0ea82bfc8c9b019eb79/965d26a4cbb855c1-d5/s540x810/fc5455be39f9ee47b38895a68f9669a0c9f30865.pnj']}
+ libreoffice:{title:'LibreOffice',tag:'Suite Ofimática Libre · Gratuita',icon:'fa-file-lines',tone:'#fb7185',type:['digital','Digital'],sku:'PRD-006',price:'Gratis',label:'descarga gratuita',desc:'LibreOffice es la suite ofimática libre y gratuita más completa del mundo. Incluye Writer para documentos, Calc para planillas de cálculo, Impress para presentaciones, Draw para diagramas, Math para fórmulas y Base para bases de datos. Compatible con los formatos de Microsoft Office y 100% libre de costos, ideal para individuos y organizaciones. Disponible para Windows, macOS y Linux.',feats:[['fa-pen-to-square','Writer','Procesador de textos con formato profesional.'],['fa-table','Calc','Planillas de cálculo con funciones avanzadas.'],['fa-chart-pie','Impress','Presentaciones con efectos y transiciones.'],['fa-arrows-rotate','Formatos compatibles','Abre los formatos de Microsoft Office.']],buy:'',download:'https://es.libreoffice.org/descarga/',imgs:['https://imgs.search.brave.com/NcESbIl3yOG_IMEeCZVkH7lhHKI3-RN2PyHkBByHYWc/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly93d3cu/Y29tcGFyYXNvZnR3/YXJlLmNvbS5hci9p/bWFnZS1hc3NldHMv/NDEyL05ERXlmSGR3/TFdOdmJuUmxiblF2/ZFhCc2IyRmtjeTh5/TURFNEx6QTRMMnh2/WjI5TWFXSnlaVTlt/Wm1salpTNXdibWMu/d2VicA']},
+ ia27fisico:{title:'IA 27 — Atenea Omega',tag:'IA Local · Edición Física',icon:'fa-robot',tone:'#a78bfa',type:['fisico','Físico'],sku:'PRD-007',price:'A confirmar',label:'precio próximamente',coming:true,desc:'IA 27 — Atenea Omega 🤖🇦🇷 La nueva IA local de Estalingrado Corp, diseñada para ofrecer inteligencia artificial avanzada directamente en tu equipo, sin depender de la nube. Un modelo potente, privado y desarrollado en Argentina.',feats:[['fa-robot','IA 100% local','Toda la potencia de Atenea Omega en tu equipo.'],['fa-flag','Hecha en Argentina','Desarrollada y producida en el país. 🤖🇦🇷'],['fa-lock','Privacidad total','Sin depender de servicios externos en la nube.'],['fa-gift','Edición física','Formato coleccionista exclusivo.']],buy:'',imgs:['https://64.media.tumblr.com/74f37b3987410a0fa12e5eb32209c60a/74a07994a91cfcfd-2d/s540x810/9ba16f8485bc17e90fe7ba0152e7bd0b27e5c75a.jpg','https://64.media.tumblr.com/e1283cdce02cb0ea82bfc8c9b019eb79/965d26a4cbb855c1-d5/s540x810/fc5455be39f9ee47b38895a68f9669a0c9f30865.pnj']},
+ malwarebytes:{title:'Malwarebytes',tag:'Antimalware · Protección Premium',icon:'fa-shield-halved',tone:'#22d3ee',type:['digital','Digital'],sku:'PRD-008',price:'Gratis',label:'descarga gratuita',desc:'Malwarebytes es el antimalware líder en detección y eliminación de amenazas avanzadas. Protege tu equipo contra malware, ransomware, spyware y sitios maliciosos con tecnología de última generación. Ideal como capa adicional de seguridad junto a tu antivirus tradicional. Disponible para Windows, macOS, Android e iOS.',feats:[['fa-shield-halved','Antimalware avanzado','Detección de malware y ransomware.'],['fa-bolt','Rápido y ligero','Análisis sin frenar tu equipo.'],['fa-globe','Navegación segura','Bloqueo de sitios maliciosos.'],['fa-desktop','Multiplataforma','Windows, macOS, Android e iOS.']],buy:'',download:'https://www.malwarebytes.com/es/mwb-download/thankyou',imgs:['https://imgs.search.brave.com/BqPBRaHIcUwi1GOhLfk4o-gGgkoL3DD8ItVQn_TvwAU/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly91cGxv/YWQud2lraW1lZGlh/Lm9yZy93aWtpcGVk/aWEvY29tbW9ucy9k/L2Q1L01hbHdhcmVi/eXRlc19BbnRpbWFs/d2FyZS5wbmc']}
 };
 
 // OS Window Manager (estilo macOS)
@@ -618,11 +641,19 @@ function openProduct(key){
     vw.classList.add('hidden');
   }
   const buy=document.getElementById('prod-buy');
+  buy.onclick=null;
   if(p.coming){
     buy.removeAttribute('href');
     buy.className='inline-flex items-center gap-2.5 px-6 py-3 rounded-full text-xs font-semibold bg-zinc-700/60 text-zinc-300 cursor-not-allowed';
     buy.innerHTML='<i class="fa-solid fa-hourglass-half text-sm"></i> Próximamente';
+  }else if(p.download){
+    buy.href=p.download;
+    buy.setAttribute('target','_blank');
+    buy.className='dl-btn inline-flex items-center gap-2.5 px-6 py-3 rounded-full text-xs font-semibold';
+    buy.innerHTML='<i class="fa-solid fa-download text-sm"></i> DESCARGAR';
+    buy.onclick=()=>alert('Estás saliendo de Estalingrado Corp. Serás redirigido a un sitio externo para completar la descarga.');
   }else{
+    buy.removeAttribute('target');
     buy.href=p.buy;
     buy.className='wsp-btn inline-flex items-center gap-2.5 px-6 py-3 rounded-full text-xs font-semibold';
     buy.innerHTML='<i class="fa-brands fa-whatsapp text-sm"></i> Comprar por WhatsApp';
