@@ -87,6 +87,10 @@ html{scroll-behavior:smooth}
 .dock-pill{display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:12px;background:rgba(30,30,36,.92);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.12);color:#e5e7eb;font-size:11px;font-weight:500;cursor:pointer;transition:transform .25s cubic-bezier(.16,1,.3,1),background .25s,border-color .25s}
 .dock-pill:hover{transform:scale(1.1) translateY(-2px);background:rgba(37,99,235,.25);border-color:rgba(37,99,235,.5)}
 .dock-pill i{color:#60a5fa}
+#cart-drawer{transform:translateX(100%);transition:transform .45s cubic-bezier(.16,1,.3,1)}
+#cart-wrap.open #cart-drawer{transform:translateX(0)}
+#cart-backdrop{opacity:0;transition:opacity .45s ease}
+#cart-wrap.open #cart-backdrop{opacity:1}
 </style>
 </head>
 <body class="min-h-screen antialiased">
@@ -109,7 +113,13 @@ html{scroll-behavior:smooth}
 <a href="market.html" class="nl text-blue-400">Market</a>
 <a href="empresa.html" class="nl hover:text-white">Empresa</a>
 </div>
+<div class="flex items-center gap-5">
+<button id="cart-btn" class="relative text-zinc-400 hover:text-white transition-colors" title="Carrito" aria-label="Abrir carrito">
+<i class="fa-solid fa-cart-shopping text-lg"></i>
+<span id="cart-count" class="absolute -top-2 -right-2.5 min-w-[18px] h-[18px] px-1 rounded-full bg-blue-600 text-white text-[10px] font-bold flex items-center justify-center hidden">0</span>
+</button>
 <button class="md:hidden text-zinc-400 hover:text-white" id="mobile-menu-btn"><i class="fa-solid fa-bars text-xl"></i></button>
+</div>
 </div>
 </nav>
 
@@ -508,9 +518,9 @@ Software y productos de calidad.
 
         <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-6 border-t border-white/5">
           <p id="prod-origin" class="text-[11px] text-zinc-600 font-mono"><i class="fa-solid fa-fingerprint text-blue-500/40 mr-1.5"></i>Producto oficial · Estalingrado Corp</p>
-          <a id="prod-buy" href="#" target="_blank" rel="noopener" class="wsp-btn inline-flex items-center gap-2.5 px-6 py-3 rounded-full text-xs font-semibold">
+          <button type="button" id="prod-buy" class="wsp-btn inline-flex items-center gap-2.5 px-6 py-3 rounded-full text-xs font-semibold">
             <i class="fa-brands fa-whatsapp text-sm"></i> Comprar por WhatsApp
-          </a>
+          </button>
         </div>
       </div>
     </div>
@@ -527,8 +537,151 @@ Software y productos de calidad.
 
 <div id="os-dock" class="fixed bottom-4 left-1/2 -translate-x-1/2 z-[500] hidden items-center gap-2 px-3 py-2 rounded-2xl glass border border-white/10 shadow-2xl"></div>
 
+<!-- CART DRAWER -->
+<div id="cart-wrap" class="fixed inset-0 z-[600] hidden">
+<div id="cart-backdrop" class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+<aside id="cart-drawer" class="absolute right-0 top-0 h-full w-full max-w-md glass border-l border-white/10 shadow-2xl flex flex-col">
+<div class="flex items-center justify-between px-6 py-5 border-b border-white/5">
+<h3 class="text-white font-medium text-sm tracking-[.15em] uppercase">Tu carrito</h3>
+<button id="cart-close" class="text-zinc-400 hover:text-white transition-colors" aria-label="Cerrar carrito"><i class="fa-solid fa-xmark text-lg"></i></button>
+</div>
+<div id="cart-view" class="flex-1 overflow-y-auto px-6">
+<div id="cart-items"></div>
+<div id="cart-foot" class="py-5 border-t border-white/5 hidden">
+<div class="flex items-center justify-between mb-4">
+<span class="text-[11px] uppercase tracking-[.2em] text-zinc-500 font-mono">Total</span>
+<span id="cart-total" class="text-xl text-blue-400 font-mono font-medium">$0</span>
+</div>
+<button id="checkout-btn" class="w-full bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold tracking-[.15em] uppercase rounded-full py-3.5 transition-all duration-300 flex items-center justify-center gap-2">
+<i class="fa-solid fa-lock text-sm"></i> Finalizar compra
+</button>
+</div>
+</div>
+<div id="checkout-view" class="hidden flex-1 overflow-y-auto px-6 py-6">
+<button id="back-btn" class="text-zinc-400 hover:text-white text-xs font-mono uppercase tracking-wider mb-6 transition-colors"><i class="fa-solid fa-arrow-left mr-1.5"></i>Volver al carrito</button>
+<div class="glass-card rounded-xl p-5 mb-6">
+<div class="flex items-center justify-between mb-1">
+<span class="text-[11px] text-zinc-500 font-mono uppercase tracking-[.2em]">A pagar</span>
+<span class="text-lg text-blue-400 font-mono font-medium" id="checkout-price">$0</span>
+</div>
+<p class="text-zinc-500 text-xs font-light">El pedido se confirma por WhatsApp para coordinar el pago y la entrega.</p>
+</div>
+<label class="block text-[11px] text-zinc-400 font-mono uppercase tracking-[.2em] mb-2" for="buyer-name">Tu nombre</label>
+<input id="buyer-name" type="text" placeholder="Ej: Juan Pérez" class="w-full mb-6 px-4 py-3 rounded-xl border border-zinc-800 bg-zinc-900/40 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-blue-500/50 transition-colors"/>
+<span class="block text-[11px] text-zinc-400 font-mono uppercase tracking-[.2em] mb-3">Método de pago</span>
+<div class="space-y-3 mb-6">
+<button id="confirm-wa" class="wsp-btn w-full flex items-center justify-between gap-3 px-5 py-3.5 rounded-xl text-xs font-semibold">
+<span class="flex items-center gap-2.5"><i class="fa-brands fa-whatsapp text-base"></i> Pagar por WhatsApp</span><i class="fa-solid fa-arrow-right text-[10px]"></i>
+</button>
+<button id="confirm-mp" class="w-full flex items-center justify-between gap-3 px-5 py-3.5 rounded-xl text-xs font-semibold bg-[#009ee3] text-white transition-all duration-300 hover:bg-[#0089c7]">
+<span class="flex items-center gap-2.5"><i class="fa-solid fa-bolt text-base"></i> Pagar con Mercado Pago</span><i class="fa-solid fa-arrow-right text-[10px]"></i>
+</button>
+<p id="mp-note" class="hidden text-[11px] text-zinc-600 font-light leading-relaxed">Mercado Pago está disponible al comprar un solo producto con link de pago habilitado.</p>
+</div>
+</div>
+</aside>
+</div>
+
+<!-- TOAST -->
+<div id="toast" class="hidden fixed bottom-20 left-1/2 -translate-x-1/2 z-[700] px-5 py-3 rounded-full glass border border-blue-500/30 text-sm text-white shadow-2xl transition-opacity duration-300 opacity-0 pointer-events-none"></div>
+
 <script>
 document.getElementById('year').textContent=new Date().getFullYear();
+
+// CONFIG: número de WhatsApp para pedidos (formato internacional)
+const WA_NUMBER='549872133491';
+// Links de Mercado Pago por producto (key = producto, valor = link de pago). Dejar '' si no tenés para ese producto.
+const MP_LINKS={};
+
+// ===== CARRITO =====
+const cartItems={}; // key -> {qty}
+let cartOpen=false;
+
+function getPriceNum(p){return p&&p.price?parseFloat(String(p.price).replace(/[^\d.]/g,'')):0;}
+const moneyFmt=new Intl.NumberFormat('es-AR',{maximumFractionDigits:0});
+const fmtPrice=n=>'$'+moneyFmt.format(n);
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;
+  t.classList.remove('hidden');
+  requestAnimationFrame(()=>t.style.opacity='1');
+  setTimeout(()=>{t.style.opacity='0';setTimeout(()=>t.classList.add('hidden'),300);},2200);
+}
+function cartCount(){return Object.keys(cartItems).reduce((a,k)=>a+cartItems[k].qty,0);}
+function addToCart(key,qty){
+  cartItems[key]={qty};
+  renderCart();
+  cartBadge();
+  const title=PRODUCTS[key]?PRODUCTS[key].title:key;
+  toast('+ '+title+' agregado al carrito');
+}
+function cartBadge(){
+  const n=cartCount(),b=document.getElementById('cart-count');
+  b.textContent=n;
+  b.classList.toggle('hidden',n===0);
+}
+function renderCart(){
+  const wrap=document.getElementById('cart-items');
+  const keys=Object.keys(cartItems).filter(k=>cartItems[k].qty>0);
+  if(!keys.length){
+    wrap.innerHTML='<div class="text-center py-20"><i class="fa-solid fa-cart-shopping text-4xl text-zinc-700 mb-4"></i><p class="text-zinc-500 text-sm font-light">Tu carrito está vacío.</p></div>';
+    document.getElementById('cart-foot').classList.add('hidden');
+    return;
+  }
+  let html='';
+  keys.forEach(k=>{
+    const p=PRODUCTS[k];
+    if(!p)return;
+    const line=p.price==='A consultar'?p.price:fmtPrice(getPriceNum(p)*cartItems[k].qty);
+    const img=p.imgs&&p.imgs[0]?'<img src="'+p.imgs[0]+'" alt="'+p.title+'" class="w-14 h-14 rounded-lg object-cover border border-white/10"/>':'<div class="w-14 h-14 rounded-lg bg-zinc-800 border border-white/10 flex items-center justify-center text-zinc-500"><i class="fa-solid '+(p.icon||'fa-box')+'"></i></div>';
+    html+='<div class="flex items-center gap-4 py-4 border-b border-white/5">'+img
+    +'<div class="flex-1 min-w-0"><p class="text-sm text-white font-medium truncate">'+p.title+'</p><p class="text-blue-400 font-mono text-sm mt-0.5">'+line+'</p></div>'
+    +'<div class="flex items-center gap-2"><button class="qty-btn w-7 h-7 rounded-lg border border-zinc-700 text-zinc-300 hover:border-blue-500/50 hover:text-white transition-colors" data-key="'+k+'" data-delta="-1">−</button>'
+    +'<span class="w-6 text-center text-sm text-white">'+cartItems[k].qty+'</span>'
+    +'<button class="qty-btn w-7 h-7 rounded-lg border border-zinc-700 text-zinc-300 hover:border-blue-500/50 hover:text-white transition-colors" data-key="'+k+'" data-delta="1">+</button>'
+    +'</div><button class="rm-btn text-zinc-500 hover:text-red-500 transition-colors" data-key="'+k+'" aria-label="Quitar elemento"><i class="fa-solid fa-trash-can text-sm"></i></button></div>';
+  });
+  wrap.innerHTML=html;
+  let total=0;
+  keys.forEach(k=>{const p=PRODUCTS[k];if(p&&p.price!=='A consultar')total+=getPriceNum(p)*cartItems[k].qty;});
+  document.getElementById('cart-total').textContent=fmtPrice(total);
+  document.getElementById('cart-foot').classList.toggle('hidden',false);
+}
+function openCart(){cartOpen=true;const w=document.getElementById('cart-wrap');w.classList.remove('hidden');requestAnimationFrame(()=>requestAnimationFrame(()=>w.classList.add('open')));document.getElementById('checkout-view').classList.add('hidden');document.getElementById('cart-view').classList.remove('hidden');document.body.style.overflow='hidden';}
+function closeCart(){cartOpen=false;const w=document.getElementById('cart-wrap');w.classList.remove('open');setTimeout(()=>w.classList.add('hidden'),460);document.body.style.overflow='';}
+function openCheckout(){
+  if(!cartCount())return;
+  const keys=Object.keys(cartItems).filter(k=>cartItems[k].qty>0);
+  let total=0,onlyOne=true,nolegs=false;
+  keys.forEach(k=>{const p=PRODUCTS[k];if(p){if(p.price==='A consultar')nolegs=true;else total+=getPriceNum(p)*cartItems[k].qty;}});
+  if(keys.length!==1)onlyOne=false;
+  const hasMP=onlyOne&&!nolegs&&!!MP_LINKS[keys[0]];
+  const mpBtn=document.getElementById('confirm-mp');
+  mpBtn.style.display=hasMP&&!nolegs?'flex':'none';
+  document.getElementById('mp-note').classList.toggle('hidden',hasMP&&!nolegs);
+  document.getElementById('checkout-price').textContent=nolegs?((keys.length===1&&PRODUCTS[keys[0]])?'A consultar':fmtPrice(total)):fmtPrice(total);
+  if(!hasMP){document.getElementById('confirm-mp').style.display='none';}
+  document.getElementById('cart-view').classList.add('hidden');
+  document.getElementById('checkout-view').classList.remove('hidden');
+  document.getElementById('checkout-view').scrollTop=0;
+}
+function backToCart(){document.getElementById('checkout-view').classList.add('hidden');document.getElementById('cart-view').classList.remove('hidden');}
+function buildOrderMsg(){
+  const name=document.getElementById('buyer-name').value.trim();
+  let msg='Hola, Estalingrado Corp.%0AMe interesa este pedido:'+encodeURIComponent('\n');
+  const keys=Object.keys(cartItems).filter(k=>cartItems[k].qty>0);
+  keys.forEach(k=>{const p=PRODUCTS[k];if(p)msg+=encodeURIComponent('\n• '+cartItems[k].qty+'x '+p.title+' ('+p.sku+')');});
+  if(name)msg+='%0A%0ANombre: '+encodeURIComponent(name);
+  return msg;
+}
+function sendWhatsApp(){
+  const url='https://wa.me/'+WA_NUMBER+'?text='+buildOrderMsg();
+  window.open(url,'_blank','noopener');
+  closeCart();
+  Object.keys(cartItems).forEach(k=>delete cartItems[k]);
+  renderCart();cartBadge();
+  toast('Pedido enviado por WhatsApp. ¡Gracias!');
+}
 
 // Scroll Reveal
 const revealEls=document.querySelectorAll('.reveal');
@@ -579,14 +732,14 @@ searchInput.addEventListener('input',(e)=>{query=normalizeStr(e.target.value.tri
 
 // PRODUCTOS
 const PRODUCTS={
- ecospro:{title:'EC-OS Pro License',origin:'propio',tag:'Sistema Operativo Webizado · Licencia Premium',icon:'fa-desktop',tone:'#60a5fa',type:['programa','Programa'],sku:'PRD-001',price:'$5.000',label:'pago único',desc:'Licencia premium del sistema operativo webizado de la corporación. Acceso ilimitado a todas las aplicaciones, actualizaciones de por vida y soporte prioritario.',feats:[['fa-window-maximize','Acceso ilimitado','Todas las aplicaciones del ecosistema incluídas.'],['fa-arrows-rotate','Actualizaciones','Mejoras de por vida sin costos adicionales.'],['fa-headset','Soporte prioritario','Asistencia directa de la división técnica.'],['fa-user-check','Multi-dispositivo','Instalación en todos tus equipos.']],buy:'https://wa.me/TU-NUMERO?text=Hola%2C%20me%20interesa%20EC-OS%20Pro%20License%20de%20Estalingrado%20Corp',imgs:['https://64.media.tumblr.com/cdc0b2522145ff9be512d2c2e3e37df1/44180efb3630df79-14/s640x960/c2545953229e83683132287461267ad0af793196.pnj']},
+ ecospro:{title:'EC-OS Pro License',origin:'propio',tag:'Sistema Operativo Webizado · Licencia Premium',icon:'fa-desktop',tone:'#60a5fa',type:['programa','Programa'],sku:'PRD-001',price:'$5.000',label:'pago único',desc:'Licencia premium del sistema operativo webizado de la corporación. Acceso ilimitado a todas las aplicaciones, actualizaciones de por vida y soporte prioritario.',feats:[['fa-window-maximize','Acceso ilimitado','Todas las aplicaciones del ecosistema incluídas.'],['fa-arrows-rotate','Actualizaciones','Mejoras de por vida sin costos adicionales.'],['fa-headset','Soporte prioritario','Asistencia directa de la división técnica.'],['fa-user-check','Multi-dispositivo','Instalación en todos tus equipos.']],buy:'https://wa.me/549872133491?text=Hola%2C%20me%20interesa%20EC-OS%20Pro%20License%20de%20Estalingrado%20Corp',imgs:['https://64.media.tumblr.com/cdc0b2522145ff9be512d2c2e3e37df1/44180efb3630df79-14/s640x960/c2545953229e83683132287461267ad0af793196.pnj']},
  appgallery:{title:'AppGallery HUAWEI',origin:'recomendado',tag:'Ecosistema HMS · App Store',icon:'fa-store',tone:'#34d399',type:['programa','Programa'],sku:'PRD-002',price:'Gratis',label:'descarga gratuita',desc:'AppGallery de Huawei – Tu puerta de entrada al ecosistema HMS. Versión: 14.4.0.300 (o última disponible). Compatibilidad: Android 6.0 (API 23) o superior. Arquitecturas: arm64-v8a, armeabi-v7a. Permisos requeridos: Almacenamiento, red, notificaciones (gestionados en tiempo de ejecución).',feats:[['fa-mobile-screen-button','Android 6.0+','Compatible con API 23 o superior.'],['fa-microchip','Arquitecturas','arm64-v8a y armeabi-v7a.'],['fa-shield-halved','Permisos gestionados','Almacenamiento, red y notificaciones en tiempo de ejecución.'],['fa-store','Ecosistema HMS','Tu puerta de entrada al ecosistema Huawei.']],buy:'',download:'https://www.apkmirror.com/apk/huawei/huawei-appgallery/',imgs:['https://64.media.tumblr.com/4042f72a8315f6293acf8d19389911f4/5cb0ddebcdf5f973-e1/s500x750/179243e75907a917e9504f58cd6b80a6c899ea0d.pnj']},
- camiseta:{title:'Camiseta Estalingrado',origin:'propio',tag:'Remera Oficial EC · Merchandising',icon:'fa-shirt',tone:'#a78bfa',type:['fisico','Físico'],sku:'PRD-003',price:'$8.000',label:'envío a todo el país',desc:'Representá la identidad de Estalingrado Corp con nuestra remera oficial EC. Un diseño minimalista y moderno, confeccionado en color negro y con el icónico logo EC en blanco sobre el pecho.',feats:[['fa-shirt','Color: negro','Confeccionada en color negro.'],['fa-star','Logo oficial EC','Logo EC en blanco sobre el pecho.'],['fa-palette','Diseño moderno','Minimalista, cómodo y versátil.'],['fa-building-columns','Producto oficial','Tecnología, identidad y futuro.']],buy:'https://wa.me/TU-NUMERO?text=Hola%2C%20me%20interesa%20Camiseta%20Estalingrado%20de%20Estalingrado%20Corp',imgs:['https://64.media.tumblr.com/ec98e900d6eb4ab197c3e2338a38ce2c/57f65f68dfcb861e-a3/s1280x1920/fb9d81960acf51d1075b4a4b38a031ef36d77b9d.pnj']},
- centinela:{title:'C-01 «CENTINELA»',origin:'propio',tag:'Plataforma Aérea Autónoma · IA Local',icon:'fa-robot',tone:'#a78bfa',type:['fisico','Físico'],sku:'PRD-004',price:'A consultar',label:'contacto comercial',desc:'El C-01 CENTINELA es una plataforma aérea autónoma desarrollada por Estalingrado Corp, diseñada para operar mediante procesamiento de inteligencia artificial 100% local. Integra una variante especializada del modelo Atenea Omega, optimizada para tareas de percepción, análisis del entorno, planificación de navegación y toma de decisiones en tiempo real. La gestión integral del sistema se realiza mediante Centinela, el software propietario de Estalingrado Corp, que proporciona la interfaz de configuración, supervisión y coordinación entre el sistema de vuelo y el módulo de IA. Arquitectura: IA local · Procesamiento en el dispositivo · Navegación autónoma · Control mediante software Centinela · Modelo Atenea Omega.',feats:[['fa-microchip','IA 100% local','Procesamiento totalmente en el dispositivo.'],['fa-brain','Atenea Omega','Variante optimizada para percepción y decisión en tiempo real.'],['fa-route','Navegación autónoma','Planificación de trayectorias y análisis del entorno.'],['fa-gamepad','Software Centinela','Configuración y supervisión integral con software propietario.']],buy:'https://wa.me/TU-NUMERO?text=Hola%2C%20me%20interesa%20el%20C-01%20CENTINELA%20de%20Estalingrado%20Corp',imgs:['https://64.media.tumblr.com/2b05c131be5a70f74a398c04885d40ac/83c7bf6126b76b6d-de/s640x960/f5260efc3a865f94ba8af50c55d46d420a20628e.pnj']},
+ camiseta:{title:'Camiseta Estalingrado',origin:'propio',tag:'Remera Oficial EC · Merchandising',icon:'fa-shirt',tone:'#a78bfa',type:['fisico','Físico'],sku:'PRD-003',price:'$8.000',label:'envío a todo el país',desc:'Representá la identidad de Estalingrado Corp con nuestra remera oficial EC. Un diseño minimalista y moderno, confeccionado en color negro y con el icónico logo EC en blanco sobre el pecho.',feats:[['fa-shirt','Color: negro','Confeccionada en color negro.'],['fa-star','Logo oficial EC','Logo EC en blanco sobre el pecho.'],['fa-palette','Diseño moderno','Minimalista, cómodo y versátil.'],['fa-building-columns','Producto oficial','Tecnología, identidad y futuro.']],buy:'https://wa.me/549872133491?text=Hola%2C%20me%20interesa%20Camiseta%20Estalingrado%20de%20Estalingrado%20Corp',imgs:['https://64.media.tumblr.com/ec98e900d6eb4ab197c3e2338a38ce2c/57f65f68dfcb861e-a3/s1280x1920/fb9d81960acf51d1075b4a4b38a031ef36d77b9d.pnj']},
+ centinela:{title:'C-01 «CENTINELA»',origin:'propio',tag:'Plataforma Aérea Autónoma · IA Local',icon:'fa-robot',tone:'#a78bfa',type:['fisico','Físico'],sku:'PRD-004',price:'A consultar',label:'contacto comercial',desc:'El C-01 CENTINELA es una plataforma aérea autónoma desarrollada por Estalingrado Corp, diseñada para operar mediante procesamiento de inteligencia artificial 100% local. Integra una variante especializada del modelo Atenea Omega, optimizada para tareas de percepción, análisis del entorno, planificación de navegación y toma de decisiones en tiempo real. La gestión integral del sistema se realiza mediante Centinela, el software propietario de Estalingrado Corp, que proporciona la interfaz de configuración, supervisión y coordinación entre el sistema de vuelo y el módulo de IA. Arquitectura: IA local · Procesamiento en el dispositivo · Navegación autónoma · Control mediante software Centinela · Modelo Atenea Omega.',feats:[['fa-microchip','IA 100% local','Procesamiento totalmente en el dispositivo.'],['fa-brain','Atenea Omega','Variante optimizada para percepción y decisión en tiempo real.'],['fa-route','Navegación autónoma','Planificación de trayectorias y análisis del entorno.'],['fa-gamepad','Software Centinela','Configuración y supervisión integral con software propietario.']],buy:'https://wa.me/549872133491?text=Hola%2C%20me%20interesa%20el%20C-01%20CENTINELA%20de%20Estalingrado%20Corp',imgs:['https://64.media.tumblr.com/2b05c131be5a70f74a398c04885d40ac/83c7bf6126b76b6d-de/s640x960/f5260efc3a865f94ba8af50c55d46d420a20628e.pnj']},
  ia27:{title:'Acceso IA 27 Beta',origin:'propio',tag:'Inteligencia Artificial Local · Beta',icon:'fa-robot',tone:'#22d3ee',type:['programa','Programa'],sku:'PRD-005',price:'Próximamente',label:'acceso anticipado',coming:true,desc:'Acceso anticipado a la versión beta del agente IA 27 con el modelo Atenea Omega. Inteligencia artificial 100% local, privada y en tu equipo.',feats:[['fa-microchip','100% local','Todo el procesamiento en tu equipo.'],['fa-lock','Privado','Tus datos nunca salen de tu computadora.'],['fa-brain','Atenea Omega','Modelo de comprensión y razonamiento.'],['fa-rocket','Beta abierta','Sé de los primeros en probarla.']],buy:'',imgs:['https://64.media.tumblr.com/42cb4f83b88bd360490ea56972eff037/4e3931f07c2eabb0-75/s640x960/f9129ef47ad14c206a425227d49ca2fae0cc44af.jpg'],video:'https://player.vimeo.com/video/1216560105'},
  libreoffice:{title:'LibreOffice',origin:'recomendado',tag:'Suite Ofimática Libre · Gratuita',icon:'fa-file-lines',tone:'#fb7185',type:['programa','Programa'],sku:'PRD-006',price:'Gratis',label:'descarga gratuita',desc:'LibreOffice es la suite ofimática libre y gratuita más completa del mundo. Incluye Writer para documentos, Calc para planillas de cálculo, Impress para presentaciones, Draw para diagramas, Math para fórmulas y Base para bases de datos. Compatible con los formatos de Microsoft Office y 100% libre de costos, ideal para individuos y organizaciones. Disponible para Windows, macOS y Linux.',feats:[['fa-pen-to-square','Writer','Procesador de textos con formato profesional.'],['fa-table','Calc','Planillas de cálculo con funciones avanzadas.'],['fa-chart-pie','Impress','Presentaciones con efectos y transiciones.'],['fa-arrows-rotate','Formatos compatibles','Abre los formatos de Microsoft Office.']],buy:'',download:'https://es.libreoffice.org/descarga/',imgs:['https://imgs.search.brave.com/NcESbIl3yOG_IMEeCZVkH7lhHKI3-RN2PyHkBByHYWc/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly93d3cu/Y29tcGFyYXNvZnR3/YXJlLmNvbS5hci9p/bWFnZS1hc3NldHMv/NDEyL05ERXlmSGR3/TFdOdmJuUmxiblF2/ZFhCc2IyRmtjeTh5/TURFNEx6QTRMMnh2/WjI5TWFXSnlaVTlt/Wm1salpTNXdibWMu/d2VicA']},
  ia27fisico:{title:'IA 27 — Atenea Omega',origin:'propio',tag:'IA Local · Edición Física',icon:'fa-robot',tone:'#a78bfa',type:['fisico','Físico'],sku:'PRD-007',price:'A confirmar',label:'precio próximamente',coming:true,desc:'IA 27 — Atenea Omega. La nueva IA local de Estalingrado Corp, diseñada para ofrecer inteligencia artificial avanzada directamente en tu equipo, sin depender de la nube. Un modelo potente, privado y desarrollado en Argentina.',feats:[['fa-robot','IA 100% local','Toda la potencia de Atenea Omega en tu equipo.'],['fa-flag','Hecha en Argentina','Desarrollada y producida en el país.'],['fa-lock','Privacidad total','Sin depender de servicios externos en la nube.'],['fa-gift','Edición física','Formato coleccionista exclusivo.']],buy:'',imgs:['https://64.media.tumblr.com/74f37b3987410a0fa12e5eb32209c60a/74a07994a91cfcfd-2d/s540x810/9ba16f8485bc17e90fe7ba0152e7bd0b27e5c75a.jpg','https://64.media.tumblr.com/e1283cdce02cb0ea82bfc8c9b019eb79/965d26a4cbb855c1-d5/s540x810/fc5455be39f9ee47b38895a68f9669a0c9f30865.pnj']},
- packhacking:{title:'Pack Hacking Ético',origin:'propio',tag:'Laboratorio Portátil · Ciberseguridad',icon:'fa-user-secret',tone:'#a78bfa',type:['fisico','Físico'],sku:'PRD-013',price:'$3.500.000',label:'pesos argentinos · 1 solo disponible',desc:'Laboratorio portátil de ciberseguridad, radiofrecuencia y hardware.\n\nLlevá tu laboratorio de seguridad a cualquier lugar. El Pack Hacking Ético combina una estación Linux, herramientas SDR y dispositivos de análisis para experimentar, aprender y realizar pruebas de seguridad sobre sistemas propios o con autorización.\n\n¿Qué incluye?\n· Laptop ThinkPad con Linux — estación principal para herramientas de ciberseguridad, programación y análisis.\n· SDR + PortaPack — exploración y análisis de señales de radiofrecuencia.\n· Analizador de espectro portátil — visualización y estudio de señales RF.\n· PC portátil con teclado y controles — plataforma móvil para ejecutar herramientas técnicas.\n· Dispositivos portátiles de experimentación — instrumentos auxiliares para pruebas y desarrollo.\n· Antenas y conexiones RF — para conectar y experimentar con los diferentes módulos.\n\nDiseñado para: Ciberseguridad · Pentesting autorizado · SDR · Radiofrecuencia · Hardware Hacking · Linux · Investigación · Educación',feats:[['fa-desktop','Laptop ThinkPad + Linux','Estación principal para herramientas de ciberseguridad, programación y análisis.'],['fa-tower-broadcast','SDR + PortaPack','Exploración y análisis de señales de radiofrecuencia.'],['fa-wave-square','Analizador de espectro','Visualización y estudio de señales RF.'],['fa-laptop','Hardware de experimentación','Dispositivos portátiles y antenas RF para pruebas y desarrollo.']],buy:'https://wa.me/TU-NUMERO?text=Hola%2C%20me%20interesa%20el%20Pack%20Hacking%20Ético%20de%20Estalingrado%20Corp',imgs:['https://64.media.tumblr.com/bc467aa5628b925aa778d670edcb0220/a64d977bc5f36aa0-50/s640x960/13b21473fdfdc2d9fcc851fb0354a54ee4c732f1.jpg']},
+ packhacking:{title:'Pack Hacking Ético',origin:'propio',tag:'Laboratorio Portátil · Ciberseguridad',icon:'fa-user-secret',tone:'#a78bfa',type:['fisico','Físico'],sku:'PRD-013',price:'$3.500.000',label:'pesos argentinos · 1 solo disponible',desc:'Laboratorio portátil de ciberseguridad, radiofrecuencia y hardware.\n\nLlevá tu laboratorio de seguridad a cualquier lugar. El Pack Hacking Ético combina una estación Linux, herramientas SDR y dispositivos de análisis para experimentar, aprender y realizar pruebas de seguridad sobre sistemas propios o con autorización.\n\n¿Qué incluye?\n· Laptop ThinkPad con Linux — estación principal para herramientas de ciberseguridad, programación y análisis.\n· SDR + PortaPack — exploración y análisis de señales de radiofrecuencia.\n· Analizador de espectro portátil — visualización y estudio de señales RF.\n· PC portátil con teclado y controles — plataforma móvil para ejecutar herramientas técnicas.\n· Dispositivos portátiles de experimentación — instrumentos auxiliares para pruebas y desarrollo.\n· Antenas y conexiones RF — para conectar y experimentar con los diferentes módulos.\n\nDiseñado para: Ciberseguridad · Pentesting autorizado · SDR · Radiofrecuencia · Hardware Hacking · Linux · Investigación · Educación',feats:[['fa-desktop','Laptop ThinkPad + Linux','Estación principal para herramientas de ciberseguridad, programación y análisis.'],['fa-tower-broadcast','SDR + PortaPack','Exploración y análisis de señales de radiofrecuencia.'],['fa-wave-square','Analizador de espectro','Visualización y estudio de señales RF.'],['fa-laptop','Hardware de experimentación','Dispositivos portátiles y antenas RF para pruebas y desarrollo.']],buy:'https://wa.me/549872133491?text=Hola%2C%20me%20interesa%20el%20Pack%20Hacking%20Ético%20de%20Estalingrado%20Corp',imgs:['https://64.media.tumblr.com/bc467aa5628b925aa778d670edcb0220/a64d977bc5f36aa0-50/s640x960/13b21473fdfdc2d9fcc851fb0354a54ee4c732f1.jpg']},
  malwarebytes:{title:'Malwarebytes',origin:'recomendado',tag:'Antimalware · Protección Premium',icon:'fa-shield-halved',tone:'#22d3ee',type:['programa','Programa'],sku:'PRD-008',price:'Gratis',label:'descarga gratuita',desc:'Malwarebytes es el antimalware líder en detección y eliminación de amenazas avanzadas. Protege tu equipo contra malware, ransomware, spyware y sitios maliciosos con tecnología de última generación. Ideal como capa adicional de seguridad junto a tu antivirus tradicional. Disponible para Windows, macOS, Android e iOS.',feats:[['fa-shield-halved','Antimalware avanzado','Detección de malware y ransomware.'],['fa-bolt','Rápido y ligero','Análisis sin frenar tu equipo.'],['fa-globe','Navegación segura','Bloqueo de sitios maliciosos.'],['fa-desktop','Multiplataforma','Windows, macOS, Android e iOS.']],buy:'',download:'https://www.malwarebytes.com/es/mwb-download/thankyou',imgs:['https://play-lh.googleusercontent.com/qB0MqW9JALRW6P_nm4so9SMkSWoKe395SknZo0Uomqux4GOnX7AWKfdN1xEJwnFyftt0_pMUvjYv-_XGvhYk']},
  opencode:{title:'OpenCode',origin:'recomendado',tag:'Agente de Codificación IA · Terminal',icon:'fa-terminal',tone:'#fbbf24',type:['programa','Programa'],sku:'PRD-009',price:'Gratis',label:'open source',fav:true,desc:'OpenCode es el agente de codificación con inteligencia artificial que trabaja directamente en tu terminal. Asistencia en tiempo real para escribir, refactorear, testear y documentar código en tus proyectos. 100% open source, integrable con GitHub, con extensión para tu navegador y la capacidad de ejecutar tareas autónomas desde la línea de comandos. El compañero perfecto para desarrolladores que quieren una IA sin salir de su flujo de trabajo.',feats:[['fa-terminal','En tu terminal','Asistencia de IA directamente en la línea de comandos.'],['fa-code','Código asistido','Escribir, refactorizar y testear con ayuda de IA.'],['fa-github','Integración GitHub','Flujo de trabajo conectado con tu repositorio.'],['fa-star','Favorito','Destacado por la comunidad de Estalingrado Corp.']],buy:'',download:'https://opencode.ai',imgs:['https://cdn.aiidelist.com/api/image/R79kIWhlQ1sOzTMq94aTW.webp']},
 '0ad':{title:'0 A.D.',origin:'recomendado',tag:'Estrategia en Tiempo Real \u00B7 Antigüedad',icon:'fa-chess-rook',tone:'#a78bfa',type:['juego','Juego'],sku:'PRD-010',price:'Gratis',label:'open source',desc:'0 A.D. es un juego de estrategia en tiempo real (RTS) de código abierto ambientado en la antigüedad, desde el 500 a.C. hasta el 500 d.C. Desarrollado por Wildfire Games, compite con los grandes títulos del género como Age of Empires. Controla civilizaciones antiguas, gestiona recursos, construye ciudades y lucha en batallas épicas con unidades terrestres y navales. Totalmente gratuito, sin microtransacciones ni DRM.',feats:[['fa-chess-rook','RTS clásico','Estrategia en tiempo real estilo Age of Empires.'],['fa-landmark','Antigüedad','Desde el 500 a.C. hasta el 500 d.C.'],['fa-code-branch','Código abierto','100% gratuito, sin DRM ni microtransacciones.'],['fa-users','Multijugador','Partidas online y campañas individuales.']],buy:'',download:'https://play0ad.com/',imgs:['https://images.hive.blog/DQmcMPC2K2yorQqwtH3cEyGv3giB2juFfCpcme7fo2AKE9X/55.-Rese%C3%B1as-juegos-0AD-4.jpg'],video:'https://www.youtube.com/embed/7ndfuKt_N2A'},
@@ -778,20 +931,24 @@ function openProduct(key){
   const buy=document.getElementById('prod-buy');
   buy.onclick=null;
   if(p.coming){
-    buy.removeAttribute('href');
+    buy.disabled=true;
     buy.className='inline-flex items-center gap-2.5 px-6 py-3 rounded-full text-xs font-semibold bg-zinc-700/60 text-zinc-300 cursor-not-allowed';
     buy.innerHTML='<i class="fa-solid fa-hourglass-half text-sm"></i> Próximamente';
   }else if(p.download){
-    buy.href=p.download;
-    buy.setAttribute('target','_blank');
+    buy.removeAttribute('href');
     buy.className='dl-btn inline-flex items-center gap-2.5 px-6 py-3 rounded-full text-xs font-semibold';
-    buy.innerHTML='<i class="fa-solid fa-download text-sm"></i> DESCARGAR';
-    buy.onclick=()=>alert('Estás saliendo de Estalingrado Corp. Serás redirigido a un sitio externo para completar la descarga.');
+    buy.innerHTML='<i class="fa-solid fa-download text-sm"></i> DESCARGAR GRATIS';
+    buy.onclick=()=>toast('Descarga gratuita disponible en el sitio oficial');
   }else{
-    buy.removeAttribute('target');
-    buy.href=p.buy;
+    buy.disabled=false;
     buy.className='wsp-btn inline-flex items-center gap-2.5 px-6 py-3 rounded-full text-xs font-semibold';
-    buy.innerHTML='<i class="fa-brands fa-whatsapp text-sm"></i> Comprar por WhatsApp';
+    buy.innerHTML='<i class="fa-solid fa-cart-plus text-sm"></i> Agregar al carrito';
+    buy.onclick=()=>{
+      addToCart(key,1);
+      const pc=cartCount();
+      if(pc>3||pc>1&&!/^\$\d/.test(p.price)){osClose('prod-win');toast('Producto agregado al carrito');}
+      else{toast((PRODUCTS[key]?PRODUCTS[key].title:key)+' agregado al carrito');}
+    };
   }
   document.getElementById('prod-tb-ico').innerHTML='<i class="fa-solid '+p.icon+'"></i>';
   document.getElementById('prod-tb-txt').textContent=p.title+' · Market Estalingrado';
@@ -804,6 +961,38 @@ function openProduct(key){
   osOpen('prod-win');
 }
 document.querySelectorAll('.prod-open').forEach(b=>b.addEventListener('click',()=>openProduct(b.dataset.product)));
+
+// Eventos del carrito
+document.getElementById('cart-btn').addEventListener('click',openCart);
+document.getElementById('cart-close').addEventListener('click',closeCart);
+document.getElementById('cart-backdrop').addEventListener('click',closeCart);
+document.getElementById('checkout-btn').addEventListener('click',openCheckout);
+document.getElementById('back-btn').addEventListener('click',backToCart);
+document.getElementById('confirm-wa').addEventListener('click',sendWhatsApp);
+document.getElementById('confirm-mp').addEventListener('click',()=>{
+  const keys=Object.keys(cartItems).filter(k=>cartItems[k].qty>0);
+  const link=keys.length===1?MP_LINKS[keys[0]]:'';
+  if(!link){toast('No hay link de Mercado Pago para este producto.');return;}
+  const url=link+(link.indexOf('?')>-1?'&':'?')+'title='+encodeURIComponent(PRODUCTS[keys[0]].title);
+  window.open(url,'_blank','noopener');
+  closeCart();
+  Object.keys(cartItems).forEach(k=>delete cartItems[k]);
+  renderCart();cartBadge();
+  toast('Redirigiendo a Mercado Pago…');
+});
+document.getElementById('cart-items').addEventListener('click',(e)=>{
+  const qb=e.target.closest('.qty-btn');
+  if(qb){
+    const k=qb.dataset.key;if(!cartItems[k])return;
+    cartItems[k].qty+=parseInt(qb.dataset.delta,10);
+    if(cartItems[k].qty<1)cartItems[k].qty=1;
+    renderCart();cartBadge();
+    return;
+  }
+  const rb=e.target.closest('.rm-btn');
+  if(rb){delete cartItems[rb.dataset.key];renderCart();cartBadge();}
+});
+document.addEventListener('keydown',(e)=>{if(e.key==='Escape'&&cartOpen)closeCart();});
 document.addEventListener('keydown',(e)=>{
  if(e.key==='Escape'){
   Object.keys(OS.wins).forEach(id=>{const w=OS.wins[id];if(!w.el.classList.contains('hidden')&&!w.min)osClose(id);});
