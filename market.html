@@ -629,6 +629,26 @@ Software y productos de calidad.
 <!-- TOAST -->
 <div id="toast" class="hidden fixed bottom-20 left-1/2 -translate-x-1/2 z-[700] px-5 py-3 rounded-full glass border border-blue-500/30 text-sm text-white shadow-2xl transition-opacity duration-300 opacity-0 pointer-events-none"></div>
 
+<!-- REDIRECCIÓN IA 27 -->
+<div id="ia-loader" class="hidden fixed inset-0 z-[800] items-center justify-center">
+<div class="absolute inset-0 bg-black/85 backdrop-blur-xl"></div>
+<div class="relative z-10 flex flex-col items-center px-6 text-center max-w-sm">
+<div class="relative mb-6">
+<div class="absolute inset-0 rounded-full bg-blue-500/30 blur-2xl animate-pulse"></div>
+<img id="ia-loader-logo" src="https://64.media.tumblr.com/74f37b3987410a0fa12e5eb32209c60a/74a07994a91cfcfd-2d/s540x810/9ba16f8485bc17e90fe7ba0152e7bd0b27e5c75a.jpg" alt="IA 27" class="relative w-20 h-20 object-cover rounded-full border border-blue-500/40 shadow-[0_0_30px_rgba(37,99,235,.4)]"/>
+</div>
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-blue-500/20 bg-blue-500/5 mb-5">
+<span class="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></span>
+<span class="text-blue-400 font-mono text-[10px] tracking-[.2em] uppercase">IA 27 · Conexión segura</span>
+</div>
+<p class="text-white font-light text-lg leading-relaxed mb-2">Estableciendo conexión con el proveedor…</p>
+<p class="text-zinc-500 text-sm font-light mb-8">Te estamos redirigiendo al sitio oficial para completar la descarga. Un momento.</p>
+<div class="w-48 h-1 rounded-full bg-zinc-800 overflow-hidden">
+<div id="ia-loader-bar" class="h-full bg-gradient-to-r from-blue-600 to-blue-400" style="width:0%"></div>
+</div>
+</div>
+</div>
+
 <script>
 document.getElementById('year').textContent=new Date().getFullYear();
 
@@ -984,7 +1004,7 @@ function openProduct(key){
     buy.className='dl-btn inline-flex items-center gap-2.5 px-6 py-3 rounded-full text-xs font-semibold';
     buy.classList.add('cursor-pointer');
     buy.innerHTML='<i class="fa-solid fa-download text-sm"></i> DESCARGAR GRATIS';
-    buy.onclick=()=>{window.open(p.download,'_blank','noopener');};
+    buy.onclick=()=>redirectTo(p.download);
   }else{
     buy.disabled=false;
     buy.className='wsp-btn inline-flex items-center gap-2.5 px-6 py-3 rounded-full text-xs font-semibold';
@@ -1039,6 +1059,30 @@ document.getElementById('cart-items').addEventListener('click',(e)=>{
   if(rb){delete cartItems[rb.dataset.key];renderCart();cartBadge();}
 });
 document.addEventListener('keydown',(e)=>{if(e.key==='Escape'&&cartOpen)closeCart();});
+
+// ===== REDIRECCIÓN CON AVISO IA 27 =====
+function redirectTo(url){
+  const loader=document.getElementById('ia-loader');
+  const bar=document.getElementById('ia-loader-bar');
+  bar.style.width='0%';
+  loader.classList.remove('hidden');
+  loader.classList.add('flex');
+  document.body.style.overflow='hidden';
+  const total=1100,start=performance.now();
+  function tick(now){
+    const pct=Math.min(100,((now-start)/total)*100);
+    bar.style.width=pct+'%';
+    if(pct<100){requestAnimationFrame(tick);return;}
+    setTimeout(()=>{window.open(url,'_blank','noopener');hideLoader();},250);
+  }
+  requestAnimationFrame(tick);
+}
+function hideLoader(){
+  const loader=document.getElementById('ia-loader');
+  loader.classList.add('hidden');
+  loader.classList.remove('flex');
+  document.body.style.overflow='';
+}
 
 // ===== COMPARTIR =====
 function productLink(key){return location.origin+location.pathname+'#producto='+encodeURIComponent(key);}
