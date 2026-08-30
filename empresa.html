@@ -448,9 +448,9 @@ form.addEventListener('submit',(e)=>{e.preventDefault();alert('Conexión encript
 
 // Mobile menu
 const mmenu=document.getElementById('mobile-menu');
-document.getElementById('mobile-menu-btn').addEventListener('click',()=>{mmenu.classList.remove('hidden');mmenu.classList.add('flex');});
-document.getElementById('mobile-menu-close').addEventListener('click',()=>{mmenu.classList.add('hidden');mmenu.classList.remove('flex');});
-document.querySelectorAll('.mobile-link').forEach(l=>l.addEventListener('click',()=>{mmenu.classList.add('hidden');mmenu.classList.remove('flex');}));
+document.getElementById('mobile-menu-btn').addEventListener('click',()=>{mmenu.classList.remove('hidden');mmenu.classList.add('flex');document.body.style.overflow='hidden';});
+document.getElementById('mobile-menu-close').addEventListener('click',()=>{mmenu.classList.add('hidden');mmenu.classList.remove('flex');document.body.style.overflow='';});
+document.querySelectorAll('.mobile-link').forEach(l=>l.addEventListener('click',()=>{mmenu.classList.add('hidden');mmenu.classList.remove('flex');document.body.style.overflow='';}));
 </script>
 </body>
 </html>
