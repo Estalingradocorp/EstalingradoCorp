@@ -982,8 +982,9 @@ function openProduct(key){
   }else if(p.download){
     buy.removeAttribute('href');
     buy.className='dl-btn inline-flex items-center gap-2.5 px-6 py-3 rounded-full text-xs font-semibold';
+    buy.classList.add('cursor-pointer');
     buy.innerHTML='<i class="fa-solid fa-download text-sm"></i> DESCARGAR GRATIS';
-    buy.onclick=()=>toast('Descarga gratuita disponible en el sitio oficial');
+    buy.onclick=()=>{window.open(p.download,'_blank','noopener');};
   }else{
     buy.disabled=false;
     buy.className='wsp-btn inline-flex items-center gap-2.5 px-6 py-3 rounded-full text-xs font-semibold';
