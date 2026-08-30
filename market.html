@@ -91,6 +91,8 @@ html{scroll-behavior:smooth}
 #cart-wrap.open #cart-drawer{transform:translateX(0)}
 #cart-backdrop{opacity:0;transition:opacity .45s ease}
 #cart-wrap.open #cart-backdrop{opacity:1}
+@keyframes cursorBlink{0%,49%{opacity:1}50%,100%{opacity:0}}
+#ia-msg-cursor,#ia-msg span{animation:cursorBlink 1s infinite}
 </style>
 </head>
 <body class="min-h-screen antialiased">
@@ -635,17 +637,20 @@ Software y productos de calidad.
 <div class="relative z-10 flex flex-col items-center px-6 text-center max-w-sm">
 <div class="relative mb-6">
 <div class="absolute inset-0 rounded-full bg-blue-500/30 blur-2xl animate-pulse"></div>
-<img id="ia-loader-logo" src="https://64.media.tumblr.com/74f37b3987410a0fa12e5eb32209c60a/74a07994a91cfcfd-2d/s540x810/9ba16f8485bc17e90fe7ba0152e7bd0b27e5c75a.jpg" alt="IA 27" class="relative w-20 h-20 object-cover rounded-full border border-blue-500/40 shadow-[0_0_30px_rgba(37,99,235,.4)]"/>
+<img src="https://64.media.tumblr.com/c60d9e1d02bae4230849ad69a879503b/a1a747e1ec0bc317-3a/s640x960/bdb7628be91380c7fd668ee04caeb08fe644e832.pnj" alt="IA 27" class="relative w-20 h-20 object-cover rounded-full border border-blue-500/40 shadow-[0_0_30px_rgba(37,99,235,.4)]"/>
 </div>
 <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-blue-500/20 bg-blue-500/5 mb-5">
 <span class="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></span>
 <span class="text-blue-400 font-mono text-[10px] tracking-[.2em] uppercase">IA 27 · Conexión segura</span>
 </div>
-<p class="text-white font-light text-lg leading-relaxed mb-2">Estableciendo conexión con el proveedor…</p>
-<p class="text-zinc-500 text-sm font-light mb-8">Te estamos redirigiendo al sitio oficial para completar la descarga. Un momento.</p>
+<div id="ia-msg" class="text-white font-light text-lg leading-relaxed mb-2 min-h-[2em]">
+<span id="ia-msg-cursor" class="text-blue-400 font-mono">▌</span>
+</div>
+<p class="text-zinc-500 text-sm font-light mb-8">Te estamos redirigiendo al sitio oficial para completar la descarga.</p>
 <div class="w-48 h-1 rounded-full bg-zinc-800 overflow-hidden">
 <div id="ia-loader-bar" class="h-full bg-gradient-to-r from-blue-600 to-blue-400" style="width:0%"></div>
 </div>
+
 </div>
 </div>
 
@@ -1061,19 +1066,43 @@ document.getElementById('cart-items').addEventListener('click',(e)=>{
 document.addEventListener('keydown',(e)=>{if(e.key==='Escape'&&cartOpen)closeCart();});
 
 // ===== REDIRECCIÓN CON AVISO IA 27 =====
+const IA_TYPE_MSG='Estableciendo conexión con el proveedor…';
+function typeIaMessage(el,text,onDone){
+  let i=0;
+  el.textContent='';
+  const cursor=document.createElement('span');
+  cursor.className='text-blue-400 font-mono';
+  cursor.textContent='▌';
+  el.appendChild(cursor);
+  const interval=setInterval(()=>{
+    if(i<text.length){
+      el.insertBefore(document.createTextNode(text[i]),cursor);
+      i++;
+    }else{
+      clearInterval(interval);
+      cursor.style.animation='cursorBlink 1s infinite';
+      if(onDone)onDone();
+    }
+  },28);
+  return interval;
+}
 function redirectTo(url){
   const loader=document.getElementById('ia-loader');
   const bar=document.getElementById('ia-loader-bar');
+  const msg=document.getElementById('ia-msg');
   bar.style.width='0%';
   loader.classList.remove('hidden');
   loader.classList.add('flex');
   document.body.style.overflow='hidden';
-  const total=1100,start=performance.now();
+  const total=2600,start=performance.now();
+  let opened=false;
+  typeIaMessage(msg,IA_TYPE_MSG);
   function tick(now){
     const pct=Math.min(100,((now-start)/total)*100);
     bar.style.width=pct+'%';
     if(pct<100){requestAnimationFrame(tick);return;}
-    setTimeout(()=>{window.open(url,'_blank','noopener');hideLoader();},250);
+    if(!opened){opened=true;window.open(url,'_blank','noopener');}
+    setTimeout(()=>{hideLoader();msg.textContent='';},500);
   }
   requestAnimationFrame(tick);
 }
