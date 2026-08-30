@@ -153,9 +153,8 @@ html{scroll-behavior:smooth}
 <span class="text-[10px] text-blue-500/70 font-mono tracking-[.2em] uppercase"><i class="fa-solid fa-terminal text-[9px] mr-1"></i>Atenea Omega · escribiendo…</span>
 </div>
 </div>
-<h1 class="text-5xl md:text-7xl lg:text-[5.5rem] font-light tracking-tight text-white leading-[1.05] mb-8" aria-label="Ingeniería de datos para el futuro.">
-<span class="block min-h-[1.15em]" id="hero-t1"></span>
-<span class="block min-h-[1.15em]" id="hero-t2"><span id="hero-t2a"></span><span class="tg font-medium italic font-serif" id="hero-t2b"></span><span class="hero-cursor text-blue-400 font-mono">▌</span></span>
+<h1 class="text-5xl md:text-7xl lg:text-[5.5rem] font-light tracking-tight text-white leading-[1.05] mb-8" id="hero-title" aria-live="polite">
+<span class="block min-h-[1.15em]" id="hero-t1"><span class="hero-cursor text-blue-400 font-mono">▌</span></span>
 </h1>
 <p class="text-lg md:text-xl text-zinc-400 max-w-2xl font-light leading-relaxed mb-12 min-h-[1.7em]" id="hero-sub">
 </p>
@@ -873,31 +872,34 @@ document.querySelectorAll('.mobile-link').forEach(l=>l.addEventListener('click',
 (function(){
   const SPEED=30;
   const t1=document.getElementById('hero-t1');
-  const t2a=document.getElementById('hero-t2a');
-  const t2b=document.getElementById('hero-t2b');
   const sub=document.getElementById('hero-sub');
-  const cursorEl=document.querySelector('.hero-cursor');
   if(!t1||!sub)return;
 
-  const T1='Ingeniería de datos ';
-  const T2A='para el ';
-  const T2B='futuro.';
-  const SUB='Corporación Estalingrado desarrolla tecnologías de búsqueda, infraestructura crítica y protocolos de seguridad para las organizaciones más exigentes del mundo.';
+  const VARIANTS=[
+    {title:'Ingeniería de datos para el futuro.',sub:'Corporación Estalingrado desarrolla tecnologías de búsqueda, infraestructura crítica y protocolos de seguridad para las organizaciones más exigentes del mundo.'},
+    {title:'Tecnología que trabaja por un futuro seguro.',sub:'Buscamos, protegemos y escalamos la infraestructura crítica de las organizaciones más exigentes del mundo.'},
+    {title:'Datos que definen el mañana.',sub:'Desarrollamos tecnologías de búsqueda, infraestructura crítica y protocolos de seguridad para quienes exigen excelencia.'},
+    {title:'Construimos el futuro con precisión.',sub:'En Estalingrado Corp convertimos datos, seguridad y tecnología en la base de un sistema confiable.'},
+    {title:'Seguridad, velocidad y escalabilidad.',sub:'Soluciones de búsqueda e infraestructura crítica diseñadas para las organizaciones más exigentes del mundo.'}
+  ];
+  const chosen=VARIANTS[Math.floor(Math.random()*VARIANTS.length)];
 
-  function typeInto(el,text,done){
-    let i=0;
-    const iv=setInterval(()=>{
-      if(i<text.length){el.textContent+=text[i];i++;}
-      else{clearInterval(iv);done();}
-    },SPEED);
+  function typeInto(el,text){
+    return new Promise(res=>{
+      let i=0;
+      const iv=setInterval(()=>{
+        if(i<text.length){el.textContent+=text[i];i++;}
+        else{clearInterval(iv);res();}
+      },SPEED);
+    });
   }
-  function showSub(){
-    // escribir el parrafo moviendo el cursor al principio del mismo
-    document.querySelector('.hero-cursor')&&cursorEl.remove();
-    typeInto(sub,SUB,()=>{cursorEl.remove();});
+  async function run(){
+    await typeInto(t1,chosen.title);
+    const cursor=document.querySelector('.hero-cursor');
+    if(cursor)cursor.remove();
+    await typeInto(sub,chosen.sub);
   }
-  // secuencia
-  typeInto(t1,T1,()=>typeInto(t2a,T2A,()=>typeInto(t2b,T2B,()=>showSub())));
+  run();
 })();
 </script>
 </body>
