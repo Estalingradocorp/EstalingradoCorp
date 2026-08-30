@@ -150,13 +150,14 @@ html{scroll-behavior:smooth}
 </div>
 <div class="flex flex-col">
 <span class="text-white font-medium text-sm tracking-wide">IA 27</span>
-<span class="text-[10px] text-blue-500/70 font-mono tracking-[.2em] uppercase"><i class="fa-solid fa-terminal text-[9px] mr-1"></i>Atenea Omega · escribiendo…</span>
+<span id="ia-status" class="text-[10px] text-blue-500/70 font-mono tracking-[.2em] uppercase"><i class="fa-solid fa-terminal text-[9px] mr-1"></i><span id="ia-status-txt">Atenea Omega · escribiendo…</span></span>
 </div>
 </div>
 <h1 class="text-5xl md:text-7xl lg:text-[5.5rem] font-light tracking-tight text-white leading-[1.05] mb-8" id="hero-title" aria-live="polite">
-<span class="block min-h-[1.15em]" id="hero-t1"><span class="hero-cursor text-blue-400 font-mono">▌</span></span>
+<span class="block min-h-[1.15em]" id="hero-t1"><span id="hero-t1-txt"></span><span class="hero-cursor text-blue-400 font-mono">▌</span></span>
 </h1>
 <p class="text-lg md:text-xl text-zinc-400 max-w-2xl font-light leading-relaxed mb-12 min-h-[1.7em]" id="hero-sub">
+<span id="hero-sub-txt"></span><span class="hero-cursor text-blue-400 font-mono">▌</span>
 </p>
 <div class="flex flex-wrap gap-4 a-fu d4">
 <a href="market.html" class="group inline-flex items-center gap-3 border border-zinc-700 text-zinc-300 px-8 py-4 text-xs font-medium tracking-[.2em] uppercase hover:border-blue-500/50 hover:text-white transition-all duration-300">
@@ -871,9 +872,12 @@ document.querySelectorAll('.mobile-link').forEach(l=>l.addEventListener('click',
 // ===== HERO IA 27 — texto escrito en pantalla =====
 (function(){
   const SPEED=30;
-  const t1=document.getElementById('hero-t1');
-  const sub=document.getElementById('hero-sub');
-  if(!t1||!sub)return;
+  const t1=document.getElementById('hero-t1-txt');
+  const t1c=document.querySelector('#hero-t1 .hero-cursor');
+  const subTxt=document.getElementById('hero-sub-txt');
+  const subCursor=document.querySelector('#hero-sub .hero-cursor');
+  const statusTxt=document.getElementById('ia-status-txt');
+  if(!t1||!subTxt)return;
 
   const VARIANTS=[
     {title:'Ingeniería de datos para el futuro.',sub:'Corporación Estalingrado desarrolla tecnologías de búsqueda, infraestructura crítica y protocolos de seguridad para las organizaciones más exigentes del mundo.'},
@@ -895,9 +899,10 @@ document.querySelectorAll('.mobile-link').forEach(l=>l.addEventListener('click',
   }
   async function run(){
     await typeInto(t1,chosen.title);
-    const cursor=document.querySelector('.hero-cursor');
-    if(cursor)cursor.remove();
-    await typeInto(sub,chosen.sub);
+    if(t1c)t1c.remove();
+    await typeInto(subTxt,chosen.sub);
+    if(subCursor)subCursor.remove();
+    if(statusTxt)statusTxt.textContent='Atenea Omega · en línea';
   }
   run();
 })();

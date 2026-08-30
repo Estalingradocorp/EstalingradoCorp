@@ -30,6 +30,8 @@ html{scroll-behavior:smooth}
 .glass{background:rgba(0,0,0,.6);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
 .glass-card{background:rgba(255,255,255,.02);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.04)}
 .glow-line{height:1px;background:linear-gradient(90deg,transparent,rgba(37,99,235,.5),transparent)}
+@keyframes cursorBlink{0%,49%{opacity:1}50%,100%{opacity:0}}
+.hero-cursor{display:inline-block;animation:cursorBlink 1s infinite}
 .tg{background:linear-gradient(135deg,#60a5fa,#2563eb,#1d4ed8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .scard{position:relative;overflow:hidden;transition:all .5s cubic-bezier(.16,1,.3,1)}
 .scard::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(37,99,235,.03),transparent);transition:left .7s ease}
@@ -82,12 +84,22 @@ html{scroll-behavior:smooth}
 <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
 <span class="text-blue-400 font-mono text-[10px] sm:text-[11px] tracking-[.1em] sm:tracking-[.2em] uppercase">Corporación · Identidad</span>
 </div>
-<h1 class="text-5xl md:text-7xl font-light tracking-tight text-white leading-[1.05] mb-6">
-<span class="block a-fu d1">Estalingrado</span>
-<span class="block a-fu d2"><span class="tg font-medium italic font-serif">Corp.</span></span>
+<div class="flex items-center gap-3 mb-6 reveal">
+<div class="relative flex-shrink-0">
+<div class="absolute inset-0 rounded-full bg-blue-500/30 blur-xl"></div>
+<img src="https://64.media.tumblr.com/c60d9e1d02bae4230849ad69a879503b/a1a747e1ec0bc317-3a/s640x960/bdb7628be91380c7fd668ee04caeb08fe644e832.pnj" alt="IA 27 — Atenea Omega" class="relative w-11 h-11 object-cover rounded-full border border-blue-500/40 shadow-[0_0_20px_rgba(37,99,235,.4)]"/>
+<span class="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-emerald-500 border-2 border-black"></span>
+</div>
+<div class="flex flex-col">
+<span class="text-white font-medium text-sm tracking-wide">IA 27</span>
+<span id="ia-status" class="text-[10px] text-blue-500/70 font-mono tracking-[.2em] uppercase"><i class="fa-solid fa-terminal text-[9px] mr-1"></i><span id="ia-status-txt">Atenea Omega · escribiendo…</span></span>
+</div>
+</div>
+<h1 class="text-5xl md:text-7xl font-light tracking-tight text-white leading-[1.05] mb-6" id="hero-title" aria-live="polite">
+<span class="block min-h-[1.15em]" id="hero-t1"><span id="hero-t1-txt"></span><span class="hero-cursor text-blue-400 font-mono">▌</span></span>
 </h1>
-<p class="text-lg md:text-xl text-zinc-400 max-w-2xl font-light leading-relaxed mb-8 a-fu d3">
-Tecnología, identidad y futuro. Una corporación argentina que diseña software, plataformas y sistemas integrados con un solo objetivo: la innovación como naturaleza.
+<p class="text-lg md:text-xl text-zinc-400 max-w-2xl font-light leading-relaxed mb-8 min-h-[1.7em]" id="hero-sub">
+<span id="hero-sub-txt"></span><span class="hero-cursor text-blue-400 font-mono">▌</span>
 </p>
 <div class="glow-line max-w-xs"></div>
 </div>
@@ -451,6 +463,43 @@ const mmenu=document.getElementById('mobile-menu');
 document.getElementById('mobile-menu-btn').addEventListener('click',()=>{mmenu.classList.remove('hidden');mmenu.classList.add('flex');document.body.style.overflow='hidden';});
 document.getElementById('mobile-menu-close').addEventListener('click',()=>{mmenu.classList.add('hidden');mmenu.classList.remove('flex');document.body.style.overflow='';});
 document.querySelectorAll('.mobile-link').forEach(l=>l.addEventListener('click',()=>{mmenu.classList.add('hidden');mmenu.classList.remove('flex');document.body.style.overflow='';}));
+
+// ===== HERO IA 27 — texto escrito en pantalla =====
+(function(){
+  const SPEED=30;
+  const t1=document.getElementById('hero-t1-txt');
+  const t1c=document.querySelector('#hero-t1 .hero-cursor');
+  const subTxt=document.getElementById('hero-sub-txt');
+  const subCursor=document.querySelector('#hero-sub .hero-cursor');
+  const statusTxt=document.getElementById('ia-status-txt');
+  if(!t1||!subTxt)return;
+
+  const VARIANTS=[
+    {title:'Estalingrado Corp.',sub:'Corporación argentina que diseña software, plataformas y sistemas integrados con la innovación como naturaleza.'},
+    {title:'Hechos en Argentina.',sub:'Tecnología, identidad y futuro. Desarrollamos sistemas operativos, plataformas y tecnología de vanguardia con visión propia.'},
+    {title:'La tecnología debe pertenecernos.',sub:'Apostamos a lo local, a lo privado y a lo propio, con IA 100% local como Atenea Omega y herramientas que no dependen de terceros.'},
+    {title:'Innovación como naturaleza.',sub:'Una corporación que no sigue tendencias: las anticipa. Diseñamos el futuro desde la soberanía tecnológica.'}
+  ];
+  const chosen=VARIANTS[Math.floor(Math.random()*VARIANTS.length)];
+
+  function typeInto(el,text){
+    return new Promise(res=>{
+      let i=0;
+      const iv=setInterval(()=>{
+        if(i<text.length){el.textContent+=text[i];i++;}
+        else{clearInterval(iv);res();}
+      },SPEED);
+    });
+  }
+  async function run(){
+    await typeInto(t1,chosen.title);
+    if(t1c)t1c.remove();
+    await typeInto(subTxt,chosen.sub);
+    if(subCursor)subCursor.remove();
+    if(statusTxt)statusTxt.textContent='Atenea Omega · en línea';
+  }
+  run();
+})();
 </script>
 </body>
 </html>
