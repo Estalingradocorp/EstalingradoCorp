@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Redirigiendo — Corporación Estalingrado</title>
+<link rel="icon" type="image/png" href="https://64.media.tumblr.com/3d305395ebd099966bbd46734f6afa03/4d78480730607865-41/s640x960/a581c93c7d5c0b6315e399f057712eb809992e5f.pnj">
+<style>
+body{background:#000;color:#e5e7eb;font-family:'Inter',ui-sans-serif,system-ui,sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;text-align:center;-webkit-font-smoothing:antialiased}
+.card{max-width:480px;padding:40px 24px}
+code{font-family:'JetBrains Mono',ui-monospace,monospace;color:#60a5fa;font-size:14px}
+h1{font-size:14px;font-weight:500;letter-spacing:.25em;text-transform:uppercase;color:#2563eb;margin:0 0 16px}
+p{color:#9ca3af;font-size:14px;line-height:1.7;font-weight:300}
+a{color:#e5e7eb;text-decoration:none;display:inline-block;margin-top:24px;padding:12px 28px;border:1px solid #374151;border-radius:9999px;font-size:12px;letter-spacing:.15em;text-transform:uppercase;transition:all .3s}
+a:hover{border-color:#2563eb;color:#fff}
+.spin{display:inline-block;width:16px;height:16px;border:2px solid #1e3a8a;border-top-color:#2563eb;border-radius:50%;animation:rot .8s linear infinite;vertical-align:-3px;margin-right:10px}
+@keyframes rot{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>Corporación Estalingrado</h1>
+  <p><span class="spin"></span>Redirigiendo a la sección correcta...</p>
+  <code id="dest"></code>
+  <br>
+  <a href="/EstalingradoCorp/inicio/">Ir al inicio</a>
+</div>
+<script>
+(function(){
+  var p = location.pathname.replace(/\/+$/,'').toLowerCase();
+  var dest = '/EstalingradoCorp/inicio/';
+  if(p.indexOf('market')>-1){dest='/EstalingradoCorp/market/';}
+  else if(p.indexOf('empresa')>-1){dest='/EstalingradoCorp/empresa/';}
+  document.getElementById('dest').textContent = dest;
+  setTimeout(function(){location.replace(dest);},1500);
+})();
+</script>
+</body>
+</html>
