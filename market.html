@@ -103,6 +103,12 @@ html{scroll-behavior:smooth}
 #prod-img.lb-zoomable .lb-zoom-badge{display:flex}
 .lb-zoom-badge{display:none;position:absolute;top:10px;right:10px;z-index:15;width:34px;height:34px;border-radius:10px;background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.18);color:#fff;align-items:center;justify-content:center;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);pointer-events:none;transition:background .2s}
 #prod-img.lb-zoomable:hover .lb-zoom-badge{background:rgba(37,99,235,.4);border-color:rgba(37,99,235,.5)}
+#lb-stage{z-index:1}
+#lb-img{transform-origin:center center;will-change:transform;cursor:zoom-in}
+#lb-img.lb-pan{cursor:grab}
+#lb-img.lb-pan:active{cursor:grabbing}
+#lb-zoombar{z-index:20}
+#lb-close,#lb-prev,#lb-next{z-index:20}
 </style>
 </head>
 <body class="min-h-screen antialiased">
@@ -624,13 +630,21 @@ Software y productos de calidad.
     <button type="button" id="lb-close" class="absolute top-5 right-5 w-11 h-11 rounded-full border border-white/15 text-zinc-300 hover:text-white hover:border-blue-500/50 transition-all flex items-center justify-center z-10" aria-label="Cerrar"><i class="fa-solid fa-xmark text-xl"></i></button>
     <button type="button" id="lb-prev" class="lb-nav absolute left-3 md:left-6 w-12 h-12 rounded-full border border-white/15 text-zinc-300 hover:text-white hover:border-blue-500/50 transition-all flex items-center justify-center hidden" aria-label="Anterior"><i class="fa-solid fa-chevron-left text-lg"></i></button>
     <button type="button" id="lb-next" class="lb-nav absolute right-3 md:right-6 w-12 h-12 rounded-full border border-white/15 text-zinc-300 hover:text-white hover:border-blue-500/50 transition-all flex items-center justify-center hidden" aria-label="Siguiente"><i class="fa-solid fa-chevron-right text-lg"></i></button>
-    <figure class="relative flex flex-col items-center max-h-full">
-      <img id="lb-img" src="" alt="Foto del producto" class="max-w-full max-h-[80vh] object-contain rounded-xl shadow-2xl select-none"/>
-      <figcaption id="lb-caption" class="mt-4 flex items-center gap-3">
-        <span id="lb-title" class="text-sm text-white font-light tracking-wide"></span>
-        <span id="lb-count" class="text-[11px] font-mono text-zinc-500 hidden"></span>
-      </figcaption>
-    </figure>
+    <div id="lb-zoombar" class="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2 px-3 py-2 rounded-full border border-white/15 bg-black/60 backdrop-blur-md">
+      <button type="button" id="lb-zoomout" class="w-9 h-9 rounded-full border border-white/15 text-zinc-300 hover:text-white hover:border-blue-500/50 transition-all flex items-center justify-center" aria-label="Alejar"><i class="fa-solid fa-minus text-sm"></i></button>
+      <span id="lb-zoomval" class="min-w-11 text-center text-xs font-mono text-zinc-300 select-none">100%</span>
+      <button type="button" id="lb-zoomin" class="w-9 h-9 rounded-full border border-white/15 text-zinc-300 hover:text-white hover:border-blue-500/50 transition-all flex items-center justify-center" aria-label="Acercar"><i class="fa-solid fa-plus text-sm"></i></button>
+      <button type="button" id="lb-zoomreset" class="w-9 h-9 rounded-full border border-white/15 text-zinc-300 hover:text-white hover:border-blue-500/50 transition-all flex items-center justify-center" aria-label="Restablecer zoom"><i class="fa-solid fa-expand text-sm"></i></button>
+    </div>
+    <div id="lb-stage" class="absolute inset-0 flex items-center justify-center overflow-hidden">
+      <figure class="relative flex flex-col items-center max-h-full">
+        <img id="lb-img" src="" alt="Foto del producto" class="max-w-full max-h-[80vh] object-contain rounded-xl shadow-2xl select-none" draggable="false"/>
+        <figcaption id="lb-caption" class="mt-4 flex items-center gap-3">
+          <span id="lb-title" class="text-sm text-white font-light tracking-wide"></span>
+          <span id="lb-count" class="text-[11px] font-mono text-zinc-500 hidden"></span>
+        </figcaption>
+      </figure>
+    </div>
   </div>
 </div>
 
@@ -1107,12 +1121,24 @@ function openProduct(key){
 
 // ===== LIGHTBOX FOTO PRODUCTO =====
 let lbList=[],lbCurrent=0,lbTitle='',lbOpen=false;
+let lbZoom=1,lbPanX=0,lbPanY=0,lbDrag=null;
+const LB_ZMIN=1,LB_ZMAX=6,LB_ZSTEP=0.5;
+function lbResetTransform(){lbZoom=1;lbPanX=0;lbPanY=0;}
+function applyLbTransform(){
+  const imgEl=document.getElementById('lb-img');
+  imgEl.style.transform='translate('+lbPanX+'px,'+lbPanY+'px) scale('+lbZoom+')';
+  imgEl.classList.toggle('lb-pan',lbZoom>1);
+  if(lbZoom>1)imgEl.style.cursor='grab';else imgEl.style.cursor='zoom-in';
+  document.getElementById('lb-zoomval').textContent=Math.round(lbZoom*100)+'%';
+}
 function showLb(){
   const imgEl=document.getElementById('lb-img');
+  lbResetTransform();
   imgEl.classList.remove('lb-show');
   imgEl.classList.add('lb-fade');
   setTimeout(()=>{
     imgEl.src=lbList[lbCurrent];
+    applyLbTransform();
     imgEl.classList.remove('lb-fade');
     requestAnimationFrame(()=>requestAnimationFrame(()=>imgEl.classList.add('lb-show')));
   },150);
@@ -1126,9 +1152,11 @@ function showLb(){
 function openLightbox(imgs,idx,title){
   lbList=imgs||[];lbCurrent=Math.max(0,Math.min(idx||0,lbList.length-1));lbTitle=title||'';lbOpen=true;
   if(!lbList.length)return;
+  lbResetTransform();
   const imgEl=document.getElementById('lb-img');
   imgEl.classList.remove('lb-show');
   imgEl.src=lbList[lbCurrent];
+  applyLbTransform();
   requestAnimationFrame(()=>requestAnimationFrame(()=>imgEl.classList.add('lb-show')));
   const wrap=document.getElementById('lb-wrap');
   wrap.classList.remove('hidden');
@@ -1139,19 +1167,49 @@ function openLightbox(imgs,idx,title){
 function closeLightbox(){
   if(!lbOpen)return;
   lbOpen=false;
+  lbResetTransform();
   const wrap=document.getElementById('lb-wrap');
   wrap.classList.remove('lb-open');
   setTimeout(()=>{wrap.classList.add('hidden');},300);
   document.body.style.overflow='';
 }
 function lbNav(d){
+  if(lbZoom>1){lbResetTransform();}
   lbCurrent=(lbCurrent+d+lbList.length)%lbList.length;
   showLb();
+}
+function lbZoomBy(factor){
+  const z=Math.min(LB_ZMAX,Math.max(LB_ZMIN,lbZoom*factor));
+  if(z!==lbZoom){lbZoom=z;applyLbTransform();}
 }
 document.getElementById('lb-close').addEventListener('click',closeLightbox);
 document.getElementById('lb-backdrop').addEventListener('click',closeLightbox);
 document.getElementById('lb-prev').addEventListener('click',()=>lbNav(-1));
 document.getElementById('lb-next').addEventListener('click',()=>lbNav(1));
+document.getElementById('lb-zoomin').addEventListener('click',()=>lbZoomBy(1+LB_ZSTEP));
+document.getElementById('lb-zoomout').addEventListener('click',()=>lbZoomBy(1/(1+LB_ZSTEP)));
+document.getElementById('lb-zoomreset').addEventListener('click',()=>{lbResetTransform();applyLbTransform();});
+const lbImgEl=document.getElementById('lb-img');
+lbImgEl.addEventListener('wheel',(e)=>{
+  if(!lbOpen)return;
+  e.preventDefault();
+  const factor=e.deltaY<0?1.12:1/1.12;
+  lbZoomBy(factor);
+},{passive:false});
+lbImgEl.addEventListener('mousedown',(e)=>{
+  if(!lbOpen||lbZoom<=1)return;
+  e.preventDefault();
+  lbDrag={x:e.clientX,y:e.clientY,px:lbPanX,py:lbPanY};
+  lbImgEl.style.cursor='grabbing';
+});
+window.addEventListener('mousemove',(e)=>{
+  if(!lbDrag)return;
+  lbPanX=lbDrag.px+(e.clientX-lbDrag.x);
+  lbPanY=lbDrag.py+(e.clientY-lbDrag.y);
+  applyLbTransform();
+});
+window.addEventListener('mouseup',()=>{lbDrag=null;if(lbOpen){applyLbTransform();}});
+lbImgEl.addEventListener('dblclick',()=>{if(lbZoom>1){lbZoomBy(1/lbZoom);}lbResetTransform();applyLbTransform();});
 document.addEventListener('keydown',(e)=>{
   if(!lbOpen)return;
   if(e.key==='Escape'){closeLightbox();}
