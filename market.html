@@ -693,7 +693,13 @@ const cartItems={}; // key -> {qty}
 let cartOpen=false;
 let currentProduct=null;
 
-function getPriceNum(p){return p&&p.price?parseFloat(String(p.price).replace(/[^\d.]/g,'')):0;}
+function getPriceNum(p){
+  if(!(p&&p.price))return 0;
+  var s=String(p.price).replace(/[^\d.,]/g,'');
+  if(s.indexOf(',')>-1){s=s.replace(/\./g,'').replace(',','.');}
+  else{s=s.replace(/\./g,'');}
+  return parseFloat(s)||0;
+}
 const moneyFmt=new Intl.NumberFormat('es-AR',{maximumFractionDigits:0});
 const fmtPrice=n=>'$'+moneyFmt.format(n);
 function toast(msg){
