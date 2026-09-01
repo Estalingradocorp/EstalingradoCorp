@@ -639,6 +639,28 @@ Conectar a Intranet <i class="fa-solid fa-chevron-right text-[10px] group-hover:
 
 <div id="os-dock" class="fixed bottom-4 left-1/2 -translate-x-1/2 z-[500] hidden items-center gap-2 px-3 py-2 rounded-2xl glass border border-white/10 shadow-2xl"></div>
 
+<!-- REDIRECCIÓN EC-OS -->
+<div id="redirect-loader" class="hidden fixed inset-0 z-[800] items-center justify-center">
+<div class="absolute inset-0 bg-black/85 backdrop-blur-xl"></div>
+<div class="relative z-10 flex flex-col items-center px-6 text-center max-w-sm">
+<div class="relative mb-6">
+<div class="absolute inset-0 rounded-full bg-blue-500/30 blur-2xl animate-pulse"></div>
+<div class="w-20 h-20 rounded-full bg-blue-500/10 border border-blue-500/40 flex items-center justify-center shadow-[0_0_30px_rgba(37,99,235,.4)]"><i class="fa-solid fa-desktop text-3xl text-blue-400"></i></div>
+</div>
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-blue-500/20 bg-blue-500/5 mb-5">
+<span class="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></span>
+<span class="text-blue-400 font-mono text-[10px] tracking-[.2em] uppercase">EC-OS · Conexión segura</span>
+</div>
+<div id="redirect-msg" class="text-white font-light text-lg leading-relaxed mb-2 min-h-[2em]">
+<span id="redirect-msg-cursor" class="text-blue-400 font-mono">▌</span>
+</div>
+<p class="text-zinc-500 text-sm font-light mb-8">Te estamos redirigiendo a la licencia EC-OS Pro para completar la oferta.</p>
+<div class="w-48 h-1 rounded-full bg-zinc-800 overflow-hidden">
+<div id="redirect-loader-bar" class="h-full bg-gradient-to-r from-blue-600 to-blue-400" style="width:0%"></div>
+</div>
+</div>
+</div>
+
 <script>
 document.getElementById('year').textContent=new Date().getFullYear();
 
@@ -823,14 +845,16 @@ const SVC={
  ecsend:{title:'EC WebSend',tag:'Transferencia Segura de Archivos',logo:'https://64.media.tumblr.com/776cae41f78ae861c5f6374b25a8ffcf/d2c356c1dcc6e266-11/s540x810/c42f60d876229a4a21b3d3a880b9ce830ae2764d.pnj',st:['act','Activo'],desc:'Plataforma segura para la transferencia y envío de archivos corporativos. Diseñada para mover información entre equipos y divisiones sin exponer datos a terceros.',feats:[['fa-lock','Cifrado','Los archivos viajan protegidos de extremo a extremo.'],['fa-bolt','Alta velocidad','Transferencias optimizadas incluso con archivos pesados.'],['fa-globe','Desde el navegador','Sin instalaciones: funciona en cualquier equipo.'],['fa-clock-rotate-left','Historial','Registro de cada envío realizado.']],url:'https://nicotips27.github.io/ECwebSend/'},
  ecnews:{title:'EC News',tag:'Portal de Noticias Corporativas',logo:'https://64.media.tumblr.com/527332b08521675a2cf2ee6f30c96a68/c124e1e4e331179f-ec/s500x750/ac10b6fb2ded5c5b8d16c32099bb49e2904104fa.jpg',st:['dev','En Proceso'],desc:'Portal oficial de noticias, comunicados y boletines informativos de la corporación. La fuente autorizada de todo lo que ocurre dentro de Estalingrado Corp.',feats:[['fa-bullhorn','Comunicados oficiales','Anuncios directamente de la dirección.'],['fa-newspaper','Boletines periódicos','Resúmenes de novedades y avances.'],['fa-box-archive','Archivo histórico','Todas las ediciones anteriores disponibles.'],['fa-pen-nib','Redacción propia','Contenido original de la división de prensa.']],url:'https://nicotips27.github.io/ECnews/'},
  ecdownload:{title:'EC Download',tag:'Centro de Descargas Oficial',logo:'https://64.media.tumblr.com/5e77caddca38e2f1b3fa07d22df4635a/d28c11561400dc7c-d3/s1280x1920/3ffad9be2e1786129b597444e73f969e686c4e47.pnj',st:['act','Beta'],desc:'Centro de recursos y descargas de software de la corporación. Todos los instaladores oficiales, verificados y listos para instalar.',feats:[['fa-shield-halved','Software verificado','Cada archivo es revisado antes de publicarse.'],['fa-tags','Versiones claras','Estables y betas claramente identificadas.'],['fa-arrows-rotate','Actualizaciones','Nuevas versiones apenas salen del horno.'],['fa-gauge-high','Descarga rápida','Servidor optimizado para alta demanda.']],url:'https://nicotips27.github.io/ec-download/'},
- ecos:{title:'EC-OS',tag:'Sistema Operativo Webizado',icon:'fa-desktop',st:['ok','Operativo'],desc:'Entorno de sistema operativo webizado para operaciones unificadas. Un escritorio completo dentro del navegador, conectado a todo el ecosistema.',feats:[['fa-window-maximize','Escritorio web','Ventanas, apps y barra de tareas en el navegador.'],['fa-puzzle-piece','Apps integradas','Acceso directo al ecosistema Estalingrado.'],['fa-user','Sesión personalizada','Tu espacio de trabajo siempre igual.'],['fa-laptop','Multiplataforma','Funciona en PC, tablet y celular.']],url:'https://nicotips27.github.io/EC-OS/'},
+ ecos:{title:'EC-OS',tag:'Sistema Operativo Webizado',icon:'fa-desktop',st:['ok','Operativo'],desc:'Entorno de sistema operativo webizado para operaciones unificadas. Un escritorio completo dentro del navegador, conectado a todo el ecosistema.',feats:[['fa-window-maximize','Escritorio web','Ventanas, apps y barra de tareas en el navegador.'],['fa-puzzle-piece','Apps integradas','Acceso directo al ecosistema Estalingrado.'],['fa-user','Sesión personalizada','Tu espacio de trabajo siempre igual.'],['fa-laptop','Multiplataforma','Funciona en PC, tablet y celular.']],url:'https://estalingradocorp.github.io/EstalingradoCorp/market.html#producto=ecospro'},
  bigdata:{title:'Big Data',tag:'Intranet · Análisis de Datos',icon:'fa-database',st:['ok','Operativo'],desc:'Análisis, visualización y gestión de grandes volúmenes de datos. El centro nervioso de la información corporativa.',feats:[['fa-chart-line','Visualización','Paneles interactivos con métricas en vivo.'],['fa-database','Grandes volúmenes','Procesamiento de datos masivos sin fricción.'],['fa-file-export','Reportes','Exportación de análisis para cada división.'],['fa-magnifying-glass-chart','Exploración','Consulta y filtrado avanzado de datos.']],url:'https://nicotips27.github.io/ec-Intra-net/'},
  wiki:{title:'Antigua Wiki',tag:'Archivo Histórico Corporativo',icon:'fa-box-archive',st:['arc','Archivo'],desc:'Archivo histórico, documentación legacy y registros de la primera Intranet de Estalingrado Corp. Preservamos dónde empezó todo.',feats:[['fa-box-archive','Documentación legacy','Las páginas originales de la primera Intranet.'],['fa-clock-rotate-left','Registros históricos','La evolución de la corporación documento a documento.'],['fa-book-open','Consulta libre','Disponible para lectura en cualquier momento.'],['fa-building-columns','Memoria institucional','La base sobre la que se construyó todo lo demás.']],url:'https://estalingradocorp.github.io/Intra-net/'},
  buscador:{title:'Buscador Estalingrado',tag:'Motor de Búsqueda Principal',icon:'fa-magnifying-glass',st:['ok','Operativo'],desc:'Motor de búsqueda principal de la corporación. Indexación y acceso de alta velocidad a todo el ecosistema Estalingrado.',feats:[['fa-bolt','Alta velocidad','Resultados al instante, sin importar la consulta.'],['fa-layer-group','Indexación total','Todos los servicios de la corporación en un solo lugar.'],['fa-sliders','Búsqueda afinada','Filtros y operadores para resultados precisos.'],['fa-shield-halved','Privada','Sin rastreo: tus búsquedas son tuyas.']],url:'https://estalingradocorp.qzz.io/'}
 };
 const svcModal=document.getElementById('svc-modal');
+let currentService=null;
 function openService(key){
  const s=SVC[key];if(!s)return;
+ currentService=key;
  const logoEl=document.getElementById('svc-logo');
  if(s.logo){logoEl.innerHTML='<img src="'+s.logo+'" alt="'+s.title+' Logo" class="w-16 h-16 object-cover rounded-xl border border-blue-500/20 shadow-[0_0_30px_rgba(37,99,235,.25)]"/>';}
  else{logoEl.innerHTML='<div class="w-16 h-16 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center shadow-[0_0_30px_rgba(37,99,235,.15)]"><i class="fa-solid '+s.icon+' text-2xl text-blue-400"></i></div>';}
@@ -849,6 +873,42 @@ function openService(key){
  osOpen('svc-win');
 }
 document.querySelectorAll('.svc-open').forEach(b=>b.addEventListener('click',()=>openService(b.dataset.service)));
+
+// CTA: EC-OS redirige en la misma pestaña con aviso de redirección
+document.getElementById('svc-cta').addEventListener('click',(e)=>{
+ if(currentService!=='ecos')return;
+ e.preventDefault();
+ const s=SVC[currentService];if(!s||!s.url)return;
+ osClose('svc-win');
+ redirectECOS(s.url);
+});
+function redirectECOS(url){
+ const loader=document.getElementById('redirect-loader');
+ const bar=document.getElementById('redirect-loader-bar');
+ const msg=document.getElementById('redirect-msg');
+ bar.style.width='0%';
+ loader.classList.remove('hidden');
+ loader.classList.add('flex');
+ document.body.style.overflow='hidden';
+ typeRedirectMsg(msg,'Redirigiendo a EC-OS Pro…');
+ const total=1800,start=performance.now();
+ function tick(now){
+  const pct=Math.min(100,((now-start)/total)*100);
+  bar.style.width=pct+'%';
+  if(pct<100){requestAnimationFrame(tick);return;}
+  window.location.href=url;
+ }
+ requestAnimationFrame(tick);
+}
+function typeRedirectMsg(el,text){
+ el.textContent='';
+ let i=0;
+ const iv=setInterval(()=>{
+  if(i<text.length){el.textContent+=text[i];i++;}
+  else clearInterval(iv);
+ },28);
+}
+
 document.addEventListener('keydown',(e)=>{
  if(e.key==='Escape'){
   Object.keys(OS.wins).forEach(id=>{const w=OS.wins[id];if(!w.el.classList.contains('hidden')&&!w.min)osClose(id);});
