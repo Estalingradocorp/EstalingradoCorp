@@ -1126,6 +1126,11 @@ function openProduct(key){
     buy.classList.add('cursor-pointer');
     buy.innerHTML='<i class="fa-solid fa-download text-sm"></i> DESCARGAR GRATIS';
     buy.onclick=()=>redirectTo(p.download);
+  }else if(key==='ecospro'){
+    buy.disabled=false;
+    buy.className='inline-flex items-center gap-2.5 px-6 py-3 rounded-full text-xs font-semibold bg-blue-600 hover:bg-blue-500 text-white transition-all duration-300 cursor-pointer';
+    buy.innerHTML='<i class="fa-solid fa-cube text-sm"></i> Obtener';
+    buy.onclick=()=>redirectTo('https://estalingradocorp.github.io/ECOS/');
   }else{
     buy.disabled=false;
     buy.className='wsp-btn inline-flex items-center gap-2.5 px-6 py-3 rounded-full text-xs font-semibold';
