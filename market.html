@@ -614,9 +614,7 @@ Software y productos de calidad.
 
         <div class="glow-line mb-8"></div>
 
-        <div id="prod-ad" class="hidden mb-8 rounded-2xl overflow-hidden relative cursor-pointer group">
-          <span class="absolute top-3 right-3 z-10 px-2 py-0.5 rounded-full bg-black/60 border border-white/10 text-[9px] font-mono uppercase tracking-widest text-zinc-400">Publicidad</span>
-        </div>
+        <div id="prod-ad" class="hidden mb-8 rounded-2xl overflow-hidden relative cursor-pointer group"></div>
 
         <div class="flex items-center gap-3 mb-5"><div class="w-6 h-px bg-blue-500"></div><span class="text-blue-400 font-mono text-[10px] tracking-[.25em] uppercase">Características</span></div>
         <div id="prod-feats" class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10"></div>
@@ -1109,7 +1107,7 @@ function openProduct(key){
     adEl.innerHTML='';
     const adImg=document.createElement('img');
     adImg.src='https://static.wixstatic.com/media/9dbdc2_d7f4662631574a52ada08bdf9d4cfcb8~mv2.gif';
-    adImg.alt='Publicidad Estalingrado Corp';
+    adImg.alt='Publicidad';
     adImg.className='w-full max-h-52 object-cover group-hover:scale-105 transition-transform duration-500 cursor-pointer block';
     adImg.addEventListener('click',(e)=>{
       e.preventDefault();
@@ -1117,6 +1115,10 @@ function openProduct(key){
       window.open('https://estalingradocorp.github.io/EstalingradoCorp/empresa.html','_blank','noopener');
     });
     adEl.appendChild(adImg);
+    const adNote=document.createElement('span');
+    adNote.textContent='Publicidad';
+    adNote.className='absolute bottom-2 right-3 z-10 px-2 py-0.5 rounded-full bg-black/50 border border-white/10 text-[8px] font-mono uppercase tracking-widest text-zinc-500 pointer-events-none select-none';
+    adEl.appendChild(adNote);
     adEl.classList.remove('hidden');
   }else{
     adEl.innerHTML='';
