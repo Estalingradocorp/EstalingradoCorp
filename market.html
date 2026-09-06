@@ -916,6 +916,26 @@ const PRODUCTS={
  fdroid:{title:'F-Droid',origin:'recomendado',tag:'Repositorio de Apps Libres - Android',icon:'fa-android',tone:'#22d3ee',type:['android','Android'],sku:'PRD-012',price:'Gratis',label:'open source',desc:'F-Droid es un repositorio de aplicaciones para Android enfocado en software libre y de codigo abierto. A diferencia de Google Play, todas las apps aqui son verificadas, sin rastreadores, sin anuncios y sin dependencias privativas. Incluye un cliente de instalacion que permite mantener las apps actualizadas de forma automatica. Ideal para usuarios que buscan privacidad y control total sobre su dispositivo.',feats:[['fa-shield-halved','Sin rastreadores','Todas las apps verificadas sin tracking.'],['fa-code-branch','Codigo abierto','100% libre y transparente.'],['fa-mobile-screen','Cliente propio','Actualizaciones automaticas desde el cliente F-Droid.'],['fa-lock','Privacidad','Sin anuncios ni dependencias privativas.']],buy:'',download:'https://f-droid.org/',imgs:['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWalN41_eDUwCnM6UebnHLxg4LAWw8xBs22EiWpkoSdw&s=10']}
 };
 
+// Publicidad en productos recomendados (no de Estalingrado Corp)
+(function(){
+  const adImg='https://static.wixstatic.com/media/9dbdc2_d7f4662631574a52ada08bdf9d4cfcb8~mv2.gif';
+  const adUrl='https://estalingradocorp.github.io/EstalingradoCorp/empresa.html';
+  document.querySelectorAll('#catalog .scard[data-product]').forEach(card=>{
+    const p=PRODUCTS[card.dataset.product];
+    if(!p||p.origin!=='recomendado')return;
+    const ad=document.createElement('span');
+    ad.className='prod-ad relative block cursor-pointer border-t border-white/5 overflow-hidden';
+    ad.title='Estalingrado Corp — Empresa';
+    ad.innerHTML='<img src="'+adImg+'" alt="Publicidad Estalingrado Corp" class="w-full h-16 md:h-20 object-cover group-hover:scale-105 transition-transform duration-500"/><span class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300"></span>';
+    ad.addEventListener('click',(e)=>{
+      e.preventDefault();
+      e.stopPropagation();
+      window.open(adUrl,'_blank','noopener');
+    });
+    card.appendChild(ad);
+  });
+})();
+
 // OS Window Manager (estilo macOS)
 const OS={z:300,wins:{}};
 function osLock(){
