@@ -21,7 +21,7 @@ El portal está compuesto por tres páginas HTML estáticas (sin build, sin depe
 | Plataforma | Descripción |
 |---|---|
 | [Buscador Estalingrado](https://estalingradocorp.qzz.io/) | Motor de búsqueda principal |
-| [EC WebSend](https://nicotips27.github.io/ECwebSend/) | Transferencia segura de archivos |
+| [EC WebSend](https://estalingradocorp.github.io/ECsendpro/) | Transferencia segura de archivos |
 | [EC News](https://nicotips27.github.io/ECnews/) | Portal de noticias corporativas |
 | [EC Download](https://nicotips27.github.io/ec-download/) | Centro de descargas |
 | [EC-OS](https://estalingradocorp.github.io/EstalingradoCorp/market.html#producto=ecospro) | Sistema operativo webizado (redirige a la licencia en el market) |
