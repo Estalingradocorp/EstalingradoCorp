@@ -78,6 +78,8 @@ Tabla de seguimiento con ID, designación, fase y estado. Todos los proyectos en
 | PRJ-107 | IA-27 Agente |
 | PRJ-108 | Centinela |
 | PRJ-109 | Auralis |
+| PRJ-110 | CentinelaEC |
+| PRJ-111 | DeepSeek Desktop |
 
 ## Stack
 
