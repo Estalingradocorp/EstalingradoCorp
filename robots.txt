@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://estalingradocorp.github.io/EstalingradoCorp/sitemap.xml
