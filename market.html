@@ -595,6 +595,30 @@ Software y productos de calidad.
 </div>
 </button>
 
+<!-- Producto 17 · AssaultCube -->
+<button type="button" class="scard glass-card rounded-2xl overflow-hidden group reveal text-left cursor-pointer prod-open" data-product="assaultcube" data-type="juego juego-android">
+<div class="aspect-[4/3] bg-zinc-900/50 relative overflow-hidden">
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-bfA9-PyTrdmEuZcgyTCaC-t65apvCuJkyboDdivwyg&s" alt="AssaultCube" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+<span class="absolute top-4 left-4 text-[10px] font-mono text-purple-400/90 tracking-[.2em] uppercase bg-black/60 px-2 py-1 rounded-full border border-white/10">PRD-017</span>
+<span class="absolute top-4 right-4 px-2.5 py-1 rounded-full bg-purple-500/90 text-white text-[10px] font-semibold"><i class="fa-solid fa-gamepad mr-1"></i>Juego</span>
+</div>
+<div class="p-6">
+<div class="flex items-center gap-2 mb-3">
+<span class="px-2.5 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-[10px] font-medium">Juego</span>
+</div>
+<h3 class="text-lg font-medium text-white mb-2 tracking-tight">AssaultCube</h3>
+<p class="text-zinc-400 font-light text-sm leading-relaxed mb-4">FPS multijugador gratuito, ultraligero y arcade. Solo 50 MB.</p>
+<div class="flex items-center justify-between pt-4 border-t border-white/5">
+<span class="text-emerald-400 font-mono text-lg font-medium">Gratis</span>
+<span class="flex items-center gap-3">
+<span class="share-btn cursor-pointer text-zinc-500 hover:text-white transition-colors" title="Compartir producto" data-share><i class="fa-solid fa-share-nodes text-[11px]"></i></span>
+<span class="text-[10px] text-blue-400/60 font-mono uppercase tracking-wider">Ver detalles</span>
+</span>
+</div>
+</div>
+</button>
+
 <div id="no-results" class="hidden text-center py-20">
 <i class="fa-solid fa-box-open text-4xl text-zinc-700 mb-4"></i>
 <p class="text-zinc-500 text-sm font-light">No se encontraron productos.</p>
@@ -661,15 +685,15 @@ Software y productos de calidad.
 
         <div id="prod-ad" class="hidden mb-8 rounded-2xl overflow-hidden relative cursor-pointer group"></div>
 
-        <div class="flex items-center gap-3 mb-5"><div class="w-6 h-px bg-blue-500"></div><span class="text-blue-400 font-mono text-[10px] tracking-[.25em] uppercase">Características</span></div>
-        <div id="prod-feats" class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10"></div>
-
         <div id="prod-video-wrap" class="hidden mb-10">
           <div class="flex items-center gap-3 mb-5"><div class="w-6 h-px bg-blue-500"></div><span class="text-blue-400 font-mono text-[10px] tracking-[.25em] uppercase">Detalles</span></div>
           <div class="relative aspect-video rounded-2xl overflow-hidden border border-white/10 bg-black">
             <iframe id="prod-video" src="" title="Detalle del producto" class="absolute inset-0 w-full h-full" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
           </div>
         </div>
+
+        <div class="flex items-center gap-3 mb-5"><div class="w-6 h-px bg-blue-500"></div><span class="text-blue-400 font-mono text-[10px] tracking-[.25em] uppercase">Características</span></div>
+        <div id="prod-feats" class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10"></div>
 
         <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-6 border-t border-white/5">
           <div class="flex items-center gap-3">
@@ -962,7 +986,8 @@ const PRODUCTS={
  deepseek:{title:'DeepSeek Desktop',origin:'propio',tag:'Asistente IA · App Nativa Windows',icon:'fa-robot',tone:'#60a5fa',type:['programa','Programa'],sku:'PRD-016',price:'Gratis',label:'descarga gratuita',desc:'DeepSeek Desktop – Tu asistente IA al alcance de un clic.\n\nDisfruta de DeepSeek Chat como si fuera una aplicación nativa de Windows. Olvídate de pestañas y navegadores: lanza la IA directamente desde el escritorio, con una ventana redimensionable, menú integrado y total integración con el tema de Windows. Recuerda tu configuración entre sesiones.\n\nBy Estalingrado Corp.',warn:'Windows puede bloquear la instalación porque estamos tramitando la licencia. <a href="https://github.com/Estalingradocorp/DeepSeekDesktop-Setup" target="_blank" rel="noopener" class="underline hover:text-zinc-300 transition-colors">Saber más</a>. ¿Cómo desactivar el bloqueo inteligente? <a href="https://www.youtube.com/watch?v=WKOXpSbtNi4" target="_blank" rel="noopener" class="underline hover:text-zinc-300 transition-colors">Video</a> · <a href="https://learn.microsoft.com/es-es/answers/questions/5746555/smart-app-control-me-ha-empezado-a-bloquear-aplica" target="_blank" rel="noopener" class="underline hover:text-zinc-300 transition-colors">Microsoft Answers</a>. Contamos con Malwarebytes.',feats:[['fa-desktop','App nativa','Lanzala directo desde el escritorio de Windows, sin navegador.'],['fa-expand','Ventana redimensionable','Ajustá el tamaño de la ventana a tu gusto.'],['fa-palette','Tema integrado','Integración total con el tema de Windows.'],['fa-floppy-disk','Configuración persistente','Recuerda tus ajustes entre sesiones.']],buy:'',download:'https://github.com/Estalingradocorp/DeepSeekDesktop-Setup/releases/download/v1.0.3/DeepSeekDesktop-Setup.exe',imgs:['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLoLS7KDrEOWQXtYzflEq-FvHLTOoSCHLjZeseeEJWHv5lI08HJYfnzn4&s=10','assets/deepseek-desktop.png','https://64.media.tumblr.com/82fd568bff0a34125ca17654a05a67ab/f7737a0246fe07d5-aa/s640x960/a98c882ea42a0051f52a6d4688b8e5f268543f5d.pnj']},
 '0ad':{title:'0 A.D.',origin:'recomendado',tag:'Estrategia en Tiempo Real \u00B7 Antigüedad',icon:'fa-chess-rook',tone:'#a78bfa',type:['juego','Juego'],sku:'PRD-010',price:'Gratis',label:'open source',desc:'0 A.D. es un juego de estrategia en tiempo real (RTS) de código abierto ambientado en la antigüedad, desde el 500 a.C. hasta el 500 d.C. Desarrollado por Wildfire Games, compite con los grandes títulos del género como Age of Empires. Controla civilizaciones antiguas, gestiona recursos, construye ciudades y lucha en batallas épicas con unidades terrestres y navales. Totalmente gratuito, sin microtransacciones ni DRM.',feats:[['fa-chess-rook','RTS clásico','Estrategia en tiempo real estilo Age of Empires.'],['fa-landmark','Antigüedad','Desde el 500 a.C. hasta el 500 d.C.'],['fa-code-branch','Código abierto','100% gratuito, sin DRM ni microtransacciones.'],['fa-users','Multijugador','Partidas online y campañas individuales.']],buy:'',download:'https://play0ad.com/',imgs:['https://images.hive.blog/DQmcMPC2K2yorQqwtH3cEyGv3giB2juFfCpcme7fo2AKE9X/55.-Rese%C3%B1as-juegos-0AD-4.jpg'],video:'https://www.youtube.com/embed/7ndfuKt_N2A'},
  luanti:{title:'Luanti',origin:'recomendado',tag:'Motor Voxel - Open Source',icon:'fa-cubes',tone:'#a78bfa',type:['juego','Juego'],sku:'PRD-011',price:'Gratis',label:'open source',desc:'Luanti (anteriormente Minetest) es un motor de juego voxel de codigo abierto que te permite crear mundos infinitos y explorarlos con total libertad. Con modulos personalizables, soporte para multiples juegos dentro del motor y una comunidad activa de desarrollo. Disponible para Windows, macOS, Linux y Android. Ideal para creativos que buscan una alternativa libre a los mundos voxel.',feats:[['fa-cubes','Mundos infinitos','Explora y construye sin limites.'],['fa-puzzle-piece','Modos personalizables','Modulos y juegos agregables por la comunidad.'],['fa-desktop','Multiplataforma','Windows, macOS, Linux y Android.'],['fa-code-branch','Codigo abierto','100% gratuito y libre.']],buy:'',download:'https://www.luanti.org/es/downloads/',imgs:['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlYx-xv5wimUD2_4gCYB-vUPpAG_qd2GbQfIna8R6YoQ&s=10'],video:'https://www.youtube.com/embed/dx2FIh3w59I'},
- fdroid:{title:'F-Droid',origin:'recomendado',tag:'Repositorio de Apps Libres - Android',icon:'fa-android',tone:'#22d3ee',type:['android','Android'],sku:'PRD-012',price:'Gratis',label:'open source',desc:'F-Droid es un repositorio de aplicaciones para Android enfocado en software libre y de codigo abierto. A diferencia de Google Play, todas las apps aqui son verificadas, sin rastreadores, sin anuncios y sin dependencias privativas. Incluye un cliente de instalacion que permite mantener las apps actualizadas de forma automatica. Ideal para usuarios que buscan privacidad y control total sobre su dispositivo.',feats:[['fa-shield-halved','Sin rastreadores','Todas las apps verificadas sin tracking.'],['fa-code-branch','Codigo abierto','100% libre y transparente.'],['fa-mobile-screen','Cliente propio','Actualizaciones automaticas desde el cliente F-Droid.'],['fa-lock','Privacidad','Sin anuncios ni dependencias privativas.']],buy:'',download:'https://f-droid.org/',imgs:['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWalN41_eDUwCnM6UebnHLxg4LAWw8xBs22EiWpkoSdw&s=10']}
+ fdroid:{title:'F-Droid',origin:'recomendado',tag:'Repositorio de Apps Libres - Android',icon:'fa-android',tone:'#22d3ee',type:['android','Android'],sku:'PRD-012',price:'Gratis',label:'open source',desc:'F-Droid es un repositorio de aplicaciones para Android enfocado en software libre y de codigo abierto. A diferencia de Google Play, todas las apps aqui son verificadas, sin rastreadores, sin anuncios y sin dependencias privativas. Incluye un cliente de instalacion que permite mantener las apps actualizadas de forma automatica. Ideal para usuarios que buscan privacidad y control total sobre su dispositivo.',feats:[['fa-shield-halved','Sin rastreadores','Todas las apps verificadas sin tracking.'],['fa-code-branch','Codigo abierto','100% libre y transparente.'],['fa-mobile-screen','Cliente propio','Actualizaciones automaticas desde el cliente F-Droid.'],['fa-lock','Privacidad','Sin anuncios ni dependencias privativas.']],buy:'',download:'https://f-droid.org/',imgs:['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWalN41_eDUwCnM6UebnHLxg4LAWw8xBs22EiWpkoSdw&s=10']},
+ assaultcube:{title:'AssaultCube',origin:'recomendado',tag:'FPS Multijugador · Ultraligero',icon:'fa-crosshairs',tone:'#a78bfa',type:['juego','Juego'],sku:'PRD-017',price:'Gratis',label:'descarga gratuita',desc:'AssaultCube (originalmente llamado ActionCube) es un videojuego de disparos en primera persona multijugador, completamente gratuito, desarrollado con el motor Cube por el equipo Rabid Viper Productions.\n\nSe caracteriza por su estilo arcade y ritmo rápido. Aunque sus gráficos no son muy elaborados, destaca por ser extremadamente ligero: su instalación ocupa apenas unos 50 MB, tiene una latencia muy baja y puede funcionar fluidamente incluso con conexiones antiguas de 56 Kbps, además de ser compatible con hardware antiguo (procesadores Pentium III o similares). Incluye modo individual con bots y ofrece más de diez modos de juego, como deathmatch, team deathmatch, captura de bandera, pistolero, one shot one kill, entre otros, además de incluir un editor de mapas.',feats:[['fa-feather','Ultraligero','Solo ~50 MB de instalación. Corre incluso en hardware antiguo.'],['fa-people-group','Multijugador','Deathmatch, team deathmatch, captura de bandera, pistolero, one shot one kill y más.'],['fa-robot','Modo individual con bots','Jugá en solitario contra bots.'],['fa-pencil-ruler','Editor de mapas','Incluye editor de mapas integrado.']],buy:'',download:'https://assault.cubers.net/download.html',imgs:['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-bfA9-PyTrdmEuZcgyTCaC-t65apvCuJkyboDdivwyg&s'],video:'https://www.youtube.com/embed/TCxY03uRMBM'}
 };
 
 // OS Window Manager (estilo macOS)
