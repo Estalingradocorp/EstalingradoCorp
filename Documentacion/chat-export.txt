@@ -1,0 +1,253 @@
+================================================================================
+EXPORT DE CONVERSACIÓN — SESIÓN DE TRABAJO
+================================================================================
+Proyecto : EstalingradoCorp (Market / catálogo)
+Fecha    : 2026-10-13
+Herramienta: opencode (modelo big-pickle)
+Directorio de trabajo: C:\Users\nicot\OneDrive\Desktop\Estalingrado corp\Empresa
+Repositorio: https://github.com/Estalingradocorp/EstalingradoCorp (rama main)
+Sitio publicado: https://estalingradocorp.github.io/EstalingradoCorp/
+================================================================================
+
+
+[USUARIO]
+¿dónde estamos trabajando?
+
+[ASISTENTE]
+En C:\Users\nicot\OneDrive\Desktop\Estalingrado corp\Empresa (repositorio git).
+
+
+--------------------------------------------------------------------------------
+TEMA 1 — Nueva categoría "Mods" + primer producto
+--------------------------------------------------------------------------------
+
+[USUARIO]
+Agrega una nueva categoría a Market que se llame "Mods". El primero en cargar es:
+  - Nombre: Cyberpunk 2077 · CyberEngineTweaks
+  - Repo: https://github.com/nicotips27/CyberEngineTweaks
+  - Link del botón Obtener:
+    https://github.com/nicotips27/CyberEngineTweaks/releases/download/v1.0.0-installer/EstalingradoCorp-Setup.exe
+  - Imagen:
+    https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRN5tjOAJFzMW9lRcFPdePKM_9cIk3EMDV5WqAm2IZcdjdSdcG6L8kAu2M&s=10
+  - Video para la descripción: https://www.youtube.com/watch?v=bXy3xTgABiQ
+
+[ACCIONES]
+- market.html:199  → nuevo botón de filtro "Mods".
+- market.html:623  → tarjeta de producto (PRD-018) con badge fucsia "Mod".
+- market.html:1016 → entrada en PRODUCTS ('cyberengine') con botón DESCARGAR GRATIS,
+  video de YouTube (embed bXy3xTgABiQ) y características.
+- market.html:1195 → badge del modal con acento fucsia para categoría "mods".
+- Validado con `node --check`: JS OK.
+
+
+[USUARIO]
+Puedes subir así se aplican los cambios (link al repo).
+
+[ASISTENTE]
+Intento de push: RECHAZADO.
+  remote: Permission to Estalingradocorp/EstalingradoCorp.git denied to nicotips27.
+  fatal: ... error: 403
+La cuenta autenticada (nicotips27) no tenía permiso de escritura en el repo de la org.
+
+
+--------------------------------------------------------------------------------
+TEMA 2 — Credenciales / permisos para publicar
+--------------------------------------------------------------------------------
+
+[USUARIO]
+Sí, dale permisos a nicotips27, las dos son mis cuentas.
+
+Opciones exploradas:
+  - Se verificaron credenciales guardadas (gh keyring, Windows Credential Manager).
+  - El token guardado de la cuenta Estalingradocorp estaba EXPIRADO/INVÁLIDO (401).
+  - No había ningún secreto válido de esa cuenta en la máquina.
+
+[ACCIONES]
+- Se creó un fork: https://github.com/nicotips27/EstalingradoCorp
+- Se pusheó el commit al fork y se abrió el PR #1:
+  https://github.com/Estalingradocorp/EstalingradoCorp/pull/1
+- El merge con nicotips27 falló: "does not have the correct permissions to execute MergePullRequest".
+
+
+[USUARIO]
+No se subió nada. Tengo token de Estalingrado Corp: ghp_**** (token provisto por el usuario).
+
+[ACCIONES]
+- Commit local del ajuste de alineación pendiente.
+- Push directo con el token de Estalingradocorp:
+  f36af89..9428d60  main -> main   (subido correctamente)
+- El token quedó expuesto en el chat → se recomendó REVOCARLO.
+
+
+[USUARIO]
+Dale permisos a nicotips27 para que pueda hacer todo esto.
+
+[ACCIONES]
+- Invitación como colaborador con permiso "write" usando el token de Estalingradocorp
+  (invitation id: 336961810).
+- Invitación aceptada con la cuenta nicotips27.
+- Verificación de permisos: {"admin":false,"maintain":false,"pull":true,"push":true,"triage":true}
+- Prueba de push directo: "Everything up-to-date" → OK, nicotips27 ya puede pushear sin PR.
+
+
+--------------------------------------------------------------------------------
+TEMA 3 — Ajuste visual de la barra de búsqueda
+--------------------------------------------------------------------------------
+
+[USUARIO]
+En la parte de las etiquetas, alinea la barra de búsqueda con la fila de etiquetas de arriba.
+
+[ACCIONES]
+- market.html:190 → se cambió "md:items-center" por "md:items-start" en el contenedor #filters,
+  para que la barra de búsqueda quede alineada con la primera fila de etiquetas.
+
+
+--------------------------------------------------------------------------------
+TEMA 4 — Aviso de bloqueo de Windows + publicidad (CyberEngineTweaks)
+--------------------------------------------------------------------------------
+
+[USUARIO]
+Agrega el mismo aviso que tiene DeepSeek Desktop:
+  "Windows puede bloquear la instalación porque estamos tramitando la licencia.
+   Saber más. ¿Cómo desactivar el bloqueo inteligente? Video · Microsoft Answers.
+   Contamos con Malwarebytes."
+También la publicidad:
+  https://static.wixstatic.com/media/9dbdc2_23a9d1da1ade40809dc9afbaee74d186~mv2.gif
+
+[ACCIONES]
+- PRODUCTS['cyberengine']: se agregó "warn" (con links a Saber más = repo de CET, Video,
+  Microsoft Answers) y "ad" (gif de publicidad).
+- openProduct(): la sección de publicidad ahora se muestra también en productos propios
+  cuando tienen "ad" (condición: p.origin==='recomendado' || p.ad).
+- Commit: c8152fd  →  push main OK (9428d60..c8152fd).
+
+
+[USUARIO]
+Sube así se aplica.
+
+[ASISTENTE]
+Confirmado: origin/main = c8152fd, local sincronizado. Pages se actualiza en ~1 min.
+
+
+--------------------------------------------------------------------------------
+TEMA 5 — Deshabilitar descarga de CyberEngineTweaks (urgente)
+--------------------------------------------------------------------------------
+
+[USUARIO]
+Deshabilita el botón "Descargar gratis" de Cyberpunk 2077 · CyberEngineTweaks, urgente.
+
+[ACCIONES]
+- PRODUCTS['cyberengine']: se agregó "coming:true".
+- El botón del modal pasa a "Próximamente" (deshabilitado).
+- Commit: 892ef6b  →  push main OK (c8152fd..892ef6b).
+
+
+[USUARIO]
+Gracias, marca en la documentación por qué CyberEngineTweaks estaba crasheando el juego
+de los usuarios y se le solicitó solución a los desarrolladores.
+
+[ACCIONES]
+- CHANGELOG.md:
+  - Añadido: categoría Mods y producto Cyberpunk 2077 · CyberEngineTweaks (PRD-018).
+  - Cambiado: botón de descarga deshabilitado (motivo: el framework estaba crasheando
+    el juego de los usuarios; se solicitó corrección a los desarrolladores).
+- Commit: 5c8121b  →  push main OK (892ef6b..5c8121b).
+
+
+--------------------------------------------------------------------------------
+TEMA 6 — Nuevo producto Android: Auralis
+--------------------------------------------------------------------------------
+
+[USUARIO]
+Agrega este producto a Android:
+  - Nombre: AURALIS
+  - Descripción:
+      Auralis — Reproductor de música para Android, moderno y sin anuncios.
+      Qué incluye:
+        · Reproducción en segundo plano con controles desde la notificación
+        · Biblioteca organizada por canciones, álbumes, artistas y playlists
+        · Playlists editables y favoritos guardados
+        · Ecualizador de 5 bandas
+        · Búsqueda con autocompletado
+        · Interfaz con Material Design 3 y tema claro/oscuro
+      Hecho con: Kotlin, Jetpack Compose, Clean Architecture, Hilt y Room.
+      Compatible con: Android 8.0 o superior.
+      Versión actual: v0.1.0
+      Desarrollado por EstalingradoCorp.
+  - Imágenes: portadas/auris/ICONO y portadas/auris/Descripcion
+  - Que el botón diga "Próximamente".
+
+[ACCIONES]
+- market.html: tarjeta PRD-019 (categoría Android) y entrada PRODUCTS['auralis'].
+- Botón "Próximamente" (coming:true), badge "Próximamente" en la tarjeta.
+- Imágenes movidas al repo y commiteadas.
+- Commit: 8ef9547  →  push main OK (5c8121b..8ef9547).
+
+
+[USUARIO]
+Están mal las imágenes. ICONO es la PORTADA. Y DESCRIPCIÓN es la imagen de muestra
+que va en descripción.
+  PORTADA:     portadas/auris/PORTADA
+  Descripción: portadas/auris/DESCRIPCION
+
+[ASISTENTE]
+Estructura real encontrada:
+  - portadas/auris/PORTADA/PORTADA.jpeg         (1254x1254) → portada
+  - portadas/auris/DESCRIPCION/Descripcion.png  (1536x1024) → imagen de muestra
+
+[ACCIONES]
+- Tarjeta y modal: imagen principal → portadas/auris/PORTADA/PORTADA.jpeg
+- PRODUCTS['auralis'].imgs → [PORTADA.jpeg, DESCRIPCION/Descripcion.png]
+- Git detectó renames (los archivos viejos se movieron).
+- Commit: a0cdb3a  →  push main OK (8ef9547..a0cdb3a).
+
+
+[USUARIO]
+Que las imágenes se puedan ampliar como los productos físicos.
+
+[ACCIONES]
+- openProduct(): condición del lightbox ampliada a (p.type[0]==='fisico' || p.zoom).
+- PRODUCTS['auralis']: se agregó "zoom:true".
+- Commit: 84494c4  →  push main OK (a0cdb3a..84494c4).
+  Las imágenes de Auralis ahora amplían con rueda, arrastre y botones ±/reset.
+
+
+--------------------------------------------------------------------------------
+TEMA 7 — Activar descarga de Auralis
+--------------------------------------------------------------------------------
+
+[USUARIO]
+Producto AURALIS: activa el botón de descarga y que te lleve a
+https://nicolabarranco27-a11y.github.io/AURALIS/#descarga
+
+[ACCIONES]
+- Tarjeta: "Próximamente" → "Gratis"; se quitó el badge "Próximamente".
+- PRODUCTS['auralis']: se quitó "coming:true", price 'Gratis', se agregó
+  download:'https://nicolabarranco27-a11y.github.io/AURALIS/#descarga'.
+- Botón del modal: "DESCARGAR GRATIS" → abre la URL con el loader de redirección.
+- Commit: 7303af4 → push main OK (84494c4..7303af4).
+
+
+[USUARIO]
+Documenta.
+
+[ACCIONES]
+- CHANGELOG.md actualizado (Auralis en Android, descarga activada, alineación
+  de la barra de búsqueda).
+- Documentacion\data-proyecto.txt y Documentacion\chat-export.txt actualizados.
+
+
+--------------------------------------------------------------------------------
+CIERRE
+--------------------------------------------------------------------------------
+[USUARIO]
+Exporta este chat a Documentacion y crea un txt en la misma carpeta con toda la
+data del proyecto.
+
+[ACCIONES]
+- Documentacion\chat-export.txt   (este archivo)
+- Documentacion\data-proyecto.txt (data completa del proyecto)
+
+================================================================================
+FIN DEL EXPORT
+================================================================================

@@ -1,0 +1,205 @@
+================================================================================
+DATA COMPLETA DEL PROYECTO — ESTALINGRADO CORP
+================================================================================
+Generado: 2026-10-13
+Directorio: C:\Users\nicot\OneDrive\Desktop\Estalingrado corp\Empresa
+================================================================================
+
+1. IDENTIDAD DEL PROYECTO
+--------------------------------------------------------------------------------
+Nombre     : Corporación Estalingrado — Sistemas Centrales
+Descripción: Portal oficial de la Corporación Estalingrado. Agrupa los servicios,
+             proyectos y sistemas de la organización.
+Repositorio: https://github.com/Estalingradocorp/EstalingradoCorp
+Rama       : main
+Sitio      : https://estalingradocorp.github.io/EstalingradoCorp/
+Despliegue  : GitHub Pages automático desde la rama main (sin build).
+
+
+2. ESTRUCTURA DEL REPOSITORIO
+--------------------------------------------------------------------------------
+Raíz:
+  index.html          → Inicio (landing, servicios, proyectos, pipeline)
+  market.html         → Market (catálogo, filtros, carrito, modales)
+  empresa.html        → Empresa (historia, identidad, productos físicos)
+  portada-market.png  → Portada del hero del Market
+  README.md           → Documentación general del proyecto
+  CHANGELOG.md        → Registro de cambios (Keep a Changelog)
+  robots.txt          → Indexación
+  sitemap.xml         → Mapa del sitio (3 URLs)
+  assets/             → Recursos (ej: deepseek-desktop.png)
+  portadas/           → Portadas e imágenes de productos
+  Documentacion/      → Documentación y exports
+
+  Páginas publicadas (sitemap):
+    - /                (priority 1.0, weekly)
+    - /market.html     (priority 0.9, weekly)
+    - /empresa.html    (priority 0.8, monthly)
+
+
+3. STACK TÉCNICO
+--------------------------------------------------------------------------------
+- HTML5 estático (sin framework de build)
+- Tailwind CSS (CDN: cdn.tailwindcss.com)
+- Font Awesome 6.5.1 (CDN)
+- Google Fonts: Inter, JetBrains Mono, Playfair Display
+- JavaScript vanilla (animaciones, filtros, modales, sistema de ventanas macOS,
+  carrito, lightbox de imágenes con zoom, reproductor de video embebido)
+
+
+4. SERVICIOS INTEGRADOS
+--------------------------------------------------------------------------------
+  Buscador Estalingrado  → https://estalingradocorp.qzz.io/
+  EC WebSend             → https://estalingradocorp.github.io/ECsendpro/
+  EC News                → https://nicotips27.github.io/ECnews/
+  EC Download            → https://nicotips27.github.io/ec-download/
+  EC-OS                  → market.html#producto=ecospro (licencia en el market)
+  Big Data (Intranet)    → https://nicotips27.github.io/ec-Intra-net/
+  Antigua Wiki           → https://estalingradocorp.github.io/Intra-net/
+  IA 27                  → https://estalingradocorp.github.io/agente-IA27-/
+
+
+5. PROYECTOS ACTIVOS (index.html)
+--------------------------------------------------------------------------------
+  PRJ-101 | EC WebSend
+  PRJ-102 | Estalingrado Corp Buscador
+  PRJ-103 | EC News
+  PRJ-104 | Demiurgo Box
+  PRJ-105 | EC Download
+  PRJ-106 | Portal NOA
+  PRJ-107 | IA-27 Agente
+  PRJ-108 | Centinela
+  PRJ-109 | Auralis
+  PRJ-110 | CentinelaEC
+  PRJ-111 | DeepSeek Desktop
+  PRJ-112 | IA 27 Prueba
+  (Todos los proyectos enlazan a https://github.com/Estalingradocorp)
+
+
+6. MARKET — CATEGORÍAS / FILTROS
+--------------------------------------------------------------------------------
+  Todos            → Todos los productos
+  EC Market        → Productos propios de la corporación
+  Físico           → Productos físicos (hardware, merchandising)
+  Programas        → Software para PC
+  Juegos           → Juegos y motores de juego
+  Android          → Apps para Android
+  Juegos Android   → Juegos multiplataforma con soporte Android
+  Mods             → Mods y mods-frameworks (NUEVO)
+
+
+7. MARKET — CATÁLOGO COMPLETO (19 productos)
+--------------------------------------------------------------------------------
+SKU      | clave        | Título                                    | Tipo      | Precio
+PRD-001  | ecospro      | EC-OS Pro License                         | Programa  | Gratis (antes $20.000)
+PRD-002  | appgallery   | AppGallery HUAWEI                         | Android   | Gratis (descarga)
+PRD-003  | camiseta     | Camiseta Estalingrado                     | Físico    | $18.000
+PRD-015  | camip27      | Cámara IP IA-27                           | Físico    | $60.000 (antes $80.000)
+PRD-004  | centinela    | C-01 «CENTINELA»                          | Físico    | $67.000
+PRD-005  | ia27         | Acceso IA 27 Beta                         | Programa  | Próximamente
+PRD-006  | libreoffice  | LibreOffice                               | Programa  | Gratis (descarga)
+PRD-007  | ia27fisico   | IA 27 — Atenea Omega                      | Físico    | A confirmar
+PRD-013  | packhacking  | Pack Hacking Ético                        | Físico    | $3.500.000
+PRD-014  | win10ltsc    | Windows 10 Enterprise LTSC                | Físico    | $27.000
+PRD-008  | malwarebytes | Malwarebytes                              | Programa  | Gratis (descarga)
+PRD-009  | opencode     | OpenCode Desktop                          | Programa  | Gratis (descarga)
+PRD-016  | deepseek     | DeepSeek Desktop                          | Programa  | Gratis (descarga)
+PRD-010  | 0ad          | 0 A.D.                                    | Juego     | Gratis (descarga)
+PRD-011  | luanti       | Luanti                                    | Juego     | Gratis (descarga)
+PRD-012  | fdroid       | F-Droid                                   | Android   | Gratis (descarga)
+PRD-017  | assaultcube  | AssaultCube                               | Juego     | Gratis (descarga)
+PRD-018  | cyberengine  | Cyberpunk 2077 · CyberEngineTweaks        | Mod       | Próximamente (descarga deshabilitada)
+PRD-019  | auralis      | Auralis                                   | Android   | Gratis (descarga)
+
+Detalle destacado:
+  - PRD-001 EC-OS Pro License: oferta limitada gratuita; botón azul "Obtener" con aviso
+    de redirección a https://estalingradocorp.github.io/ECOS/
+  - PRD-016 DeepSeek Desktop: incluye aviso "Windows puede bloquear la instalación…"
+    con links (Saber más, Video, Microsoft Answers) + Malwarebytes.
+    Descarga: https://github.com/Estalingradocorp/DeepSeekDesktop-Setup/releases/download/v1.0.3/DeepSeekDesktop-Setup.exe
+  - PRD-018 Cyberpunk 2077 · CyberEngineTweaks:
+      · Repo: https://github.com/nicotips27/CyberEngineTweaks
+      · Instalador: .../releases/download/v1.0.0-installer/EstalingradoCorp-Setup.exe
+      · Video: https://www.youtube.com/embed/bXy3xTgABiQ
+      · Aviso de bloqueo de Windows + publicidad (gif Wix).
+      · DESCARGA DESHABILITADA: el framework estaba crasheando el juego de los usuarios;
+        se solicitó corrección a los desarrolladores.
+  - PRD-019 Auralis: reproductor de música Android (Kotlin, Jetpack Compose, Clean
+    Architecture, Hilt, Room; Android 8.0+; v0.1.0; por EstalingradoCorp).
+    Descarga ACTIVADA: botón "DESCARGAR GRATIS" → https://nicolabarranco27-a11y.github.io/AURALIS/#descarga
+    (con loader de redirección). Imágenes ampliables (zoom).
+
+
+8. IMÁGENES / RECURSOS DE PRODUCTOS
+--------------------------------------------------------------------------------
+  Auralis:
+    Portada (principal)   → portadas/auris/PORTADA/PORTADA.jpeg        (1254x1254)
+    Imagen de muestra     → portadas/auris/DESCRIPCION/Descripcion.png (1536x1024)
+  DeepSeek Desktop:
+    assets/deepseek-desktop.png (+ imágenes remotas)
+  Otros productos: imágenes remotas (tumblr, gstatic, hive, etc.)
+  Publicidad recomendados:
+    https://static.wixstatic.com/media/9dbdc2_23a9d1da1ade40809dc9afbaee74d186~mv2.gif
+  Banner publicidad (hero del market):
+    https://static.wixstatic.com/media/9dbdc2_d7f4662631574a52ada08bdf9d4cfcb8~mv2.gif
+
+
+9. FLUJOS TÉCNICOS CLAVE (market.html)
+--------------------------------------------------------------------------------
+  - Filtros: cada tarjeta usa data-type (códigos separados por espacio); el JS cruza
+    con el filtro activo. Un producto puede pertenecer a varias categorías.
+  - Búsqueda: input #search; normaliza texto (sin acentos) y filtra por
+    título, tag, sku y descripción.
+  - Apertura por hash: market.html#producto=<clave> abre el detalle automáticamente.
+  - Compra: WhatsApp (wa.me). Número config: WA_NUMBER = 549872133491.
+    MP_LINKS = {} (links de Mercado Pago por producto, actualmente vacío).
+  - redirectTo(): loader animado (estilo IA 27) antes de abrir enlaces externos.
+  - Modal de producto: sistema de ventanas estilo macOS (arrastrar, minimizar,
+    maximizar, redimensionar), video embebido, características, aviso (warn),
+    publicidad condicional (recomendado o con propiedad "ad").
+  - Lightbox: zoom con rueda, arrastre (pan) y botones ±/reset. Disponible para
+    productos físicos y para los que tengan la propiedad "zoom:true".
+  - Carrito: drawer lateral, checkout por WhatsApp / Mercado Pago.
+  - Compartir: enlace #producto=<clave> al portapapeles.
+
+
+10. CUENTAS Y PERMISOS
+--------------------------------------------------------------------------------
+  Cuentas GitHub:
+    - Estalingradocorp (dueña del repo) — token provisto por el usuario (EXPIRADO).
+      ⚠ El token compartido quedó expuesto en el chat y debe REVOCARSE.
+    - nicotips27 (colaboradora) — token válido en gh keyring y Git Credential Manager.
+  Colaboración:
+    - nicotips27 fue agregada como colaborador con permiso "write" al repo
+      Estalingradocorp/EstalingradoCorp (puede pushear y mergear PRs).
+    - Verificado: {"admin":false,"maintain":false,"pull":true,"push":true,"triage":true}
+  Fork (opcional, ya no necesario): https://github.com/nicotips27/EstalingradoCorp
+  PR abierto (redundante): https://github.com/Estalingradocorp/EstalingradoCorp/pull/1
+
+
+11. HISTORIAL RECIENTE DE COMMITS (main)
+--------------------------------------------------------------------------------
+  7303af4  Market: activar descarga de Auralis (link a AURALIS#descarga)
+  84494c4  Market: permitir ampliar imagenes de Auralis como productos fisicos
+  a0cdb3a  Market: Auralis - usar PORTADA como portada y DESCRIPCION como muestra
+  8ef9547  Market: agregar Auralis (PRD-019) a la categoria Android
+  5c8121b  Docs: documentar categoria Mods y motivo de deshabilitar CyberEngineTweaks
+  892ef6b  Market: deshabilitar descarga de CyberEngineTweaks (Proximamente)
+  c8152fd  Market: aviso de bloqueo de Windows y publicidad en CyberEngineTweaks
+  9428d60  Market: alinear barra de busqueda con la fila de etiquetas
+  fce0059  Market: nueva categoría Mods con Cyberpunk 2077 CyberEngineTweaks (PRD-018)
+  f36af89  Index: agregar proyecto PRJ-112 IA 27 Prueba
+  5173561  Market: agregar AssaultCube (PRD-017), video gameplay debajo de la publicidad
+  5bc1cf7  DeepSeek Desktop: enlaces para desactivar Smart App Control
+  bd72620  DeepSeek Desktop: link 'Saber más' apunta al repo DeepSeekDesktop-Setup
+
+
+12. NOTAS DE PUBLICACIÓN
+--------------------------------------------------------------------------------
+  - Para publicar: `git add -A ; git commit -m "..." ; git push origin main`.
+  - GitHub Pages publica automáticamente desde main (~1 minuto).
+  - El PR #1 del fork quedó redundante (los cambios ya están en main).
+
+================================================================================
+FIN DE LA DATA DEL PROYECTO
+================================================================================

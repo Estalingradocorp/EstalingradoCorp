@@ -14,6 +14,7 @@ Cambios realizados sobre el estado publicado en GitHub Pages.
 - **Categorías nuevas**: filtros **Android** y **Juegos Android** en la barra de filtros.
 - **Categoría Mods**: nuevo filtro **Mods** en la barra de filtros.
 - **Cyberpunk 2077 · CyberEngineTweaks (PRD-018)**: primer producto de la categoría Mods, con aviso de bloqueo de Windows y publicidad integrada.
+- **Auralis (PRD-019)**: nuevo producto en la categoría **Android** — reproductor de música para Android, moderno y sin anuncios (Kotlin, Jetpack Compose, Clean Architecture, Hilt y Room; Android 8.0 o superior; versión v0.1.0; por EstalingradoCorp). Sus imágenes se pueden **ampliar** (zoom con rueda, arrastre y botones ±/reset) igual que los productos físicos.
 - Asignación de productos a las nuevas categorías:
   - **AppGallery HUAWEI** → categoría Android.
   - **F-Droid** → categoría Android.
@@ -30,6 +31,8 @@ Cambios realizados sobre el estado publicado en GitHub Pages.
   - Descripción actualizada para describir la app de escritorio del agente IA.
   - Link de descarga actualizado a `https://opencode.ai/es/download`.
   - Etiqueta "Terminal" → "Escritorio".
+- **Auralis (PRD-019)**: botón de descarga **activado**. Abre (con el loader de redirección) **https://nicolabarranco27-a11y.github.io/AURALIS/#descarga**. La tarjeta pasó de "Próximamente" a **Gratis**.
+- **Barra de filtros/búsqueda**: la barra de búsqueda ahora se **alinea con la primera fila de etiquetas** (contenedor `#filters`: `md:items-center` → `md:items-start`).
 
 #### Corregido / Reorganizado
 - Las apps Android (AppGallery, F-Droid) ya **no** aparecen en la categoría "Programas": quedan solo en **Android**, dejando "Programas" exclusivamente para software de PC.

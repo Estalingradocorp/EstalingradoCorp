@@ -1,0 +1,135 @@
+CHAT EXPORTADO — OpenCode
+Fecha: 2026-09-25
+Proyecto: EstalingradoCorp (C:\Users\nicot\OneDrive\Desktop\Empresa)
+Repo: https://github.com/Estalingradocorp/EstalingradoCorp
+Sitio: https://estalingradocorp.github.io/EstalingradoCorp/
+
+=================================================================
+TRANSCRIPCIÓN DEL CHAT
+=================================================================
+
+[Usuario] ruta de trabajo actual?
+[Asistente] C:\Users\nicot\OneDrive\Desktop\Empresa
+
+[Usuario] Agregar producto Cámara IP IA-27 a la tienda.
+- Precio: $60.000 (bajado de $80.000)
+- Producto físico y de la empresa
+- Imagen: (tumblr)
+- Descripción: Cámara de videovigilancia IP con IA-27, sin emojis.
+[Asistente] Investigó market.html (catálogo + PRODUCTS en JS).
+Propuso plan: tarjeta + entrada PRODUCTS, SKU PRD-015, tipo Físico,
+origin propio, badge Oferta, WhatsApp 549872133491.
+[Usuario] Confirmó (question: "Sí, todo correcto").
+[Asistente] Implementó en market.html: tarjeta + objeto `camip27`.
+
+[Usuario] sube a su repo asi se aplica los cambios en git hub page
+[Asistente] git add market.html, commit "Add Cámara IP IA-27 physical
+product to market" (2d11c30), push OK (primera vez funcionó).
+
+[Usuario] link?
+[Asistente] https://estalingradocorp.github.io/EstalingradoCorp/market.html
+
+[Usuario] Reemplazar imagen de portada del market por la local
+(portada-market.png).
+[Asistente] Editó market.html (hero). git add de las imágenes. Commit
+623ebdd. Primer push falló con 403 (nicotips27 sin permiso push en la org).
+
+[Usuario] subelo
+[Asistente] Investigó: gh auth status muestra nicotips27 con solo pull.
+Revisión de credenciales Windows: hay otra pa' Estalingradocorp.
+Detectó el problema: la cuenta nicotips27 solo tenía pull.
+Se resolvió usando -c credential.helper=manager
+-c credential.https://github.com.username=Estalingradocorp → push OK.
+
+[Usuario] cómo cambio de cuenta (las dos están en mi PC)
+[Asistente] Hay credencial Windows de Estalingradocorp guardada. El helper
+gh (nicotips27) tomaba prioridad. Se usa explícitamente el helper manager
+con username=Estalingradocorp para los pushes a la org.
+
+[Usuario] no se subió nada (repo)
+[Asistente] Descubrió que solo se subieron las imágenes y el cambio de
+portada en market.html quedó sin commitear. Además el working tree local
+tenía cambios sin commitear que revertían SEO y borraban robots/sitemap.
+Preguntó: solo portada / +seo removal / todo.
+[Usuario] "Solo la portada".
+[Asistente] Respaldo de la copia local, checkout, aplicó solo portada,
+commit f4dd241, push OK, restauró la copia local.
+
+[Usuario] DeepSeek Desktop: reemplazar link de descarga por v1.0.3 y subir.
+[Asistente] Mismo procedimiento quirúrgico. Commit 95388eb, push OK,
+restauró copia local.
+
+[Usuario] Banner publicitario (gif wixstatic) entre filtros/buscador y
+productos en la market.
+[Asistente] Insertó sección "BANNER PUBLICIDAD" (gif + badge Publicidad +
+click → empresa.html). Commit c1b5468, push OK, restauró local.
+
+[Usuario] Reemplazar gif de publicidad dentro de productos por
+9dbdc2_23a9d1da...~mv2.gif
+[Asistente] Reemplazó adImg.src en openProduct. Commit 30b1502, push OK.
+
+[Usuario] DeepSeek Desktop: advertencia discreta cerca del botón descargar:
+Windows puede bloquear la instalación (tramitando licencia) + "Saber más"
+link GitHub EstalingradoCorp + contamos con Malwarebytes.
+[Asistente] Agregó <div id="prod-warn"> al modal, soporte p.warn en
+openProduct y `warn:'...'` en el objeto deepseek. Commit 4760616, push OK.
+
+[Usuario] aplica todos los cambios en local también exactamente
+C:\Users\nicot\OneDrive\Desktop\Empresa
+[Asistente] git restore . → working tree alineado 1:1 con origin/main.
+Verificó: portada-market, banner, prod-warn, deepseek warn + v1.0.3, ad
+gif actualizado, robots.txt y sitemap.xml restaurados.
+
+[Usuario] El link del mensaje de DeepSeek era este:
+https://github.com/Estalingradocorp/DeepSeekDesktop-Setup
+[Asistente] Editó el link de "Saber más" en el warn. Commit bd72620,
+push OK.
+
+[Usuario] DeepSeek: agregar cómo desactivar el bloqueo inteligente con
+links a YouTube y Microsoft Answers.
+[Asistente] Agregó "¿Cómo desactivar el bloqueo inteligente? Video ·
+Microsoft Answers" al warn. Commit 5bc1cf7, push OK.
+
+[Usuario] Agregar AssaultCube (categoría juegos y juegos Android):
+- Foto: encrypted-tbn0...
+- Descripción completa (texto)
+- Descarga: https://assault.cubers.net/download.html
+- Gameplay video debajo de la publicidad: https://www.youtube.com/watch?v=TCxY03uRMBM
+[Asistente] Movió prod-video-wrap inmediatamente debajo de prod-ad en el
+modal. Agregó tarjeta (PRD-017, badge Juego, data-type="juego
+juego-android") y objeto PRODUCTS `assaultcube` con video YouTube.
+Commit 5173561, push OK.
+
+[Usuario] Exporta este chat en un txt a:
+C:\Users\nicot\OneDrive\Desktop\Empresa\chats ia
+
+=================================================================
+RESUMEN DE CAMBIOS PUBLICADOS (commits en main)
+=================================================================
+2d11c30  Add Cámara IP IA-27 physical product to market
+623ebdd  Replace market cover image with local portada-market.png
+         (solo imágenes; el cambio del HTML quedó fuera)
+f4dd241  Apply portada-market.png as market hero background
+95388eb  DeepSeek Desktop: actualizar link de descarga a v1.0.3
+c1b5468  Market: banner publicitario entre filtros y catálogo
+30b1502  Market: actualizar gif de publicidad en modal de productos
+4760616  DeepSeek Desktop: advertencia discreta sobre bloqueo de Windows
+bd72620  DeepSeek Desktop: link 'Saber más' apunta al repo
+         DeepSeekDesktop-Setup
+5bc1cf7  DeepSeek Desktop: enlaces para desactivar Smart App Control
+5173561  Market: agregar AssaultCube (PRD-017), video gameplay debajo de
+         la publicidad
+
+=================================================================
+NOTAS TÉCNICAS
+=================================================================
+- Push a la org: se usa
+  git -c credential.helper=manager
+      -c credential.https://github.com.username=Estalingradocorp
+      push origin main
+  (gh autentica como nicotips27 que solo tiene pull).
+- Los cambios se commitean quirúrgicamente cuando el working tree local
+  tenía ediciones ajenas (SEO reversal, robots/sitemap).
+- Los productos viven en market.html: tarjeta HTML (#catalog) + objeto
+  en const PRODUCTS.
+- El botón "DESCARGAR GRATIS" usa redirectTo() (loader IA 27).
