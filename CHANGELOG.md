@@ -12,6 +12,8 @@ Cambios realizados sobre el estado publicado en GitHub Pages.
 
 #### Añadido
 - **Categorías nuevas**: filtros **Android** y **Juegos Android** en la barra de filtros.
+- **Categoría Mods**: nuevo filtro **Mods** en la barra de filtros.
+- **Cyberpunk 2077 · CyberEngineTweaks (PRD-018)**: primer producto de la categoría Mods, con aviso de bloqueo de Windows y publicidad integrada.
 - Asignación de productos a las nuevas categorías:
   - **AppGallery HUAWEI** → categoría Android.
   - **F-Droid** → categoría Android.
@@ -32,6 +34,9 @@ Cambios realizados sobre el estado publicado en GitHub Pages.
 #### Corregido / Reorganizado
 - Las apps Android (AppGallery, F-Droid) ya **no** aparecen en la categoría "Programas": quedan solo en **Android**, dejando "Programas" exclusivamente para software de PC.
 - Badges de tarjeta y modal de AppGallery y F-Droid actualizados de "Programa" a "Android".
+- **Cyberpunk 2077 · CyberEngineTweaks (PRD-018)**:
+  - Botón de descarga **deshabilitado** (ahora muestra "Próximamente").
+  - **Motivo**: el framework estaba **crasheando el juego** de los usuarios. Se solicitó la corrección a los desarrolladores; la descarga se rehabilitará cuando se resuelva.
 
 ### Cambios en Inicio (`index.html`)
 
