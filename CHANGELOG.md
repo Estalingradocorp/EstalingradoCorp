@@ -15,6 +15,7 @@ Cambios realizados sobre el estado publicado en GitHub Pages.
 - **Categoría Mods**: nuevo filtro **Mods** en la barra de filtros.
 - **Cyberpunk 2077 · CyberEngineTweaks (PRD-018)**: primer producto de la categoría Mods, con aviso de bloqueo de Windows y publicidad integrada.
 - **Auralis (PRD-019)**: nuevo producto en la categoría **Android** — reproductor de música para Android, moderno y sin anuncios (Kotlin, Jetpack Compose, Clean Architecture, Hilt y Room; Android 8.0 o superior; versión v0.1.0; por EstalingradoCorp). Sus imágenes se pueden **ampliar** (zoom con rueda, arrastre y botones ±/reset) igual que los productos físicos.
+- **Command & Conquer: Generals - Zero Hour (PRD-020)**: nuevo producto en la categoría **Juegos Android** (también visible en Juegos). Prueba de rendimiento del port para Android con descripción, video embebido y botón **OBTENER GRATIS** que redirige al proveedor.
 - Asignación de productos a las nuevas categorías:
   - **AppGallery HUAWEI** → categoría Android.
   - **F-Droid** → categoría Android.
@@ -32,6 +33,8 @@ Cambios realizados sobre el estado publicado en GitHub Pages.
   - Link de descarga actualizado a `https://opencode.ai/es/download`.
   - Etiqueta "Terminal" → "Escritorio".
 - **Auralis (PRD-019)**: botón de descarga **activado**. Abre (con el loader de redirección) **https://nicolabarranco27-a11y.github.io/AURALIS/#descarga**. La tarjeta pasó de "Próximamente" a **Gratis**.
+- **Command & Conquer: Generals - Zero Hour (PRD-020)**: botón **OBTENER GRATIS** (nuevo soporte de etiqueta de botón vía `btnLabel`) → redirige a `https://centercorpec.wixsite.com/softwarelab/post/command-and-conquer-generals-pc-full-espa%C3%B1ol`.
+- **Intercambio de posiciones en "Todos"**: la tarjeta de **Auralis** y la de **Camiseta Estalingrado** se intercambiaron de lugar en el catálogo.
 - **Barra de filtros/búsqueda**: la barra de búsqueda ahora se **alinea con la primera fila de etiquetas** (contenedor `#filters`: `md:items-center` → `md:items-start`).
 
 #### Corregido / Reorganizado
@@ -40,6 +43,25 @@ Cambios realizados sobre el estado publicado en GitHub Pages.
 - **Cyberpunk 2077 · CyberEngineTweaks (PRD-018)**:
   - Botón de descarga **deshabilitado** (ahora muestra "Próximamente").
   - **Motivo**: el framework estaba **crasheando el juego** de los usuarios. Se solicitó la corrección a los desarrolladores; la descarga se rehabilitará cuando se resuelva.
+
+### Notas de ingeniería / Errores a evitar
+
+> Registrado para que **no se repita**.
+
+- **No modificar `redirectTo()` sin necesidad.** Es la función central de redirección que usan **TODOS** los botones de descarga/obtener (DeepSeek, AppGallery, LibreOffice, Malwarebytes, OpenCode, F-Droid, 0 A.D., Luanti, AssaultCube, Auralis, Command & Conquer, EC-OS, etc.).
+
+- **Flujo correcto de `redirectTo()` (NO TOCAR):**
+  1. Mostrar la pantalla de carga (loader) y animarla hasta el 100%.
+  2. **Recién al llegar al 100%**, ejecutar `window.open(url,'_blank','noopener')`.
+  - La apertura es **asíncrona a propósito** (después del loader), para respetar la pantalla de carga.
+
+- **Error cometido (y revertido):** ante el reporte "el botón de Auralis no funciona", se cambió `window.open` para que fuera **síncrono** y luego se usó una **pestaña en blanco** que se navegaba al final. Ambos intentos **rompieron la pantalla de carga**: la pestaña del proveedor se abría antes de terminar el loader, o aparecía una pestaña en blanco durante la carga. Se **revirtió** al flujo original.
+
+- **Causa raíz real del síntoma:** el navegador mostraba una **versión cacheada** del `market.html` (el botón aún decía "Próximamente"). **No** era un bug de código.
+
+- **Regla:** ante el reporte de un botón/producto puntual, **primero** descartar caché del navegador (recarga forzada con `Ctrl+F5`). **No** tocar lógica que afecta a todos los productos por un caso aislado.
+
+- **Si el `window.open` asíncrono es bloqueado** por el bloqueador de ventanas emergentes: la solución correcta es **permitir emergentes para `estalingradocorp.github.io`**, NO alterar el flujo del loader.
 
 ### Cambios en Inicio (`index.html`)
 

@@ -238,6 +238,82 @@ Documenta.
 
 
 --------------------------------------------------------------------------------
+TEMA 8 — Intercambio de posiciones (Auralis / Camiseta) en "Todos"
+--------------------------------------------------------------------------------
+
+[USUARIO]
+En la categoría Todos, coloca a Camiseta Estalingrado donde está Auralis, y a
+Auralis donde estaba Camiseta Estalingrado.
+
+[ACCIONES]
+- Se intercambiaron las tarjetas en el catálogo (mismos data-product y badges).
+- Commit: 478aaf4 → push main OK (9e1c541..478aaf4).
+
+
+--------------------------------------------------------------------------------
+TEMA 9 — Nuevo producto: Command & Conquer: Generals - Zero Hour (Juegos Android)
+--------------------------------------------------------------------------------
+
+[USUARIO]
+Agrega este producto a Juegos Android.
+  - Nombre: Command & Conquer: Generals - Zero Hour en Android
+  - Descripción: prueba de rendimiento del port para Android (Snapdragon 680, 4GB RAM,
+    canal EMUSTATION, 9 de octubre de 2026).
+  - Portada: portadas\CCGZ\LOGO PORTA
+  - Botón OBTENER GRATIS: https://centercorpec.wixsite.com/softwarelab/post/command-and-conquer-generals-pc-full-espa%C3%B1ol
+  - Video: https://www.youtube.com/watch?v=RmOXBdQaaVw
+
+[ACCIONES]
+- Tarjeta PRD-020 (data-type="juego juego-android") y entrada PRODUCTS['ccgz'].
+- Nueva propiedad "btnLabel" en openProduct() para personalizar el texto del botón
+  de descarga ("OBTENER GRATIS").
+- Imagen commiteada en portadas/CCGZ/LOGO PORTA/PORTADA.png.
+- Commit: 7ef16dd → push main OK (478aaf4..7ef16dd).
+
+
+--------------------------------------------------------------------------------
+TEMA 10 — BUG del botón de Auralis y REVERT de redirectTo (ERROR documentado)
+--------------------------------------------------------------------------------
+
+[USUARIO]
+El botón de Auralis no funciona: https://nicolabarranco27-a11y.github.io/AURALIS/#descarga
+
+[DIAGNÓSTICO]
+- El destino responde 200 y el APK (Auralis.apk, 25 MB) también. El sitio del
+  proveedor está OK.
+- Se supuso que la causa era el bloqueo de popups por window.open asíncrono.
+
+[ACCIONES Y ERROR]
+- (7a73a6b) Se hizo window.open SÍNCRONO → se rompió la pantalla de carga: el
+  proveedor se abría antes de terminar el loader.
+- (90e7ec7) Se intentó abrir una pestaña en blanco y navegarla al final → aparecía
+  una pestaña en blanco durante la carga. Peor.
+
+[USUARIO]
+"Se va a la pestaña del proveedor sin respetar la pantalla de carga, esto es grave!"
+
+[ACCIÓN]
+- (374fed1) REVERT al redirectTo() ORIGINAL: loader hasta el 100% → después
+  window.open(url,'_blank','noopener').
+- CAUSA RAÍZ REAL: el navegador mostraba una versión CACHEADO del market (el botón
+  aún decía "Próximamente"). No era un bug de código → hay que hacer Ctrl+F5.
+
+
+--------------------------------------------------------------------------------
+TEMA 11 — Documentar todo (incluyendo los errores)
+--------------------------------------------------------------------------------
+
+[USUARIO]
+Documenta todo hasta tus errores así no se repita.
+
+[ACCIONES]
+- CHANGELOG.md → nueva sección "Notas de ingeniería / Errores a evitar".
+- Documentacion\data-proyecto.txt → sección "13. Lecciones aprendidas / Errores a
+  evitar" (E-001 a E-004).
+- Documentacion\chat-export.txt → estos temas.
+
+
+--------------------------------------------------------------------------------
 CIERRE
 --------------------------------------------------------------------------------
 [USUARIO]

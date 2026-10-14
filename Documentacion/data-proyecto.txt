@@ -110,6 +110,7 @@ PRD-012  | fdroid       | F-Droid                                   | Android   
 PRD-017  | assaultcube  | AssaultCube                               | Juego     | Gratis (descarga)
 PRD-018  | cyberengine  | Cyberpunk 2077 · CyberEngineTweaks        | Mod       | Próximamente (descarga deshabilitada)
 PRD-019  | auralis      | Auralis                                   | Android   | Gratis (descarga)
+PRD-020  | ccgz         | Command & Conquer: Generals - Zero Hour   | Juego     | Gratis (obtener)
 
 Detalle destacado:
   - PRD-001 EC-OS Pro License: oferta limitada gratuita; botón azul "Obtener" con aviso
@@ -128,6 +129,13 @@ Detalle destacado:
     Architecture, Hilt, Room; Android 8.0+; v0.1.0; por EstalingradoCorp).
     Descarga ACTIVADA: botón "DESCARGAR GRATIS" → https://nicolabarranco27-a11y.github.io/AURALIS/#descarga
     (con loader de redirección). Imágenes ampliables (zoom).
+    Portada: portadas/auris/PORTADA/PORTADA.jpeg ; Muestra: portadas/auris/DESCRIPCION/Descripcion.png
+  - PRD-020 Command & Conquer: Generals - Zero Hour (Android): prueba de rendimiento
+    del port en Snapdragon 680 + 4GB RAM (canal EMUSTATION, 9 oct 2026).
+    Categoría Juegos Android (y Juegos).
+    Portada: portadas/CCGZ/LOGO PORTA/PORTADA.png
+    Video: https://www.youtube.com/embed/RmOXBdQaaVw
+    Botón "OBTENER GRATIS" (propiedad nueva btnLabel) → https://centercorpec.wixsite.com/softwarelab/post/command-and-conquer-generals-pc-full-espa%C3%B1ol
 
 
 8. IMÁGENES / RECURSOS DE PRODUCTOS
@@ -179,6 +187,12 @@ Detalle destacado:
 
 11. HISTORIAL RECIENTE DE COMMITS (main)
 --------------------------------------------------------------------------------
+  374fed1  Market: revertir redirectTo al flujo original (carga completa antes de abrir proveedor)
+  90e7ec7  Market: respetar pantalla de carga antes de redirigir (pestana en blanco + navegacion al final)
+  7a73a6b  Market: abrir descarga/obtener de forma sincrona (evita bloqueo de popups)
+  7ef16dd  Market: agregar Command & Conquer Generals - Zero Hour (PRD-020) a Juegos Android
+  478aaf4  Market: intercambiar posiciones de Auralis y Camiseta Estalingrado en Todos
+  9e1c541  Docs: actualizar CHANGELOG y documentacion del proyecto
   7303af4  Market: activar descarga de Auralis (link a AURALIS#descarga)
   84494c4  Market: permitir ampliar imagenes de Auralis como productos fisicos
   a0cdb3a  Market: Auralis - usar PORTADA como portada y DESCRIPCION como muestra
@@ -199,6 +213,40 @@ Detalle destacado:
   - Para publicar: `git add -A ; git commit -m "..." ; git push origin main`.
   - GitHub Pages publica automáticamente desde main (~1 minuto).
   - El PR #1 del fork quedó redundante (los cambios ya están en main).
+
+
+13. LECCIONES APRENDIDAS / ERRORES A EVITAR
+--------------------------------------------------------------------------------
+  (Registrado para que NO se repita.)
+
+  [E-001] redirectTo() — NO tocar sin necesidad
+  SÍNTOMA: se cambió la función central de redirección para "arreglar" el botón de
+           Auralis, y se rompió la pantalla de carga de TODO el market.
+  ERROR COMETIDO:
+    1) Se hizo window.open() SÍNCRONO → la pestaña del proveedor se abría antes de
+       que terminara la pantalla de carga (no la respetaba).
+    2) Luego se abrió una pestaña en blanco que se navegaba al final → aparecía una
+       pestaña en blanco durante la carga (mal).
+  FLUJO CORRECTO (NO TOCAR):
+    1) Mostrar el loader y animarlo hasta el 100%.
+    2) Recién al 100%, window.open(url,'_blank','noopener').  (asíncrono a propósito)
+  SE REVIRTIÓ al flujo original (commit 374fed1).
+
+  [E-002] Causa raíz real del "no funciona"
+  El síntoma "el botón de Auralis no funciona" NO era un bug de código: el navegador
+  mostraba una versión CACHEADa del market.html (el botón aún decía "Próximamente").
+  REGLA: ante un reporte de un botón/producto puntual, PRIMERO descartar caché del
+  navegador (Ctrl+F5). NO modificar lógica que afecta a todos los productos por un
+  caso aislado.
+
+  [E-003] Popups bloqueados
+  Si el window.open asíncrono (tras el loader) es bloqueado por el navegador, la
+  solución correcta es PERMITIR EMERGENTES para estalingradocorp.github.io,
+  NO alterar el flujo del loader.
+
+  [E-004] Comunicación de cambios
+  Al publicar, avisar SIEMPRE de hacer recarga forzada (Ctrl+F5) y esperar ~1 min a
+  que GitHub Pages actualice, para no diagnosticar sobre versiones viejas.
 
 ================================================================================
 FIN DE LA DATA DEL PROYECTO
