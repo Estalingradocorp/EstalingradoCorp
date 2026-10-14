@@ -1489,7 +1489,7 @@ function typeIaMessage(el,text,onDone){
 }
 function redirectTo(url){
   let win=null;
-  try{win=window.open(url,'_blank');}catch(e){}
+  try{win=window.open('about:blank','_blank');}catch(e){}
   if(win){try{win.opener=null;}catch(e){}}
   const loader=document.getElementById('ia-loader');
   const bar=document.getElementById('ia-loader-bar');
@@ -1504,7 +1504,7 @@ function redirectTo(url){
     const pct=Math.min(100,((now-start)/total)*100);
     bar.style.width=pct+'%';
     if(pct<100){requestAnimationFrame(tick);return;}
-    if(!win)location.href=url;
+    if(win&&!win.closed){try{win.location.href=url;}catch(e){location.href=url;}}else{location.href=url;}
     setTimeout(()=>{hideLoader();msg.textContent='';},500);
   }
   requestAnimationFrame(tick);
