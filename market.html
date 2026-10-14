@@ -1488,6 +1488,9 @@ function typeIaMessage(el,text,onDone){
   return interval;
 }
 function redirectTo(url){
+  let win=null;
+  try{win=window.open(url,'_blank');}catch(e){}
+  if(win){try{win.opener=null;}catch(e){}}
   const loader=document.getElementById('ia-loader');
   const bar=document.getElementById('ia-loader-bar');
   const msg=document.getElementById('ia-msg');
@@ -1496,13 +1499,12 @@ function redirectTo(url){
   loader.classList.add('flex');
   document.body.style.overflow='hidden';
   const total=1800,start=performance.now();
-  let opened=false;
   typeIaMessage(msg,IA_TYPE_MSG);
   function tick(now){
     const pct=Math.min(100,((now-start)/total)*100);
     bar.style.width=pct+'%';
     if(pct<100){requestAnimationFrame(tick);return;}
-    if(!opened){opened=true;window.open(url,'_blank','noopener');}
+    if(!win)location.href=url;
     setTimeout(()=>{hideLoader();msg.textContent='';},500);
   }
   requestAnimationFrame(tick);
