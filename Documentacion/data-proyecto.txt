@@ -241,9 +241,9 @@ Detalle destacado:
 
   [E-003] Popups bloqueados — SOLUCIÓN DEFINITIVA (fallback en la misma pestaña)
   El bloqueo de window.open NO es un problema de TIEMPO: en Chrome/Edge la "user
-  activation" dura ~5 s (1,8 s ya entraba) y en Firefox/Safari un window.open dentro
-  de un setTimeout/rAF nunca cuenta como gesto del usuario. REDUCIR el loader a 0,4 s
-  NO lo arregla (y no se debe tocar el loader por esto).
+  activation" dura ~5 s (incluso con un loader de 0,4 s entra de sobra) y en
+  Firefox/Safari un window.open dentro de un setTimeout/rAF nunca cuenta como gesto
+  del usuario. REDUCIR el loader NO lo arregla (y no se debe tocar el loader por esto).
   SOLUCIÓN IMPLEMENTADA: al terminar el loader (100%) se abre la pestaña con
   window.open(url,'_blank') — SIN 'noopener', para poder detectar el bloqueo — y si
   devuelve null (bloqueado) se navega a la MISMA pestaña con location.href.
