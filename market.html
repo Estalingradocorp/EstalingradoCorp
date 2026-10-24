@@ -1503,7 +1503,10 @@ function redirectTo(url){
     if(pct<100){requestAnimationFrame(tick);return;}
     setTimeout(()=>{
       hideLoader();msg.textContent='';
-      window.open(url,'_blank','noopener');
+      let win=null;
+      try{win=window.open(url,'_blank');}catch(e){}
+      if(win){try{win.opener=null;}catch(e){}}
+      else{location.href=url;}
     },300);
   }
   requestAnimationFrame(tick);

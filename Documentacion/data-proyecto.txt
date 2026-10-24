@@ -239,10 +239,17 @@ Detalle destacado:
   navegador (Ctrl+F5). NO modificar lógica que afecta a todos los productos por un
   caso aislado.
 
-  [E-003] Popups bloqueados
-  Si el window.open asíncrono (tras el loader) es bloqueado por el navegador, la
-  solución correcta es PERMITIR EMERGENTES para estalingradocorp.github.io,
-  NO alterar el flujo del loader.
+  [E-003] Popups bloqueados — SOLUCIÓN DEFINITIVA (fallback en la misma pestaña)
+  El bloqueo de window.open NO es un problema de TIEMPO: en Chrome/Edge la "user
+  activation" dura ~5 s (1,8 s ya entraba) y en Firefox/Safari un window.open dentro
+  de un setTimeout/rAF nunca cuenta como gesto del usuario. REDUCIR el loader a 0,4 s
+  NO lo arregla (y no se debe tocar el loader por esto).
+  SOLUCIÓN IMPLEMENTADA: al terminar el loader (100%) se abre la pestaña con
+  window.open(url,'_blank') — SIN 'noopener', para poder detectar el bloqueo — y si
+  devuelve null (bloqueado) se navega a la MISMA pestaña con location.href.
+  Resultado: la pantalla de carga se respeta completa y el botón SIEMPRE llega al
+  proveedor. Complemento opcional: permitir emergentes para estalingradocorp.github.io
+  para que siempre abra en pestaña nueva.
 
   [E-004] Comunicación de cambios
   Al publicar, avisar SIEMPRE de hacer recarga forzada (Ctrl+F5) y esperar ~1 min a

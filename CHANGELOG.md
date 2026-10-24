@@ -61,7 +61,8 @@ Cambios realizados sobre el estado publicado en GitHub Pages.
 
 - **Regla:** ante el reporte de un botón/producto puntual, **primero** descartar caché del navegador (recarga forzada con `Ctrl+F5`). **No** tocar lógica que afecta a todos los productos por un caso aislado.
 
-- **Si el `window.open` asíncrono es bloqueado** por el bloqueador de ventanas emergentes: la solución correcta es **permitir emergentes para `estalingradocorp.github.io`**, NO alterar el flujo del loader.
+- **Si el `window.open` asíncrono es bloqueado** por el navegador: la pantalla de carga **no se toca**. Se abre la pestaña al terminar el loader **sin `noopener`** (para poder detectar el bloqueo) y, si devuelve `null`, se navega a la **misma pestaña** con `location.href`. Así el botón siempre llega al proveedor.
+  - **Aclaración**: el bloqueo de popups **no es un problema de tiempo**. En Chrome/Edge la "user activation" dura ~5 s (el loader de 1,8 s ya entraba) y en Firefox/Safari un `window.open` dentro de `setTimeout`/`rAF` nunca cuenta como gesto del usuario. **Reducir el loader a 0,4 s no lo arregla.**
 
 ### Cambios en Inicio (`index.html`)
 
