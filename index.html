@@ -685,16 +685,16 @@ Conectar a Intranet <i class="fa-solid fa-chevron-right text-[10px] group-hover:
 <div class="relative z-10 flex flex-col items-center px-6 text-center max-w-sm">
 <div class="relative mb-6">
 <div class="absolute inset-0 rounded-full bg-blue-500/30 blur-2xl animate-pulse"></div>
-<div class="w-20 h-20 rounded-full bg-blue-500/10 border border-blue-500/40 flex items-center justify-center shadow-[0_0_30px_rgba(37,99,235,.4)]"><i class="fa-solid fa-desktop text-3xl text-blue-400"></i></div>
+<div class="w-20 h-20 rounded-full bg-blue-500/10 border border-blue-500/40 flex items-center justify-center shadow-[0_0_30px_rgba(37,99,235,.4)]"><i id="redirect-icon" class="fa-solid fa-desktop text-3xl text-blue-400"></i></div>
 </div>
 <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-blue-500/20 bg-blue-500/5 mb-5">
 <span class="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></span>
-<span class="text-blue-400 font-mono text-[10px] tracking-[.2em] uppercase">EC-OS · Conexión segura</span>
+<span id="redirect-badge" class="text-blue-400 font-mono text-[10px] tracking-[.2em] uppercase">EC-OS · Conexión segura</span>
 </div>
 <div id="redirect-msg" class="text-white font-light text-lg leading-relaxed mb-2 min-h-[2em]">
 <span id="redirect-msg-cursor" class="text-blue-400 font-mono">▌</span>
 </div>
-<p class="text-zinc-500 text-sm font-light mb-8">Te estamos redirigiendo a la licencia EC-OS Pro para completar la oferta.</p>
+<p id="redirect-desc" class="text-zinc-500 text-sm font-light mb-8">Te estamos redirigiendo a la licencia EC-OS Pro para completar la oferta.</p>
 <div class="w-48 h-1 rounded-full bg-zinc-800 overflow-hidden">
 <div id="redirect-loader-bar" class="h-full bg-gradient-to-r from-blue-600 to-blue-400" style="width:0%"></div>
 </div>
@@ -888,7 +888,7 @@ const SVC={
  ecos:{title:'EC-OS',tag:'Sistema Operativo Webizado',logo:'https://64.media.tumblr.com/76e1731cb57e42c75e23a5a49ac6b7ad/0405ac2cbd79fe6a-5c/s640x960/7f9ed20667da1cb5c38238059200f66d06078553.pnj',icon:'fa-desktop',st:['ok','Operativo'],desc:'Entorno de sistema operativo webizado para operaciones unificadas. Un escritorio completo dentro del navegador, conectado a todo el ecosistema.',feats:[['fa-window-maximize','Escritorio web','Ventanas, apps y barra de tareas en el navegador.'],['fa-puzzle-piece','Apps integradas','Acceso directo al ecosistema Estalingrado.'],['fa-user','Sesión personalizada','Tu espacio de trabajo siempre igual.'],['fa-laptop','Multiplataforma','Funciona en PC, tablet y celular.']],url:'https://estalingradocorp.github.io/EstalingradoCorp/market.html#producto=ecospro'},
  bigdata:{title:'Big Data',tag:'Intranet · Análisis de Datos',icon:'fa-database',st:['ok','Operativo'],desc:'Análisis, visualización y gestión de grandes volúmenes de datos. El centro nervioso de la información corporativa.',feats:[['fa-chart-line','Visualización','Paneles interactivos con métricas en vivo.'],['fa-database','Grandes volúmenes','Procesamiento de datos masivos sin fricción.'],['fa-file-export','Reportes','Exportación de análisis para cada división.'],['fa-magnifying-glass-chart','Exploración','Consulta y filtrado avanzado de datos.']],url:'https://nicotips27.github.io/ec-Intra-net/'},
  wiki:{title:'Antigua Wiki',tag:'Archivo Histórico Corporativo',icon:'fa-box-archive',st:['arc','Archivo'],desc:'Archivo histórico, documentación legacy y registros de la primera Intranet de Estalingrado Corp. Preservamos dónde empezó todo.',feats:[['fa-box-archive','Documentación legacy','Las páginas originales de la primera Intranet.'],['fa-clock-rotate-left','Registros históricos','La evolución de la corporación documento a documento.'],['fa-book-open','Consulta libre','Disponible para lectura en cualquier momento.'],['fa-building-columns','Memoria institucional','La base sobre la que se construyó todo lo demás.']],url:'https://estalingradocorp.github.io/Intra-net/'},
- buscador:{title:'Buscador Estalingrado',tag:'Motor de Búsqueda Principal',icon:'fa-magnifying-glass',st:['ok','Operativo'],desc:'Motor de búsqueda principal de la corporación. Indexación y acceso de alta velocidad a todo el ecosistema Estalingrado.',feats:[['fa-bolt','Alta velocidad','Resultados al instante, sin importar la consulta.'],['fa-layer-group','Indexación total','Todos los servicios de la corporación en un solo lugar.'],['fa-sliders','Búsqueda afinada','Filtros y operadores para resultados precisos.'],['fa-shield-halved','Privada','Sin rastreo: tus búsquedas son tuyas.']],url:'https://estalingradocorp.qzz.io/'}
+ buscador:{title:'Buscador Estalingrado',tag:'Motor de Búsqueda Principal',icon:'fa-magnifying-glass',st:['ok','Operativo'],desc:'Motor de búsqueda principal de la corporación. Indexación y acceso de alta velocidad a todo el ecosistema Estalingrado.',feats:[['fa-bolt','Alta velocidad','Resultados al instante, sin importar la consulta.'],['fa-layer-group','Indexación total','Todos los servicios de la corporación en un solo lugar.'],['fa-sliders','Búsqueda afinada','Filtros y operadores para resultados precisos.'],['fa-shield-halved','Privada','Sin rastreo: tus búsquedas son tuyas.']],url:'https://estalingradocorp.github.io/estalingradocorpbuscador/'}
 };
 const svcModal=document.getElementById('svc-modal');
 let currentService=null;
@@ -916,29 +916,68 @@ document.querySelectorAll('.svc-open').forEach(b=>b.addEventListener('click',()=
 
 // CTA: EC-OS redirige en la misma pestaña con aviso de redirección
 document.getElementById('svc-cta').addEventListener('click',(e)=>{
- if(currentService!=='ecos')return;
- e.preventDefault();
- const s=SVC[currentService];if(!s||!s.url)return;
- osClose('svc-win');
- redirectECOS(s.url);
+  if(currentService==='ecos'){
+    e.preventDefault();
+    const s=SVC[currentService];if(!s||!s.url)return;
+    osClose('svc-win');
+    redirectECOS(s.url);
+  } else if(currentService==='buscador'){
+    e.preventDefault();
+    const s=SVC[currentService];if(!s||!s.url)return;
+    osClose('svc-win');
+    redirectBuscador(s.url);
+  }
 });
 function redirectECOS(url){
- const loader=document.getElementById('redirect-loader');
- const bar=document.getElementById('redirect-loader-bar');
- const msg=document.getElementById('redirect-msg');
- bar.style.width='0%';
- loader.classList.remove('hidden');
- loader.classList.add('flex');
- document.body.style.overflow='hidden';
- typeRedirectMsg(msg,'Redirigiendo a EC-OS Pro…');
- const total=1800,start=performance.now();
- function tick(now){
-  const pct=Math.min(100,((now-start)/total)*100);
-  bar.style.width=pct+'%';
-  if(pct<100){requestAnimationFrame(tick);return;}
-  window.location.href=url;
- }
- requestAnimationFrame(tick);
+  const loader=document.getElementById('redirect-loader');
+  const bar=document.getElementById('redirect-loader-bar');
+  const msg=document.getElementById('redirect-msg');
+  const icon=document.getElementById('redirect-icon');
+  const badge=document.getElementById('redirect-badge');
+  const desc=document.getElementById('redirect-desc');
+  // Update UI for EC-OS
+  icon.className='fa-solid fa-desktop text-3xl text-blue-400';
+  badge.textContent='EC-OS · Conexión segura';
+  desc.textContent='Te estamos redirigiendo a la licencia EC-OS Pro para completar la oferta.';
+  bar.style.width='0%';
+  loader.classList.remove('hidden');
+  loader.classList.add('flex');
+  document.body.style.overflow='hidden';
+  typeRedirectMsg(msg,'Redirigiendo a EC-OS Pro…');
+  const total=1800,start=performance.now();
+  function tick(now){
+   const pct=Math.min(100,((now-start)/total)*100);
+   bar.style.width=pct+'%';
+   if(pct<100){requestAnimationFrame(tick);return;}
+   window.location.href=url;
+  }
+  requestAnimationFrame(tick);
+}
+
+function redirectBuscador(url){
+  const loader=document.getElementById('redirect-loader');
+  const bar=document.getElementById('redirect-loader-bar');
+  const msg=document.getElementById('redirect-msg');
+  const icon=document.getElementById('redirect-icon');
+  const badge=document.getElementById('redirect-badge');
+  const desc=document.getElementById('redirect-desc');
+  // Update UI for buscador
+  icon.className='fa-solid fa-magnifying-glass text-3xl text-blue-400';
+  badge.textContent='Buscador Estalingrado · Conexión segura';
+  desc.textContent='Te estamos redirigiendo al Buscador Estalingrado…';
+  bar.style.width='0%';
+  loader.classList.remove('hidden');
+  loader.classList.add('flex');
+  document.body.style.overflow='hidden';
+  typeRedirectMsg(msg,'Redirigiendo al Buscador Estalingrado…');
+  const total=1800,start=performance.now();
+  function tick(now){
+   const pct=Math.min(100,((now-start)/total)*100);
+   bar.style.width=pct+'%';
+   if(pct<100){requestAnimationFrame(tick);return;}
+   window.location.href=url;
+  }
+  requestAnimationFrame(tick);
 }
 function typeRedirectMsg(el,text){
  el.textContent='';
