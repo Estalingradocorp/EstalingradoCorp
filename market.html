@@ -1503,7 +1503,7 @@ function redirectTo(url){
     if(pct<100){requestAnimationFrame(tick);return;}
     setTimeout(()=>{
       hideLoader();msg.textContent='';
-      window.location.href=url;
+      window.open(url,'_blank','noopener');
     },300);
   }
   requestAnimationFrame(tick);
