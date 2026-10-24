@@ -255,6 +255,21 @@ Detalle destacado:
   Al publicar, avisar SIEMPRE de hacer recarga forzada (Ctrl+F5) y esperar ~1 min a
   que GitHub Pages actualice, para no diagnosticar sobre versiones viejas.
 
+  [E-005] Posible bloqueo adicional — BAJO OBSERVACIÓN (seguimos atentos)
+  Ya está cubierto el caso "window.open bloqueado" (fallback a la misma pestaña).
+  QUEDA BAJO OBSERVACIÓN otro posible bloqueo: que el navegador abra la pestaña pero
+  la deje EN BLANCO (extensiones, políticas de empresa, modo estricto/privado, o que
+  se bloquee sólo la URL del proveedor).
+  SAFEGUARD IMPLEMENTADO: a los 2,5 s se comprueba si la pestaña sigue en
+  'about:blank'; si es así, se cierra y la navegación se hace en la MISMA pestaña.
+  PLAN si se detectan más casos:
+    1. Registrar el caso acá y en CHANGELOG.md ANTES de tocar el código.
+    2. Probar en Chrome/Edge/Firefox/Safari y con la extensión bloqueante activa.
+    3. No romper nunca la pantalla de carga ni el flujo de los demás productos.
+    4. Evaluar pedir "permitir emergentes para estalingradocorp.github.io".
+  Estado actual: pendiente de monitoreo. Loader reducido a 0,4 s (no afecta la
+  detección de bloqueos).
+
 ================================================================================
 FIN DE LA DATA DEL PROYECTO
 ================================================================================

@@ -63,6 +63,7 @@ Cambios realizados sobre el estado publicado en GitHub Pages.
 
 - **Si el `window.open` asíncrono es bloqueado** por el navegador: la pantalla de carga **no se toca**. Se abre la pestaña al terminar el loader **sin `noopener`** (para poder detectar el bloqueo) y, si devuelve `null`, se navega a la **misma pestaña** con `location.href`. Así el botón siempre llega al proveedor.
   - **Aclaración**: el bloqueo de popups **no es un problema de tiempo**. En Chrome/Edge la "user activation" dura ~5 s (el loader de 1,8 s ya entraba) y en Firefox/Safari un `window.open` dentro de `setTimeout`/`rAF` nunca cuenta como gesto del usuario. **Reducir el loader a 0,4 s no lo arregla.**
+- **Vigilancia de bloqueos adicionales**: queda **bajo observación** un posible bloqueo distinto al ya cubierto (por ejemplo: el navegador abre la pestaña pero la deja en blanco, o una extensión bloquea sólo la URL del proveedor). Para ese caso se agregó una **comprobación a los 2,5 s**: si la pestaña sigue en `about:blank`, se cierra y la navegación se hace en la **misma pestaña**. Si se detectan nuevos casos, se documentan en esta misma sección antes de tocar el código.
 
 ### Cambios en Inicio (`index.html`)
 

@@ -1505,8 +1505,12 @@ function redirectTo(url){
       hideLoader();msg.textContent='';
       let win=null;
       try{win=window.open(url,'_blank');}catch(e){}
-      if(win){try{win.opener=null;}catch(e){}}
-      else{location.href=url;}
+      if(win){
+        try{win.opener=null;}catch(e){}
+        setTimeout(()=>{
+          try{if(win&&!win.closed&&win.location.href==='about:blank'){win.close();location.href=url;}}catch(e){}
+        },2500);
+      }else{location.href=url;}
     },0);
   }
   requestAnimationFrame(tick);
